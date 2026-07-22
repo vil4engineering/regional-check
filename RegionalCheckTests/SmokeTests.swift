@@ -1,6 +1,6 @@
 import Foundation
-import Testing
 @testable import RegionalCheck
+import Testing
 
 struct SmokeTests {
     @Test
@@ -57,7 +57,7 @@ struct SmokeTests {
 
         await controller.refresh()
 
-        guard case .quiet(let lastCheckedAt) = controller.state else {
+        guard case let .quiet(lastCheckedAt) = controller.state else {
             Issue.record("Expected Quiet/quiet state, got \(controller.state)")
             return
         }
@@ -82,7 +82,7 @@ struct SmokeTests {
 
         await controller.refresh()
 
-        guard case .alarm(let lastCheckedAt) = controller.state else {
+        guard case let .alarm(lastCheckedAt) = controller.state else {
             Issue.record("Expected Loud/alarm state, got \(controller.state)")
             return
         }
@@ -152,8 +152,8 @@ struct SmokeTests {
     }
 
     @Test
-    func provider_throwsWhenRegionMissing() async {
-        let provider = try! makeProvider(json: kyivJSON(alertnow: true))
+    func provider_throwsWhenRegionMissing() async throws {
+        let provider = try makeProvider(json: kyivJSON(alertnow: true))
         let region = AlertRegion(kind: .oblast(name: "Одеська область"))
         await #expect(throws: UbillingError.missingRegionKey("Одеська область")) {
             _ = try await provider.fetchStatus(region: region)
@@ -161,13 +161,13 @@ struct SmokeTests {
     }
 
     @Test
-    func provider_throwsOnHTTPError() async {
-        let response = HTTPURLResponse(
-            url: URL(string: "https://ubilling.net.ua/aerialalerts/")!,
+    func provider_throwsOnHTTPError() async throws {
+        let response = try #require(HTTPURLResponse(
+            url: #require(URL(string: "https://ubilling.net.ua/aerialalerts/")),
             statusCode: 500,
             httpVersion: nil,
             headerFields: nil
-        )!
+        ))
         let http = MockHTTPClient(result: .success(Data("{}".utf8), response))
         let provider = UbillingProvider(httpClient: http)
 
@@ -175,7 +175,7 @@ struct SmokeTests {
             _ = try await provider.fetchStatus(region: .kyivCity)
             Issue.record("Expected HTTP error")
         } catch let error as UbillingError {
-            guard case .unexpectedResponse(let statusCode, _, _) = error else {
+            guard case let .unexpectedResponse(statusCode, _, _) = error else {
                 Issue.record("Expected unexpectedResponse, got \(error)")
                 return
             }
@@ -186,9 +186,9 @@ struct SmokeTests {
     }
 
     @Test
-    func regionStore_savesAndLoadsRegions() {
+    func regionStore_savesAndLoadsRegions() throws {
         let suite = "SmokeTests.RegionStore.\(UUID().uuidString)"
-        let defaults = UserDefaults(suiteName: suite)!
+        let defaults = try #require(UserDefaults(suiteName: suite))
         defer { defaults.removePersistentDomain(forName: suite) }
         let store = RegionStore(userDefaults: defaults)
 
@@ -228,26 +228,22 @@ private func makeProvider(json: String, now: Date = Date()) throws -> UbillingPr
 private struct MockStatusProvider: StatusProviding {
     let statusForRegion: @Sendable (AlertRegion) async throws -> AlertStatusSnapshot
 
-    init(statusForRegion: @escaping @Sendable (AlertRegion) async throws -> AlertStatusSnapshot) {
-        self.statusForRegion = statusForRegion
-    }
-
     func fetchStatus(region: AlertRegion) async throws -> AlertStatusSnapshot {
         try await statusForRegion(region)
     }
 }
 
 private struct MockHTTPClient: HTTPClient {
-    enum Result: Sendable {
+    enum Result {
         case success(Data, URLResponse)
     }
 
     let result: Result
 
-    func data(from url: URL) async throws -> (Data, URLResponse) {
+    func data(from _: URL) async throws -> (Data, URLResponse) {
         switch result {
-        case .success(let data, let response):
-            return (data, response)
+        case let .success(data, response):
+            (data, response)
         }
     }
 }

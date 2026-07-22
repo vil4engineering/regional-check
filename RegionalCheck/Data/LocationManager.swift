@@ -15,7 +15,7 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
     override init() {
         let manager = CLLocationManager()
         self.manager = manager
-        self.authorizationStatus = manager.authorizationStatus
+        authorizationStatus = manager.authorizationStatus
         super.init()
         manager.delegate = self
     }
@@ -55,7 +55,7 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
         }
     }
 
-    nonisolated func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    nonisolated func locationManager(_: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let last = locations.last?.coordinate else { return }
         Task { @MainActor in
             coordinate = last

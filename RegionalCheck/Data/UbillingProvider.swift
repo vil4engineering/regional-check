@@ -40,16 +40,24 @@ struct UbillingProvider: StatusProviding {
             let statusCode = http.statusCode
             let contentType = http.value(forHTTPHeaderField: "Content-Type")
 
-            if !(200...299).contains(statusCode) {
+            if !(200 ... 299).contains(statusCode) {
                 let prefix = Self.bodyPrefix(data)
                 Self.log.error("Ubilling HTTP \(statusCode) contentType=\(contentType ?? "nil", privacy: .public)")
-                throw UbillingError.unexpectedResponse(statusCode: statusCode, contentType: contentType, bodyPrefix: prefix)
+                throw UbillingError.unexpectedResponse(
+                    statusCode: statusCode,
+                    contentType: contentType,
+                    bodyPrefix: prefix
+                )
             }
 
             if let contentType, !contentType.localizedCaseInsensitiveContains("application/json") {
                 let prefix = Self.bodyPrefix(data)
                 Self.log.error("Ubilling non-JSON contentType=\(contentType, privacy: .public)")
-                throw UbillingError.unexpectedResponse(statusCode: statusCode, contentType: contentType, bodyPrefix: prefix)
+                throw UbillingError.unexpectedResponse(
+                    statusCode: statusCode,
+                    contentType: contentType,
+                    bodyPrefix: prefix
+                )
             }
         }
 
@@ -69,9 +77,9 @@ struct UbillingProvider: StatusProviding {
     private func ubillingKey(for region: AlertRegion) -> String {
         switch region.kind {
         case .kyivCity:
-            return "м. Київ"
-        case .oblast(let name):
-            return name
+            "м. Київ"
+        case let .oblast(name):
+            name
         }
     }
 

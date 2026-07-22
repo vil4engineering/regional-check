@@ -1,9 +1,17 @@
 import SwiftUI
 
 struct HomeView: View {
-    private var controller: StatusController { AppDependencies.status }
-    private var location: LocationManager { AppDependencies.location }
-    private var regions: RegionSelection { AppDependencies.regions }
+    private var controller: StatusController {
+        AppDependencies.status
+    }
+
+    private var location: LocationManager {
+        AppDependencies.location
+    }
+
+    private var regions: RegionSelection {
+        AppDependencies.regions
+    }
 
     var body: some View {
         StatusView(controller: controller) {

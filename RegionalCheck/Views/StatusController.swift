@@ -2,7 +2,7 @@ import Foundation
 import Observation
 import os
 
-enum StatusState: Equatable, Sendable {
+enum StatusState: Equatable {
     case idle
     case quiet(lastCheckedAt: Date)
     case alarm(lastCheckedAt: Date)
@@ -11,37 +11,37 @@ enum StatusState: Equatable, Sendable {
     var title: String {
         switch self {
         case .alarm:
-            return String(localized: "Loud")
+            String(localized: "Loud")
         case .quiet:
-            return String(localized: "Quiet")
+            String(localized: "Quiet")
         case .idle:
-            return String(localized: "Checking…")
+            String(localized: "Checking…")
         case .error:
-            return String(localized: "Unknown")
+            String(localized: "Unknown")
         }
     }
 
     var symbolName: String {
         switch self {
         case .alarm:
-            return "speaker.wave.3.fill"
+            "speaker.wave.3.fill"
         case .quiet:
-            return "speaker.slash.fill"
+            "speaker.slash.fill"
         case .idle:
-            return "hourglass"
+            "hourglass"
         case .error:
-            return "questionmark.circle.fill"
+            "questionmark.circle.fill"
         }
     }
 
     var detailText: String? {
         switch self {
-        case .alarm(let lastCheckedAt), .quiet(let lastCheckedAt):
-            return String(format: String(localized: "Updated: %@"), lastCheckedAt.formatted(date: .omitted, time: .shortened))
+        case let .alarm(lastCheckedAt), let .quiet(lastCheckedAt):
+            String(format: String(localized: "Updated: %@"), lastCheckedAt.formatted(date: .omitted, time: .shortened))
         case .error:
-            return String(localized: "Tap Refresh to try again")
+            String(localized: "Tap Refresh to try again")
         case .idle:
-            return nil
+            nil
         }
     }
 }
@@ -64,12 +64,12 @@ final class StatusController {
     ) {
         self.region = region
         self.provider = provider
-        self.regionTitle = region.title
+        regionTitle = region.title
     }
 
     func setRegion(_ region: AlertRegion) {
         self.region = region
-        self.regionTitle = region.title
+        regionTitle = region.title
     }
 
     func refresh() async {

@@ -10,23 +10,22 @@ enum Theme {
         static let onFillSecondary = Color.white.opacity(0.72)
 
         static func statusGradient(for state: StatusState) -> LinearGradient {
-            let base: Color
-            switch state {
+            let base: Color = switch state {
             case .alarm:
-                base = attention
+                attention
             case .quiet:
-                base = normal
+                normal
             case .idle:
-                base = checking
+                checking
             case .error:
-                base = unavailable
+                unavailable
             }
 
             return LinearGradient(
                 colors: [
                     base.mix(with: .white, by: 0.18),
                     base,
-                    base.mix(with: .black, by: 0.22)
+                    base.mix(with: .black, by: 0.22),
                 ],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing

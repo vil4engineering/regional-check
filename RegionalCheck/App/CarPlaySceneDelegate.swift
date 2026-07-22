@@ -8,12 +8,20 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
     private var refreshTask: Task<Void, Never>?
     private var isConnected = false
 
-    private var location: LocationManager { AppDependencies.location }
-    private var regions: RegionSelection { AppDependencies.regions }
-    private var status: StatusController { AppDependencies.status }
+    private var location: LocationManager {
+        AppDependencies.location
+    }
+
+    private var regions: RegionSelection {
+        AppDependencies.regions
+    }
+
+    private var status: StatusController {
+        AppDependencies.status
+    }
 
     func templateApplicationScene(
-        _ templateApplicationScene: CPTemplateApplicationScene,
+        _: CPTemplateApplicationScene,
         didConnect interfaceController: CPInterfaceController
     ) {
         self.interfaceController = interfaceController
@@ -27,25 +35,25 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
         refreshTask = Task { [weak self] in
             guard let self else { return }
 
-            await self.render(animated: false)
-            await self.status.refresh()
-            await self.render(animated: true)
+            await render(animated: false)
+            await status.refresh()
+            await render(animated: true)
 
             while !Task.isCancelled {
                 try? await Task.sleep(for: .seconds(30))
                 guard !Task.isCancelled else { return }
-                await self.status.refresh()
-                await self.render(animated: true)
+                await status.refresh()
+                await render(animated: true)
             }
         }
     }
 
     func templateApplicationScene(
-        _ templateApplicationScene: CPTemplateApplicationScene,
-        didDisconnectInterfaceController interfaceController: CPInterfaceController
+        _: CPTemplateApplicationScene,
+        didDisconnectInterfaceController _: CPInterfaceController
     ) {
         isConnected = false
-        self.interfaceController = nil
+        interfaceController = nil
         refreshTask?.cancel()
         refreshTask = nil
         location.endUpdating()
@@ -57,11 +65,11 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
             _ = regions.selectedRegion
         } onChange: { [weak self] in
             Task { @MainActor [weak self] in
-                guard let self, self.isConnected else { return }
-                self.status.setRegion(self.regions.selectedRegion)
-                await self.status.refresh()
-                await self.render(animated: true)
-                self.armRegionObservation()
+                guard let self, isConnected else { return }
+                status.setRegion(regions.selectedRegion)
+                await status.refresh()
+                await render(animated: true)
+                armRegionObservation()
             }
         }
     }
@@ -72,11 +80,11 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
             _ = location.coordinateStamp
         } onChange: { [weak self] in
             Task { @MainActor [weak self] in
-                guard let self, self.isConnected else { return }
-                if let coordinate = self.location.coordinate {
-                    self.regions.updateFromLocation(coordinate: coordinate)
+                guard let self, isConnected else { return }
+                if let coordinate = location.coordinate {
+                    regions.updateFromLocation(coordinate: coordinate)
                 }
-                self.armLocationObservation()
+                armLocationObservation()
             }
         }
     }

@@ -30,20 +30,17 @@ final class RegionSelection {
                 guard let address = mapItems.first?.addressRepresentations else { return }
                 guard address.region?.identifier == "UA" else { return }
 
-                let resolved: AlertRegion?
-
-                if let city = address.cityName, city == "Київ" || city == "Kyiv" {
-                    resolved = .kyivCity
+                let resolved: AlertRegion? = if let city = address.cityName, city == "Київ" || city == "Kyiv" {
+                    .kyivCity
                 } else if let admin = Self.administrativeAreaName(from: address), !admin.isEmpty {
-                    resolved = AlertRegion(kind: .oblast(name: admin))
+                    AlertRegion(kind: .oblast(name: admin))
                 } else {
-                    resolved = nil
+                    nil
                 }
 
                 guard let resolved else { return }
                 apply(resolved)
-            } catch {
-            }
+            } catch {}
         }
     }
 

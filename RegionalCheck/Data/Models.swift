@@ -1,7 +1,7 @@
 import Foundation
 
-struct AlertRegion: Hashable, Sendable, Codable {
-    enum Kind: Hashable, Sendable, Codable {
+struct AlertRegion: Hashable, Codable {
+    enum Kind: Hashable, Codable {
         case kyivCity
         case oblast(name: String)
     }
@@ -13,19 +13,19 @@ struct AlertRegion: Hashable, Sendable, Codable {
     var title: String {
         switch kind {
         case .kyivCity:
-            return "Kyiv"
-        case .oblast(let name):
-            return name
+            "Kyiv"
+        case let .oblast(name):
+            name
         }
     }
 }
 
-enum AlertStatus: Equatable, Sendable {
+enum AlertStatus: Equatable {
     case quiet
     case alarm
 }
 
-struct AlertStatusSnapshot: Equatable, Sendable {
+struct AlertStatusSnapshot: Equatable {
     let region: AlertRegion
     let status: AlertStatus
     let checkedAt: Date

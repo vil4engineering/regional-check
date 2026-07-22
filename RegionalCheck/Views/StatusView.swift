@@ -71,13 +71,13 @@ struct StatusView: View {
         .sensoryFeedback(trigger: controller.state) { _, new in
             switch new {
             case .alarm:
-                return .warning
+                .warning
             case .quiet:
-                return .impact(flexibility: .soft, intensity: 0.7)
+                .impact(flexibility: .soft, intensity: 0.7)
             case .error:
-                return .error
+                .error
             case .idle:
-                return nil
+                nil
             }
         }
         .onAppear {
