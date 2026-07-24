@@ -162,8 +162,9 @@ struct SmokeTests {
 
     @Test
     func provider_throwsOnHTTPError() async throws {
+        let url = try #require(URL(string: "https://ubilling.net.ua/aerialalerts/"))
         let response = try #require(HTTPURLResponse(
-            url: #require(URL(string: "https://ubilling.net.ua/aerialalerts/")),
+            url: url,
             statusCode: 500,
             httpVersion: nil,
             headerFields: nil
