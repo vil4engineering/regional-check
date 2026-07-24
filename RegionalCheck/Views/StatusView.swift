@@ -34,6 +34,12 @@ struct StatusView: View {
                     .contentTransition(.interpolate)
                     .padding(.horizontal, Theme.Spacing.md)
 
+                Text(controller.state.explanation)
+                    .font(Theme.Typography.caption)
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(Theme.Colors.onFillSecondary)
+                    .padding(.horizontal, Theme.Spacing.md)
+
                 Text(controller.regionTitle)
                     .font(Theme.Typography.regionTitle)
                     .multilineTextAlignment(.center)

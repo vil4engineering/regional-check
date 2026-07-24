@@ -34,6 +34,19 @@ enum StatusState: Equatable {
         }
     }
 
+    var explanation: String {
+        switch self {
+        case .quiet:
+            String(localized: "status.explanation.quiet")
+        case .alarm:
+            String(localized: "status.explanation.loud")
+        case .idle:
+            String(localized: "status.explanation.updating")
+        case .error:
+            String(localized: "status.explanation.unknown")
+        }
+    }
+
     var detailText: String? {
         switch self {
         case let .alarm(lastCheckedAt), let .quiet(lastCheckedAt):

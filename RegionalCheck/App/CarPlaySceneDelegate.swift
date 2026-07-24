@@ -100,7 +100,7 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
     }
 
     private func makeRootTemplate(state: StatusState, regionTitle: String) -> CPListTemplate {
-        let statusItem = CPListItem(text: state.title, detailText: state.detailText)
+        let statusItem = CPListItem(text: state.title, detailText: state.explanation)
         statusItem.isEnabled = false
         statusItem.setImage(UIImage(systemName: state.symbolName))
 
