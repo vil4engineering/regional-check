@@ -5,7 +5,7 @@ struct OnboardingView: View {
 
     var body: some View {
         ZStack {
-            Theme.Colors.statusGradient(for: .idle)
+            Theme.Colors.onboardingGradient
                 .ignoresSafeArea()
 
             VStack(spacing: Theme.Spacing.lg) {

@@ -8,6 +8,13 @@
         "uk" : { "stringUnit" : { "state" : "translated", "value" : "Перевіряємо…" } }
       }
     },
+    "About" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "About" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "О приложении" } },
+        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Про застосунок" } }
+      }
+    },
     "Continue" : {
       "localizations" : {
         "en" : { "stringUnit" : { "state" : "translated", "value" : "Continue" } },

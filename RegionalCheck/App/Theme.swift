@@ -5,6 +5,7 @@ enum Theme {
         static let normal = Color("Normal")
         static let attention = Color(red: 0.88, green: 0.48, blue: 0.48)
         static let checking = Color(red: 0.55, green: 0.57, blue: 0.60)
+        static let onboarding = Color(red: 0.86, green: 0.68, blue: 0.28)
         static let unavailable = Color("Unavailable")
         static let onFill = Color.white.opacity(0.92)
         static let onFillSecondary = Color.white.opacity(0.72)
@@ -20,8 +21,15 @@ enum Theme {
             case .error:
                 unavailable
             }
+            return gradient(base: base)
+        }
 
-            return LinearGradient(
+        static var onboardingGradient: LinearGradient {
+            gradient(base: onboarding)
+        }
+
+        private static func gradient(base: Color) -> LinearGradient {
+            LinearGradient(
                 colors: [
                     base.mix(with: .white, by: 0.18),
                     base,

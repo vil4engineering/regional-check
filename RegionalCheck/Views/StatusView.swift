@@ -3,6 +3,7 @@ import SwiftUI
 struct StatusView: View {
     var controller: StatusController
     var onRefresh: () -> Void = {}
+    var onShowInfo: (() -> Void)?
 
     @State private var pulseBright = false
 
@@ -73,6 +74,24 @@ struct StatusView: View {
             }
             .padding(Theme.Spacing.xl)
             .animation(Theme.Motion.stateSpring, value: controller.state.title)
+
+            if let onShowInfo {
+                VStack {
+                    HStack {
+                        Spacer()
+                        Button(action: onShowInfo) {
+                            Image(systemName: "info.circle")
+                                .font(Theme.Typography.refreshSymbol)
+                                .foregroundStyle(Theme.Colors.onFill)
+                                .frame(width: Theme.Spacing.refreshControl, height: Theme.Spacing.refreshControl)
+                                .background(.ultraThinMaterial, in: Circle())
+                        }
+                        .accessibilityLabel(Text("About"))
+                    }
+                    Spacer()
+                }
+                .padding(Theme.Spacing.md)
+            }
         }
         .sensoryFeedback(trigger: controller.state) { _, new in
             switch new {
