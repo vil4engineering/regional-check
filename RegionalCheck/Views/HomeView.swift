@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct HomeView: View {
+    @State private var showsOnboarding = false
+
     private var controller: StatusController {
         AppDependencies.status
     }
@@ -14,9 +16,15 @@ struct HomeView: View {
     }
 
     var body: some View {
-        StatusView(controller: controller) {
-            Task { await controller.refresh() }
-        }
+        StatusView(
+            controller: controller,
+            onRefresh: {
+                Task { await controller.refresh() }
+            },
+            onShowInfo: {
+                showsOnboarding = true
+            }
+        )
         .onAppear {
             location.beginUpdating()
             controller.setRegion(regions.selectedRegion)
@@ -32,6 +40,11 @@ struct HomeView: View {
         }
         .onDisappear {
             location.endUpdating()
+        }
+        .fullScreenCover(isPresented: $showsOnboarding) {
+            OnboardingView {
+                showsOnboarding = false
+            }
         }
     }
 }

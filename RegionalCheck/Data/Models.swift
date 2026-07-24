@@ -13,9 +13,9 @@ struct AlertRegion: Hashable, Codable {
     var title: String {
         switch kind {
         case .kyivCity:
-            "Kyiv"
+            String(localized: "Kyiv")
         case let .oblast(name):
-            name
+            String(localized: String.LocalizationValue(name))
         }
     }
 }

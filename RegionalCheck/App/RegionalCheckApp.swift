@@ -3,10 +3,17 @@ import SwiftUI
 @main
 struct RegionalCheckApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
 
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            if hasCompletedOnboarding {
+                HomeView()
+            } else {
+                OnboardingView {
+                    hasCompletedOnboarding = true
+                }
+            }
         }
     }
 }

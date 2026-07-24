@@ -21,6 +21,11 @@ struct SmokeTests {
         #expect(alarm.symbolName == "speaker.wave.3.fill")
         #expect(error.symbolName == "questionmark.circle.fill")
 
+        #expect(idle.explanation == String(localized: "status.explanation.updating"))
+        #expect(quiet.explanation == String(localized: "status.explanation.quiet"))
+        #expect(alarm.explanation == String(localized: "status.explanation.loud"))
+        #expect(error.explanation == String(localized: "status.explanation.unknown"))
+
         #expect(idle.detailText == nil)
         #expect(error.detailText == "Tap Refresh to try again")
         #expect(quiet.detailText?.hasPrefix("Updated:") == true)
@@ -34,8 +39,11 @@ struct SmokeTests {
 
     @Test
     func regionTitles_matchBusinessRules() {
-        #expect(AlertRegion.kyivCity.title == "Kyiv")
-        #expect(AlertRegion(kind: .oblast(name: "Львівська область")).title == "Львівська область")
+        #expect(AlertRegion.kyivCity.title == String(localized: "Kyiv"))
+        #expect(
+            AlertRegion(kind: .oblast(name: "Львівська область")).title
+                == String(localized: "Львівська область")
+        )
     }
 
     @Test
@@ -53,7 +61,8 @@ struct SmokeTests {
         let controller = StatusController(region: .kyivCity, provider: provider)
 
         #expect(controller.state == .idle)
-        #expect(controller.regionTitle == "Kyiv")
+        #expect(controller.regionTitle == String(localized: "Kyiv"))
+        #expect(controller.state.explanation == String(localized: "status.explanation.updating"))
 
         await controller.refresh()
 
@@ -63,6 +72,7 @@ struct SmokeTests {
         }
         #expect(lastCheckedAt == checkedAt)
         #expect(controller.state.title == "Quiet")
+        #expect(controller.state.explanation == String(localized: "status.explanation.quiet"))
         #expect(controller.state.detailText?.hasPrefix("Updated:") == true)
     }
 
@@ -88,6 +98,7 @@ struct SmokeTests {
         }
         #expect(lastCheckedAt == checkedAt)
         #expect(controller.state.title == "Loud")
+        #expect(controller.state.explanation == String(localized: "status.explanation.loud"))
     }
 
     @Test
@@ -114,7 +125,7 @@ struct SmokeTests {
         let oblast = AlertRegion(kind: .oblast(name: "Київська область"))
 
         controller.setRegion(oblast)
-        #expect(controller.regionTitle == "Київська область")
+        #expect(controller.regionTitle == String(localized: "Київська область"))
     }
 
     @Test
