@@ -28,14 +28,17 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
         isConnected = true
         location.beginUpdating()
         status.setRegion(regions.selectedRegion)
+
+        let initialTemplate = makeRootTemplate(state: status.state, regionTitle: status.regionTitle)
+        interfaceController.setRootTemplate(initialTemplate, animated: false) { _, _ in }
+
         armRegionObservation()
         armLocationObservation()
 
         refreshTask?.cancel()
-        refreshTask = Task { [weak self] in
+        refreshTask = Task { @MainActor [weak self] in
             guard let self else { return }
 
-            await render(animated: false)
             await status.refresh()
             await render(animated: true)
 
@@ -111,7 +114,7 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
                 completion()
                 return
             }
-            Task {
+            Task { @MainActor in
                 await self.status.refresh()
                 await self.render(animated: true)
                 completion()
