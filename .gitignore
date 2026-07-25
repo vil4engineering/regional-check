@@ -1,5 +1,6 @@
 # Xcode
 DerivedData/
+.screenshot-derived/
 build/
 *.xcuserstate
 xcuserdata/

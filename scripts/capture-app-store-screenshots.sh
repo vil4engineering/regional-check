@@ -35,16 +35,19 @@ raise SystemExit('missing simulator: '+name)
 xcrun simctl boot "$udid" 2>/dev/null || true
 echo "Using $SIM ($udid) → ${WIDTH}x${HEIGHT} → $OUT_DIR"
 
+DERIVED="/tmp/regional-check-screenshot-derived"
+rm -rf "$DERIVED"
+
 xcodebuild \
   -project RegionalCheck.xcodeproj \
   -scheme "$SCHEME" \
   -destination "platform=iOS Simulator,id=$udid" \
-  -derivedDataPath "$ROOT/.screenshot-derived" \
+  -derivedDataPath "$DERIVED" \
   -configuration Debug \
   build \
   >/tmp/regional-check-screenshot-build.log
 
-APP="$(find "$ROOT/.screenshot-derived" -name 'RegionalCheck.app' -type d | head -1)"
+APP="$(find "$DERIVED" -name 'RegionalCheck.app' -type d | head -1)"
 if [[ -z "$APP" ]]; then
   echo "Built app not found" >&2
   exit 1
@@ -69,4 +72,5 @@ for entry in "${phases[@]}"; do
   echo "Wrote $out ($(sips -g pixelWidth -g pixelHeight "$out" 2>/dev/null | awk '/pixel/{print $2}' | paste -sd x -))"
 done
 
+rm -rf "$DERIVED"
 echo "Upload ALL files from $OUT_DIR into ASC «iPhone 6.5\" Display»"
