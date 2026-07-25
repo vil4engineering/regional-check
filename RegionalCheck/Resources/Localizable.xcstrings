@@ -1,307 +1,930 @@
 {
-  "sourceLanguage" : "en",
-  "strings" : {
-    "Checking…" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Checking…" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Проверяем…" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Перевіряємо…" } }
+  "sourceLanguage": "en",
+  "strings": {
+    "About": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "About"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "О приложении"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Про застосунок"
+          }
+        }
       }
     },
-    "About" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "About" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "О приложении" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Про застосунок" } }
+    "Continue": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continue"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продолжить"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продовжити"
+          }
+        }
       }
     },
-    "Continue" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Continue" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Продолжить" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Продовжити" } }
+    "Kyiv": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kyiv"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Киев"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Київ"
+          }
+        }
       }
     },
-    "Kyiv" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Kyiv" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Киев" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Київ" } }
+    "Loud": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loud"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Громко"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Гучно"
+          }
+        }
       }
     },
-    "Loud" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Loud" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Громко" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Гучно" } }
+    "Onboarding body": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Built for CarPlay so you can check the alert status at a glance — without taking your attention off the road."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для водителя в CarPlay: не отвлекаясь, одним взглядом посмотреть статус тревоги."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для водія в CarPlay: не відволікаючись, одним поглядом побачити статус тривоги."
+          }
+        }
       }
     },
-    "Onboarding body" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Built for CarPlay so you can check the alert status at a glance — without taking your attention off the road." } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Для водителя в CarPlay: не отвлекаясь, одним взглядом посмотреть статус тревоги." } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Для водія в CarPlay: не відволікаючись, одним поглядом побачити статус тривоги." } }
+    "Quiet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quiet"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тихо"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тихо"
+          }
+        }
       }
     },
-    "Quiet" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Quiet" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Тихо" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Тихо" } }
+    "Refresh": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refresh"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обновить"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оновити"
+          }
+        }
       }
     },
-    "Refresh" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Refresh" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Обновить" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Оновити" } }
+    "Regional Check": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Regional Check"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Regional Check"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Regional Check"
+          }
+        }
       }
     },
-    "Regional Check" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Regional Check" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Regional Check" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Regional Check" } }
+    "status.explanation.loud": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alert is active — stay careful; bridges may be closed."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сейчас громко — будьте осторожны, мосты могут быть перекрыты."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зараз гучно — будьте обережні, мости можуть бути перекриті."
+          }
+        }
       }
     },
-    "Status" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Status" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Статус" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Статус" } }
+    "status.explanation.quiet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All quiet — you can drive calmly."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сейчас тихо — можно ехать спокойно."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зараз тихо — можна їхати спокійно."
+          }
+        }
       }
     },
-    "status.explanation.loud" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Alert is active — stay careful; bridges may be closed." } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Сейчас громко — будьте осторожны, мосты могут быть перекрыты." } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Зараз гучно — будьте обережні, мости можуть бути перекриті." } }
+    "status.explanation.unknown": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Status unavailable right now."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Статус сейчас недоступен."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Статус зараз недоступний."
+          }
+        }
       }
     },
-    "status.explanation.quiet" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "All quiet — you can drive calmly." } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Сейчас тихо — можно ехать спокойно." } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Зараз тихо — можна їхати спокійно." } }
+    "status.explanation.updating": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Updating the latest status…"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сейчас обновляем данные…"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зараз оновлюємо дані…"
+          }
+        }
       }
     },
-    "status.explanation.unknown" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Status unavailable right now." } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Статус сейчас недоступен." } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Статус зараз недоступний." } }
+    "Tap Refresh to try again": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tap Refresh to try again"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажмите «Обновить», чтобы попробовать снова"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Натисніть «Оновити», щоб спробувати знову"
+          }
+        }
       }
     },
-    "status.explanation.updating" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Updating the latest status…" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Сейчас обновляем данные…" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Зараз оновлюємо дані…" } }
+    "Unknown": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unknown"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Неизвестно"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Невідомо"
+          }
+        }
       }
     },
-    "Tap Refresh to try again" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tap Refresh to try again" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Нажмите «Обновить», чтобы попробовать снова" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Натисніть «Оновити», щоб спробувати знову" } }
+    "Updated: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Updated: %@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обновлено: %@"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оновлено: %@"
+          }
+        }
       }
     },
-    "Unknown" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Unknown" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Неизвестно" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Невідомо" } }
+    "Checking…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checking…"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проверяем…"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перевіряємо…"
+          }
+        }
       }
     },
-    "Updated: %@" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Updated: %@" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Обновлено: %@" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Оновлено: %@" } }
+    "Автономна Республіка Крим": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Autonomous Republic of Crimea"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Автономная Республика Крым"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Автономна Республіка Крим"
+          }
+        }
       }
     },
-    "Автономна Республіка Крим" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Autonomous Republic of Crimea" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Автономная Республика Крым" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Автономна Республіка Крим" } }
+    "Волинська область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volyn Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Волынская область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Волинська область"
+          }
+        }
       }
     },
-    "Вінницька область" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Vinnytsia Oblast" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Винницкая область" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Вінницька область" } }
+    "Вінницька область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vinnytsia Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Винницкая область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вінницька область"
+          }
+        }
       }
     },
-    "Волинська область" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Volyn Oblast" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Волынская область" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Волинська область" } }
+    "Дніпропетровська область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dnipropetrovsk Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Днепропетровская область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дніпропетровська область"
+          }
+        }
       }
     },
-    "Дніпропетровська область" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Dnipropetrovsk Oblast" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Днепропетровская область" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Дніпропетровська область" } }
+    "Донецька область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Donetsk Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Донецкая область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Донецька область"
+          }
+        }
       }
     },
-    "Донецька область" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Donetsk Oblast" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Донецкая область" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Донецька область" } }
+    "Житомирська область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zhytomyr Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Житомирская область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Житомирська область"
+          }
+        }
       }
     },
-    "Житомирська область" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Zhytomyr Oblast" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Житомирская область" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Житомирська область" } }
+    "Закарпатська область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zakarpattia Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закарпатская область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закарпатська область"
+          }
+        }
       }
     },
-    "Закарпатська область" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Zakarpattia Oblast" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Закарпатская область" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Закарпатська область" } }
+    "Запорізька область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaporizhzhia Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запорожская область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запорізька область"
+          }
+        }
       }
     },
-    "Запорізька область" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Zaporizhzhia Oblast" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Запорожская область" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Запорізька область" } }
+    "Київська область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kyiv Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Киевская область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Київська область"
+          }
+        }
       }
     },
-    "Івано-Франківська область" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Ivano-Frankivsk Oblast" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Ивано-Франковская область" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Івано-Франківська область" } }
+    "Кіровоградська область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kirovohrad Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кировоградская область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кіровоградська область"
+          }
+        }
       }
     },
-    "Київська область" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Kyiv Oblast" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Киевская область" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Київська область" } }
+    "Луганська область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Luhansk Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Луганская область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Луганська область"
+          }
+        }
       }
     },
-    "Кіровоградська область" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Kirovohrad Oblast" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Кировоградская область" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Кіровоградська область" } }
+    "Львівська область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lviv Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Львовская область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Львівська область"
+          }
+        }
       }
     },
-    "Луганська область" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Luhansk Oblast" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Луганская область" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Луганська область" } }
+    "м. Севастополь": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sevastopol"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "г. Севастополь"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "м. Севастополь"
+          }
+        }
       }
     },
-    "Львівська область" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Lviv Oblast" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Львовская область" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Львівська область" } }
+    "Миколаївська область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mykolaiv Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Николаевская область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Миколаївська область"
+          }
+        }
       }
     },
-    "м. Севастополь" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sevastopol" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "г. Севастополь" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "м. Севастополь" } }
+    "Одеська область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Odesa Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Одесская область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Одеська область"
+          }
+        }
       }
     },
-    "Миколаївська область" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Mykolaiv Oblast" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Николаевская область" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Миколаївська область" } }
+    "Полтавська область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poltava Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Полтавская область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Полтавська область"
+          }
+        }
       }
     },
-    "Одеська область" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Odesa Oblast" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Одесская область" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Одеська область" } }
+    "Рівненська область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rivne Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ровенская область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рівненська область"
+          }
+        }
       }
     },
-    "Полтавська область" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Poltava Oblast" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Полтавская область" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Полтавська область" } }
+    "Сумська область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sumy Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сумская область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сумська область"
+          }
+        }
       }
     },
-    "Рівненська область" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Rivne Oblast" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Ровенская область" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Рівненська область" } }
+    "Тернопільська область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ternopil Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тернопольская область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тернопільська область"
+          }
+        }
       }
     },
-    "Сумська область" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sumy Oblast" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Сумская область" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Сумська область" } }
+    "Харківська область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kharkiv Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Харьковская область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Харківська область"
+          }
+        }
       }
     },
-    "Тернопільська область" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Ternopil Oblast" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Тернопольская область" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Тернопільська область" } }
+    "Херсонська область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kherson Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Херсонская область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Херсонська область"
+          }
+        }
       }
     },
-    "Харківська область" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Kharkiv Oblast" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Харьковская область" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Харківська область" } }
+    "Хмельницька область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Khmelnytskyi Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хмельницкая область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хмельницька область"
+          }
+        }
       }
     },
-    "Херсонська область" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Kherson Oblast" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Херсонская область" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Херсонська область" } }
+    "Черкаська область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cherkasy Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Черкасская область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Черкаська область"
+          }
+        }
       }
     },
-    "Хмельницька область" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Khmelnytskyi Oblast" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Хмельницкая область" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Хмельницька область" } }
+    "Чернівецька область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chernivtsi Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Черновицкая область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чернівецька область"
+          }
+        }
       }
     },
-    "Черкаська область" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Cherkasy Oblast" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Черкасская область" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Черкаська область" } }
+    "Чернігівська область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chernihiv Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Черниговская область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чернігівська область"
+          }
+        }
       }
     },
-    "Чернівецька область" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Chernivtsi Oblast" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Черновицкая область" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Чернівецька область" } }
-      }
-    },
-    "Чернігівська область" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Chernihiv Oblast" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Черниговская область" } },
-        "uk" : { "stringUnit" : { "state" : "translated", "value" : "Чернігівська область" } }
+    "Івано-Франківська область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ivano-Frankivsk Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ивано-Франковская область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Івано-Франківська область"
+          }
+        }
       }
     }
   },
-  "version" : "1.1"
+  "version": "1.1"
 }
