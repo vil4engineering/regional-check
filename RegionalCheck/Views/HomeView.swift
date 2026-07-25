@@ -26,6 +26,10 @@ struct HomeView: View {
             }
         )
         .onAppear {
+            if let phase = AppLaunchArguments.screenshotPhase {
+                controller.applyScreenshotFixture(phase)
+                return
+            }
             location.beginUpdating()
             controller.setRegion(regions.selectedRegion)
             Task { await controller.refresh() }
@@ -42,7 +46,7 @@ struct HomeView: View {
             location.endUpdating()
         }
         .fullScreenCover(isPresented: $showsOnboarding) {
-            OnboardingView {
+            OnboardingView(purpose: .about) {
                 showsOnboarding = false
             }
         }

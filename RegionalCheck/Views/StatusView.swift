@@ -9,72 +9,111 @@ struct StatusView: View {
 
     var body: some View {
         ZStack {
-            Theme.Colors.statusGradient(for: controller.state)
+            Theme.Colors.statusBackdrop(for: controller.state)
                 .ignoresSafeArea()
                 .overlay {
-                    Color.white.opacity(pulseOverlayOpacity)
+                    Theme.Colors.statusAccent(for: controller.state)
+                        .opacity(pulseOverlayOpacity)
                         .ignoresSafeArea()
                         .allowsHitTesting(false)
                 }
-                .animation(Theme.Motion.stateSpring, value: controller.state.title)
+                .animation(Theme.Motion.stateSpring, value: controller.state.phase)
 
-            VStack(spacing: Theme.Spacing.md) {
-                Image(systemName: controller.state.symbolName)
-                    .font(Theme.Typography.symbol)
-                    .symbolRenderingMode(.hierarchical)
-                    .foregroundStyle(Theme.Colors.onFill)
-                    .contentTransition(.symbolEffect(.replace))
-                    .symbolEffect(.bounce, value: controller.state.symbolName)
-                    .symbolEffect(.pulse, options: .repeating, isActive: isLoud)
-                    .accessibilityHidden(true)
+            VStack(spacing: 0) {
+                Color.clear
+                    .frame(height: Theme.Spacing.refreshControl)
 
-                Text(controller.state.title)
-                    .font(Theme.Typography.stateTitle)
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(Theme.Colors.onFill)
-                    .contentTransition(.interpolate)
-                    .padding(.horizontal, Theme.Spacing.md)
+                Spacer(minLength: Theme.Spacing.md)
+
+                VStack(spacing: Theme.Spacing.md) {
+                    Image(systemName: controller.state.symbolName)
+                        .font(Theme.Typography.symbol)
+                        .symbolRenderingMode(.hierarchical)
+                        .foregroundStyle(Theme.Colors.statusAccent(for: controller.state))
+                        .shadow(
+                            color: Theme.Shadows.glow,
+                            radius: Theme.Shadows.glowRadius,
+                            y: Theme.Shadows.glowY
+                        )
+                        .contentTransition(.symbolEffect(.replace))
+                        .symbolEffect(.bounce, value: controller.state.symbolName)
+                        .symbolEffect(.pulse, options: .repeating, isActive: isAlertActive)
+                        .symbolEffect(.rotate, options: .repeating, isActive: isChecking)
+                        .accessibilityHidden(true)
+
+                    Text(controller.state.title)
+                        .font(Theme.Typography.stateTitle)
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(Theme.Colors.statusAccent(for: controller.state))
+                        .shadow(
+                            color: Theme.Shadows.soft,
+                            radius: Theme.Shadows.softRadius,
+                            y: Theme.Shadows.softY
+                        )
+                        .contentTransition(.interpolate)
+                        .padding(.horizontal, Theme.Spacing.md)
+                }
+
+                instrumentDivider
+                    .padding(.top, Theme.Spacing.lg)
+
+                HStack(alignment: .firstTextBaseline) {
+                    Text(controller.regionTitle)
+                        .font(Theme.Typography.regionTitle)
+                        .foregroundStyle(Theme.Colors.onFill)
+                        .lineLimit(2)
+
+                    Spacer(minLength: Theme.Spacing.sm)
+
+                    if let checkedAt = controller.state.checkedAt {
+                        Text(checkedAt.formatted(date: .omitted, time: .shortened))
+                            .font(Theme.Typography.caption.monospacedDigit())
+                            .foregroundStyle(Theme.Colors.onFillSecondary)
+                    }
+                }
+                .padding(.horizontal, Theme.Spacing.xl)
+                .padding(.vertical, Theme.Spacing.md)
+                .accessibilityElement(children: .combine)
+
+                instrumentDivider
 
                 Text(controller.state.explanation)
                     .font(Theme.Typography.caption)
                     .multilineTextAlignment(.center)
                     .foregroundStyle(Theme.Colors.onFillSecondary)
-                    .padding(.horizontal, Theme.Spacing.md)
+                    .padding(.horizontal, Theme.Spacing.xl)
+                    .padding(.top, Theme.Spacing.md)
 
-                Text(controller.regionTitle)
-                    .font(Theme.Typography.regionTitle)
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(Theme.Colors.onFill)
-                    .padding(.horizontal, Theme.Spacing.md)
-
-                if let detail = controller.state.detailText {
+                if case .error = controller.state, let detail = controller.state.detailText {
                     Text(detail)
                         .font(Theme.Typography.caption)
+                        .multilineTextAlignment(.center)
                         .foregroundStyle(Theme.Colors.onFillSecondary)
+                        .padding(.horizontal, Theme.Spacing.xl)
+                        .padding(.top, Theme.Spacing.sm)
                 }
 
-                VStack(spacing: Theme.Spacing.sm) {
-                    Button(action: onRefresh) {
-                        Image(systemName: "arrow.clockwise")
-                            .font(Theme.Typography.refreshSymbol)
-                            .foregroundStyle(Theme.Colors.onFill)
-                            .symbolEffect(.rotate, options: .repeating, isActive: controller.isLoading)
-                            .frame(width: Theme.Spacing.refreshControl, height: Theme.Spacing.refreshControl)
-                            .background(.ultraThinMaterial, in: Circle())
-                    }
-                    .buttonStyle(HapticButtonStyle(feedback: Theme.Haptics.icon))
-                    .disabled(controller.isLoading)
-                    .accessibilityLabel(Text("Refresh"))
+                Spacer(minLength: Theme.Spacing.lg)
 
-                    Text("Refresh")
-                        .font(Theme.Typography.refreshLabel)
-                        .foregroundStyle(Theme.Colors.onFillSecondary)
-                        .accessibilityHidden(true)
+                Button(action: onRefresh) {
+                    Image(systemName: "arrow.clockwise")
+                        .font(Theme.Typography.refreshSymbol)
+                        .foregroundStyle(Theme.Colors.onFill)
+                        .symbolEffect(.rotate, options: .repeating, isActive: controller.isLoading)
+                        .frame(width: Theme.Spacing.refreshControl, height: Theme.Spacing.refreshControl)
+                        .background(.ultraThinMaterial, in: Circle())
+                        .shadow(
+                            color: Theme.Shadows.elevated,
+                            radius: Theme.Shadows.elevatedRadius,
+                            y: Theme.Shadows.elevatedY
+                        )
                 }
-                .padding(.top, Theme.Spacing.sm)
+                .buttonStyle(HapticButtonStyle(feedback: Theme.Haptics.icon))
+                .disabled(controller.isLoading)
+                .accessibilityLabel(Text("Refresh"))
+                .padding(.bottom, Theme.Spacing.xl)
             }
-            .padding(Theme.Spacing.xl)
-            .animation(Theme.Motion.stateSpring, value: controller.state.title)
+            .animation(Theme.Motion.stateSpring, value: controller.state.phase)
 
             if let onShowInfo {
                 VStack {
@@ -83,7 +122,7 @@ struct StatusView: View {
                         Button(action: onShowInfo) {
                             Image(systemName: "info.circle")
                                 .font(Theme.Typography.refreshSymbol)
-                                .foregroundStyle(Theme.Colors.onFill)
+                                .foregroundStyle(Theme.Colors.onFillSecondary)
                                 .frame(width: Theme.Spacing.refreshControl, height: Theme.Spacing.refreshControl)
                                 .contentShape(Rectangle())
                         }
@@ -92,7 +131,8 @@ struct StatusView: View {
                     }
                     Spacer()
                 }
-                .padding(Theme.Spacing.md)
+                .padding(.horizontal, Theme.Spacing.md)
+                .padding(.top, Theme.Spacing.sm)
             }
         }
         .sensoryFeedback(trigger: controller.state.phase) { _, new in
@@ -110,23 +150,35 @@ struct StatusView: View {
         .onAppear {
             syncPulse()
         }
-        .onChange(of: controller.state.title) { _, _ in
+        .onChange(of: controller.state.phase) { _, _ in
             syncPulse()
         }
     }
 
-    private var isLoud: Bool {
+    private var instrumentDivider: some View {
+        Rectangle()
+            .fill(Theme.Colors.separator)
+            .frame(height: 1)
+            .padding(.horizontal, Theme.Spacing.xl)
+    }
+
+    private var isAlertActive: Bool {
         if case .alarm = controller.state { return true }
         return false
     }
 
+    private var isChecking: Bool {
+        if case .idle = controller.state { return true }
+        return false
+    }
+
     private var pulseOverlayOpacity: Double {
-        guard isLoud else { return 0 }
-        return pulseBright ? 0.14 : 0.02
+        guard isAlertActive else { return 0 }
+        return pulseBright ? 0.18 : 0.04
     }
 
     private func syncPulse() {
-        if isLoud {
+        if isAlertActive {
             pulseBright = false
             withAnimation(Theme.Motion.loudPulse) {
                 pulseBright = true

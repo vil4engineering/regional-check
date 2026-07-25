@@ -12,9 +12,9 @@ struct SmokeTests {
         let error = StatusState.error
 
         #expect(idle.title == "Checking…")
-        #expect(quiet.title == "Quiet")
-        #expect(alarm.title == "Loud")
-        #expect(error.title == "Unknown")
+        #expect(quiet.title == "All Clear")
+        #expect(alarm.title == "Alert Active")
+        #expect(error.title == "Unavailable")
 
         #expect(idle.phase == .idle)
         #expect(quiet.phase == .quiet)
@@ -23,9 +23,9 @@ struct SmokeTests {
         #expect(StatusState.quiet(lastCheckedAt: checkedAt).phase
             == StatusState.quiet(lastCheckedAt: Date(timeIntervalSince1970: 2)).phase)
 
-        #expect(idle.symbolName == "hourglass")
-        #expect(quiet.symbolName == "speaker.slash.fill")
-        #expect(alarm.symbolName == "speaker.wave.3.fill")
+        #expect(idle.symbolName == "arrow.triangle.2.circlepath")
+        #expect(quiet.symbolName == "checkmark.circle.fill")
+        #expect(alarm.symbolName == "exclamationmark.circle.fill")
         #expect(error.symbolName == "questionmark.circle.fill")
 
         #expect(idle.explanation == String(localized: "status.explanation.updating"))
@@ -37,11 +37,43 @@ struct SmokeTests {
         #expect(error.detailText == "Tap Refresh to try again")
         #expect(quiet.detailText?.hasPrefix("Updated:") == true)
         #expect(alarm.detailText?.hasPrefix("Updated:") == true)
+        #expect(quiet.checkedAt == checkedAt)
+        #expect(alarm.checkedAt == checkedAt)
+        #expect(idle.checkedAt == nil)
+        #expect(error.checkedAt == nil)
         #expect(quiet.detailText == StatusState.quiet(lastCheckedAt: checkedAt).detailText)
         #expect(alarm.detailText == String(
             format: String(localized: "Updated: %@"),
             checkedAt.formatted(date: .omitted, time: .shortened)
         ))
+    }
+
+    @Test
+    func onboardingPurpose_usesExpectedCTAKeys() {
+        #expect(OnboardingPurpose.firstLaunch.ctaTitleKey == "Get Started")
+        #expect(OnboardingPurpose.about.ctaTitleKey == "Got It")
+    }
+
+    @Test
+    @MainActor
+    func controller_appliesScreenshotFixtures() {
+        let provider = MockStatusProvider { region in
+            AlertStatusSnapshot(region: region, status: .quiet, checkedAt: Date(), source: "test")
+        }
+        let controller = StatusController(region: .kyivCity, provider: provider)
+
+        controller.applyScreenshotFixture("allClear")
+        #expect(controller.state.title == "All Clear")
+        #expect(controller.regionTitle == String(localized: "Kyiv"))
+
+        controller.applyScreenshotFixture("alertActive")
+        #expect(controller.state.title == "Alert Active")
+
+        controller.applyScreenshotFixture("checking")
+        #expect(controller.state == .idle)
+
+        controller.applyScreenshotFixture("unavailable")
+        #expect(controller.state == .error)
     }
 
     @Test
@@ -74,11 +106,11 @@ struct SmokeTests {
         await controller.refresh()
 
         guard case let .quiet(lastCheckedAt) = controller.state else {
-            Issue.record("Expected Quiet/quiet state, got \(controller.state)")
+            Issue.record("Expected quiet state, got \(controller.state)")
             return
         }
         #expect(lastCheckedAt == checkedAt)
-        #expect(controller.state.title == "Quiet")
+        #expect(controller.state.title == "All Clear")
         #expect(controller.state.explanation == String(localized: "status.explanation.quiet"))
         #expect(controller.state.detailText?.hasPrefix("Updated:") == true)
     }
@@ -100,11 +132,11 @@ struct SmokeTests {
         await controller.refresh()
 
         guard case let .alarm(lastCheckedAt) = controller.state else {
-            Issue.record("Expected Loud/alarm state, got \(controller.state)")
+            Issue.record("Expected alarm state, got \(controller.state)")
             return
         }
         #expect(lastCheckedAt == checkedAt)
-        #expect(controller.state.title == "Loud")
+        #expect(controller.state.title == "Alert Active")
         #expect(controller.state.explanation == String(localized: "status.explanation.loud"))
     }
 
@@ -118,7 +150,7 @@ struct SmokeTests {
         await controller.refresh()
 
         #expect(controller.state == .error)
-        #expect(controller.state.title == "Unknown")
+        #expect(controller.state.title == "Unavailable")
         #expect(controller.state.detailText == "Tap Refresh to try again")
     }
 

@@ -14,6 +14,6 @@ RegionalCheck/
 
 Shared `provider` / `location` / `regions` live in `RegionalCheckApp.swift` (`AppDependencies`) for phone + CarPlay.
 
-Flow: GPS → Region → Ubilling → Normal / Attention / Checking / Unable to update
+Flow: GPS → Region → Ubilling → All Clear / Alert Active / Checking / Unavailable
 
 Smoke: `./scripts/smoke-tests.sh`

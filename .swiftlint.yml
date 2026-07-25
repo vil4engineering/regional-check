@@ -9,3 +9,9 @@ excluded:
 line_length: 120
 identifier_name:
   min_length: 2
+cyclomatic_complexity:
+  ignores_case_statements: true
+function_body_length:
+  warning: 80
+  error: 120
+

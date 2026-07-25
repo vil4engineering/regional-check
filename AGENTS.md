@@ -6,9 +6,9 @@
 
 ## Project
 
-- Name: regional-check
+- Product: Drive Check (display name)
+- Repo / scheme: `regional-check` / `RegionalCheck` (see `runtime.yml`)
 - Context: `.cursor/project-context` → `personal`
-- Scheme: `RegionalCheck` (see `runtime.yml`)
 - Simulator: `iPhone 17`
 
 ## Config

@@ -1,6 +1,6 @@
-# Regional Check
+# Drive Check
 
-Minimal Apple-style CarPlay utility that shows the current regional public-notice state for the driver’s location. Calm, one screen, one region, one refresh action. iPhone mirrors the same experience as a companion. It is not an emergency, monitoring, or notification product and does not promise safety.
+CarPlay utility for drivers: see your region’s current alert status without reaching for the phone. Open, glance, close — not a monitor, map, or notification product.
 
 **Org:** [vil4engineering](https://github.com/vil4engineering) · **Repo:** [vil4engineering/regional-check](https://github.com/vil4engineering/regional-check)
 

@@ -23,24 +23,24 @@
         }
       }
     },
-    "Continue": {
+    "Checking…": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Continue"
+            "value": "Checking…"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Продолжить"
+            "value": "Проверяем…"
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Продовжити"
+            "value": "Перевіряємо…"
           }
         }
       }
@@ -67,68 +67,24 @@
         }
       }
     },
-    "Loud": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Loud"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Громко"
-          }
-        },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Гучно"
-          }
-        }
-      }
-    },
     "Onboarding body": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Built for CarPlay so you can check the alert status at a glance — without taking your attention off the road."
+            "value": "Regional alert status,\ndesigned for CarPlay."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Для водителя в CarPlay: не отвлекаясь, одним взглядом посмотреть статус тревоги."
+            "value": "Статус тревоги в регионе.\nСделано для CarPlay."
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Для водія в CarPlay: не відволікаючись, одним поглядом побачити статус тривоги."
-          }
-        }
-      }
-    },
-    "Quiet": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Quiet"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Тихо"
-          }
-        },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Тихо"
+            "value": "Статус тривоги в регіоні.\nЗроблено для CarPlay."
           }
         }
       }
@@ -151,28 +107,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Оновити"
-          }
-        }
-      }
-    },
-    "Regional Check": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Regional Check"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Regional Check"
-          }
-        },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Regional Check"
           }
         }
       }
@@ -287,28 +221,6 @@
         }
       }
     },
-    "Unknown": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Unknown"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Неизвестно"
-          }
-        },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Невідомо"
-          }
-        }
-      }
-    },
     "Updated: %@": {
       "localizations": {
         "en": {
@@ -327,28 +239,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Оновлено: %@"
-          }
-        }
-      }
-    },
-    "Checking…": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Checking…"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Проверяем…"
-          }
-        },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Перевіряємо…"
           }
         }
       }
@@ -375,28 +265,6 @@
         }
       }
     },
-    "Волинська область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Volyn Oblast"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Волынская область"
-          }
-        },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Волинська область"
-          }
-        }
-      }
-    },
     "Вінницька область": {
       "localizations": {
         "en": {
@@ -415,6 +283,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Вінницька область"
+          }
+        }
+      }
+    },
+    "Волинська область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volyn Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Волынская область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Волинська область"
           }
         }
       }
@@ -525,6 +415,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Запорізька область"
+          }
+        }
+      }
+    },
+    "Івано-Франківська область": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ivano-Frankivsk Oblast"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ивано-Франковская область"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Івано-Франківська область"
           }
         }
       }
@@ -903,24 +815,134 @@
         }
       }
     },
-    "Івано-Франківська область": {
+    "Drive Check": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ivano-Frankivsk Oblast"
+            "value": "Drive Check"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ивано-Франковская область"
+            "value": "Drive Check"
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Івано-Франківська область"
+            "value": "Drive Check"
+          }
+        }
+      }
+    },
+    "Alert Active": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alert Active"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тревога"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тривога"
+          }
+        }
+      }
+    },
+    "All Clear": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All Clear"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Всё ясно"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все ясно"
+          }
+        }
+      }
+    },
+    "Unavailable": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unavailable"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Недоступно"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Недоступно"
+          }
+        }
+      }
+    },
+    "Get Started": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get Started"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почати"
+          }
+        }
+      }
+    },
+    "Got It": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Got It"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Понял"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зрозуміло"
           }
         }
       }

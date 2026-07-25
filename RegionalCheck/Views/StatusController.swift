@@ -31,24 +31,24 @@ enum StatusState: Equatable {
     var title: String {
         switch self {
         case .alarm:
-            String(localized: "Loud")
+            String(localized: "Alert Active")
         case .quiet:
-            String(localized: "Quiet")
+            String(localized: "All Clear")
         case .idle:
             String(localized: "Checking…")
         case .error:
-            String(localized: "Unknown")
+            String(localized: "Unavailable")
         }
     }
 
     var symbolName: String {
         switch self {
         case .alarm:
-            "speaker.wave.3.fill"
+            "exclamationmark.circle.fill"
         case .quiet:
-            "speaker.slash.fill"
+            "checkmark.circle.fill"
         case .idle:
-            "hourglass"
+            "arrow.triangle.2.circlepath"
         case .error:
             "questionmark.circle.fill"
         }
@@ -74,6 +74,15 @@ enum StatusState: Equatable {
         case .error:
             String(localized: "Tap Refresh to try again")
         case .idle:
+            nil
+        }
+    }
+
+    var checkedAt: Date? {
+        switch self {
+        case let .alarm(lastCheckedAt), let .quiet(lastCheckedAt):
+            lastCheckedAt
+        case .idle, .error:
             nil
         }
     }
@@ -103,6 +112,26 @@ final class StatusController {
     func setRegion(_ region: AlertRegion) {
         self.region = region
         regionTitle = region.title
+    }
+
+    func applyScreenshotFixture(_ phase: String) {
+        let checkedAt = Date(timeIntervalSince1970: 1_720_000_000)
+        switch phase {
+        case "allClear":
+            setRegion(.kyivCity)
+            state = .quiet(lastCheckedAt: checkedAt)
+        case "alertActive":
+            setRegion(AlertRegion(kind: .oblast(name: "Харківська область")))
+            state = .alarm(lastCheckedAt: checkedAt)
+        case "checking":
+            setRegion(AlertRegion(kind: .oblast(name: "Харківська область")))
+            state = .idle
+        case "unavailable":
+            setRegion(.kyivCity)
+            state = .error
+        default:
+            break
+        }
     }
 
     func refresh() async {

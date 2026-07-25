@@ -7,14 +7,49 @@ struct RegionalCheckApp: App {
 
     var body: some Scene {
         WindowGroup {
-            if hasCompletedOnboarding {
-                HomeView()
-            } else {
-                OnboardingView {
-                    hasCompletedOnboarding = true
-                }
+            rootContent
+        }
+    }
+
+    @ViewBuilder
+    private var rootContent: some View {
+        if let phase = AppLaunchArguments.screenshotPhase {
+            screenshotRoot(phase: phase)
+        } else if hasCompletedOnboarding {
+            HomeView()
+        } else {
+            OnboardingView(purpose: .firstLaunch) {
+                hasCompletedOnboarding = true
             }
         }
+    }
+
+    @ViewBuilder
+    private func screenshotRoot(phase: String) -> some View {
+        switch phase {
+        case "launch":
+            LaunchScreenCaptureView()
+        case "onboarding":
+            OnboardingView(purpose: .firstLaunch, onContinue: {})
+        case "about":
+            OnboardingView(purpose: .about, onContinue: {})
+        default:
+            HomeView()
+        }
+    }
+}
+
+private struct LaunchScreenCaptureView: View {
+    var body: some View {
+        ZStack {
+            Color("LaunchBackground")
+                .ignoresSafeArea()
+            Image("LaunchScreen")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+        }
+        .accessibilityHidden(true)
     }
 }
 

@@ -1,6 +1,8 @@
-# Agent pilot brief — Regional Check
+# Agent pilot brief — Drive Check (RegionalCheck scheme)
 
 You are working in the **pilot lab** for the iOS Engineering Runtime (`ios-agent-harness`), not a greenfield app rewrite.
+
+Product display name: **Drive Check**. Xcode scheme/target and Bundle ID stay `RegionalCheck` / `vil4max.RegionalCheck`.
 
 Human goal: open this chat, watch what you do, and verify the Brain + Runtime workflow.
 
@@ -19,6 +21,7 @@ Brain (behavior) comes from global Cursor rules/skills (`cursor-agent-kit`). Do 
 | Item | Value |
 |------|--------|
 | App path | `~/Developer/GitHub/vil4engineering/regional-check` |
+| Product name | Drive Check (CFBundleDisplayName) |
 | Scheme / target | `RegionalCheck` |
 | Tests | `RegionalCheckTests` |
 | Simulator | `iPhone 17` (see `runtime.yml`) |
