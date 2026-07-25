@@ -1,3 +1,4 @@
+import CarPlay
 import UIKit
 
 final class AppDelegate: NSObject, UIApplicationDelegate {
@@ -6,12 +7,18 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         configurationForConnecting connectingSceneSession: UISceneSession,
         options _: UIScene.ConnectionOptions
     ) -> UISceneConfiguration {
-        if connectingSceneSession.role == .carTemplateApplication {
+        if connectingSceneSession.role == .carTemplateApplication
+            || connectingSceneSession.configuration.name == "CarPlay"
+        {
             let config = UISceneConfiguration(name: "CarPlay", sessionRole: connectingSceneSession.role)
             config.delegateClass = CarPlaySceneDelegate.self
+            config.sceneClass = CPTemplateApplicationScene.self
             return config
         }
 
-        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+        return UISceneConfiguration(
+            name: connectingSceneSession.configuration.name,
+            sessionRole: connectingSceneSession.role
+        )
     }
 }

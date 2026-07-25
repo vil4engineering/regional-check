@@ -24,6 +24,33 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
         _: CPTemplateApplicationScene,
         didConnect interfaceController: CPInterfaceController
     ) {
+        handleConnect(interfaceController)
+    }
+
+    func templateApplicationScene(
+        _: CPTemplateApplicationScene,
+        didConnect interfaceController: CPInterfaceController,
+        to _: CPWindow
+    ) {
+        handleConnect(interfaceController)
+    }
+
+    func templateApplicationScene(
+        _: CPTemplateApplicationScene,
+        didDisconnectInterfaceController _: CPInterfaceController
+    ) {
+        handleDisconnect()
+    }
+
+    func templateApplicationScene(
+        _: CPTemplateApplicationScene,
+        didDisconnect _: CPInterfaceController,
+        from _: CPWindow
+    ) {
+        handleDisconnect()
+    }
+
+    private func handleConnect(_ interfaceController: CPInterfaceController) {
         self.interfaceController = interfaceController
         isConnected = true
         location.beginUpdating()
@@ -51,10 +78,7 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
         }
     }
 
-    func templateApplicationScene(
-        _: CPTemplateApplicationScene,
-        didDisconnectInterfaceController _: CPInterfaceController
-    ) {
+    private func handleDisconnect() {
         isConnected = false
         interfaceController = nil
         refreshTask?.cancel()
@@ -102,26 +126,28 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
         } catch {}
     }
 
-    private func makeRootTemplate(state: StatusState, regionTitle: String) -> CPListTemplate {
-        let statusItem = CPListItem(text: state.title, detailText: state.explanation)
-        statusItem.isEnabled = false
-        statusItem.setImage(UIImage(systemName: state.symbolName))
+    private func makeRootTemplate(state: StatusState, regionTitle: String) -> CPTemplate {
+        var items = [
+            CPInformationItem(title: regionTitle, detail: state.detailText),
+        ]
+        items.append(CPInformationItem(title: state.explanation, detail: nil))
 
-        let refreshItem = CPListItem(text: NSLocalizedString("Refresh", comment: ""), detailText: nil)
-        refreshItem.setImage(UIImage(systemName: "arrow.clockwise"))
-        refreshItem.handler = { [weak self] _, completion in
-            guard let self else {
-                completion()
-                return
-            }
-            Task { @MainActor in
-                await self.status.refresh()
-                await self.render(animated: true)
-                completion()
+        let refresh = CPTextButton(
+            title: NSLocalizedString("Refresh", comment: ""),
+            textStyle: .confirm
+        ) { [weak self] _ in
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                await status.refresh()
+                await render(animated: true)
             }
         }
 
-        let section = CPListSection(items: [statusItem, refreshItem])
-        return CPListTemplate(title: regionTitle, sections: [section])
+        return CPInformationTemplate(
+            title: state.title,
+            layout: .leading,
+            items: items,
+            actions: [refresh]
+        )
     }
 }

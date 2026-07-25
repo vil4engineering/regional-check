@@ -61,7 +61,7 @@ enum Theme {
 
     enum Typography {
         static let stateTitle = Font.system(.largeTitle, design: .rounded).weight(.bold)
-        static let regionTitle = Font.system(.body, design: .rounded).weight(.semibold)
+        static let regionTitle = Font.system(.title, design: .rounded).weight(.semibold)
         static let caption = Font.system(.footnote, design: .rounded).weight(.regular)
         static let refreshLabel = Font.system(.caption, design: .rounded).weight(.semibold)
         static let symbol = Font.system(size: 88, weight: .medium)
