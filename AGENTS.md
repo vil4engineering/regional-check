@@ -36,8 +36,10 @@ just verify
 
 ## Release / TestFlight
 
-- App Store already has marketing version **1.0** (live or in review).
-- Before any new Xcode Cloud Archive → App Store Connect / TestFlight upload, bump `MARKETING_VERSION` above what is already on App Store (do not ship another `1.0` prepare). Also keep `CURRENT_PROJECT_VERSION` higher than any build already uploaded for that version.
+- App Store: **1.0** live (or Ready); **1.1** submitted / in review (build **18**). Repo next: **1.2** / build **1**.
+- New marketing version → reset `CURRENT_PROJECT_VERSION` to **1** (builds do not carry over from the previous marketing version).
+- Same marketing version → bump `CURRENT_PROJECT_VERSION` above the highest build already uploaded for that version.
+- Before Archive → ASC / TestFlight: `MARKETING_VERSION` must be above what is already live or in flight when starting a new version line.
 - Symptom if forgotten: Xcode Cloud Archive fails with **Preparing build for App Store Connect failed** (`action_required`) while Test still passes and local archive succeeds.
 
 ## Notes
