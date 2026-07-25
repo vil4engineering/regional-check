@@ -62,6 +62,7 @@ struct StatusView: View {
                             .frame(width: Theme.Spacing.refreshControl, height: Theme.Spacing.refreshControl)
                             .background(.ultraThinMaterial, in: Circle())
                     }
+                    .buttonStyle(HapticButtonStyle(feedback: Theme.Haptics.icon))
                     .disabled(controller.isLoading)
                     .accessibilityLabel(Text("Refresh"))
 
@@ -84,8 +85,9 @@ struct StatusView: View {
                                 .font(Theme.Typography.refreshSymbol)
                                 .foregroundStyle(Theme.Colors.onFill)
                                 .frame(width: Theme.Spacing.refreshControl, height: Theme.Spacing.refreshControl)
-                                .background(.ultraThinMaterial, in: Circle())
+                                .contentShape(Rectangle())
                         }
+                        .buttonStyle(HapticButtonStyle(feedback: Theme.Haptics.icon))
                         .accessibilityLabel(Text("About"))
                     }
                     Spacer()
@@ -93,7 +95,7 @@ struct StatusView: View {
                 .padding(Theme.Spacing.md)
             }
         }
-        .sensoryFeedback(trigger: controller.state) { _, new in
+        .sensoryFeedback(trigger: controller.state.phase) { _, new in
             switch new {
             case .alarm:
                 .warning

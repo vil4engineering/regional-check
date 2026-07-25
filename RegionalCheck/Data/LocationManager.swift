@@ -1,11 +1,10 @@
 import CoreLocation
-import Foundation
 import Observation
 
 @MainActor
 @Observable
 final class LocationManager: NSObject, CLLocationManagerDelegate {
-    private(set) var authorizationStatus: CLAuthorizationStatus
+    private var authorizationStatus: CLAuthorizationStatus
     private(set) var coordinate: CLLocationCoordinate2D?
     private(set) var coordinateStamp: Int = 0
 

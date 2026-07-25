@@ -19,19 +19,3 @@ struct AlertRegion: Hashable, Codable {
         }
     }
 }
-
-enum AlertStatus: Equatable {
-    case quiet
-    case alarm
-}
-
-struct AlertStatusSnapshot: Equatable {
-    let region: AlertRegion
-    let status: AlertStatus
-    let checkedAt: Date
-    let source: String
-}
-
-protocol StatusProviding: Sendable {
-    func fetchStatus(region: AlertRegion) async throws -> AlertStatusSnapshot
-}

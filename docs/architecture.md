@@ -8,7 +8,7 @@ MVC · single app target · no SPM packages.
 RegionalCheck/
   App/       lifecycle, CarPlay, Theme
   Views/     HomeView, StatusView, StatusController
-  Data/      models, Ubilling, location, region store
+  Data/      AlertRegion, AlertStatusSnapshot, StatusProviding, Ubilling, location, region store
   Resources/
 ```
 

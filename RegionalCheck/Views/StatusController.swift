@@ -3,10 +3,30 @@ import Observation
 import os
 
 enum StatusState: Equatable {
+    enum Phase: Equatable {
+        case idle
+        case quiet
+        case alarm
+        case error
+    }
+
     case idle
     case quiet(lastCheckedAt: Date)
     case alarm(lastCheckedAt: Date)
     case error
+
+    var phase: Phase {
+        switch self {
+        case .idle:
+            .idle
+        case .quiet:
+            .quiet
+        case .alarm:
+            .alarm
+        case .error:
+            .error
+        }
+    }
 
     var title: String {
         switch self {

@@ -16,6 +16,13 @@ struct SmokeTests {
         #expect(alarm.title == "Loud")
         #expect(error.title == "Unknown")
 
+        #expect(idle.phase == .idle)
+        #expect(quiet.phase == .quiet)
+        #expect(alarm.phase == .alarm)
+        #expect(error.phase == .error)
+        #expect(StatusState.quiet(lastCheckedAt: checkedAt).phase
+            == StatusState.quiet(lastCheckedAt: Date(timeIntervalSince1970: 2)).phase)
+
         #expect(idle.symbolName == "hourglass")
         #expect(quiet.symbolName == "speaker.slash.fill")
         #expect(alarm.symbolName == "speaker.wave.3.fill")
@@ -103,7 +110,7 @@ struct SmokeTests {
 
     @Test
     @MainActor
-    func controller_showsUnableToUpdateOnFailure() async {
+    func controller_showsUnknownOnFailure() async {
         struct TestError: Error {}
         let provider = MockStatusProvider { _ in throw TestError() }
         let controller = StatusController(region: .kyivCity, provider: provider)
@@ -180,7 +187,7 @@ struct SmokeTests {
             httpVersion: nil,
             headerFields: nil
         ))
-        let http = MockHTTPClient(result: .success(Data("{}".utf8), response))
+        let http = MockHTTPClient(data: Data("{}".utf8), response: response)
         let provider = UbillingProvider(httpClient: http)
 
         do {
@@ -233,7 +240,7 @@ private func makeProvider(json: String, now: Date = Date()) throws -> UbillingPr
         httpVersion: nil,
         headerFields: ["Content-Type": "application/json"]
     )!
-    let http = MockHTTPClient(result: .success(data, response))
+    let http = MockHTTPClient(data: data, response: response)
     return UbillingProvider(httpClient: http, now: { now })
 }
 
@@ -246,16 +253,10 @@ private struct MockStatusProvider: StatusProviding {
 }
 
 private struct MockHTTPClient: HTTPClient {
-    enum Result {
-        case success(Data, URLResponse)
-    }
-
-    let result: Result
+    let data: Data
+    let response: URLResponse
 
     func data(from _: URL) async throws -> (Data, URLResponse) {
-        switch result {
-        case let .success(data, response):
-            (data, response)
-        }
+        (data, response)
     }
 }

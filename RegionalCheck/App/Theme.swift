@@ -63,4 +63,21 @@ enum Theme {
         static let quietFade = Animation.easeInOut(duration: 0.9)
         static let loudPulse = Animation.easeInOut(duration: 1.15).repeatForever(autoreverses: true)
     }
+
+    enum Haptics {
+        static let button = SensoryFeedback.press(.button)
+        static let icon = SensoryFeedback.press(.buttonIconOnly)
+    }
+}
+
+struct HapticButtonStyle: ButtonStyle {
+    var feedback: SensoryFeedback = Theme.Haptics.button
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .opacity(configuration.isPressed ? 0.72 : 1)
+            .sensoryFeedback(feedback, trigger: configuration.isPressed) { _, isPressed in
+                isPressed
+            }
+    }
 }

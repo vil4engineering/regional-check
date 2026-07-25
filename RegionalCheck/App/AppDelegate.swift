@@ -15,4 +15,3 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
 }
-

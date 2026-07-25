@@ -119,9 +119,6 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
         }
 
         let section = CPListSection(items: [statusItem, refreshItem])
-        let template = CPListTemplate(title: regionTitle, sections: [section])
-        template.tabTitle = NSLocalizedString("Status", comment: "")
-        template.tabImage = UIImage(systemName: state.symbolName)
-        return template
+        return CPListTemplate(title: regionTitle, sections: [section])
     }
 }

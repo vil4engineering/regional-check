@@ -38,6 +38,7 @@ struct OnboardingView: View {
                         .padding(.vertical, Theme.Spacing.md)
                         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
                 }
+                .buttonStyle(HapticButtonStyle(feedback: Theme.Haptics.button))
                 .accessibilityLabel(Text("Continue"))
                 .padding(.horizontal, Theme.Spacing.xl)
                 .padding(.bottom, Theme.Spacing.xl)
