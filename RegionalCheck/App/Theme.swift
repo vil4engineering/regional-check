@@ -51,7 +51,7 @@ enum Theme {
                 colors: [
                     base.mix(with: .white, by: 0.18),
                     base,
-                    base.mix(with: .black, by: 0.22)
+                    base.mix(with: .black, by: 0.22),
                 ],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
