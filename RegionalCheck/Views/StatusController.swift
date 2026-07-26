@@ -93,9 +93,10 @@ enum StatusState: Equatable {
 final class StatusController {
     private static let log = Logger(subsystem: "vil4max.RegionalCheck", category: "Status")
 
-    private(set) var state: StatusState = .idle
+    private(set) var state: StatusState = .error
     private(set) var regionTitle: String
     private(set) var isLoading = false
+    private(set) var checkedAtLabel: String?
 
     private var region: AlertRegion
     private let provider: any StatusProviding
@@ -140,15 +141,18 @@ final class StatusController {
         defer { isLoading = false }
         do {
             let snapshot = try await provider.fetchStatus(region: region)
+            let label = snapshot.checkedAt.formatted(date: .omitted, time: .shortened)
             switch snapshot.status {
             case .alarm:
                 state = .alarm(lastCheckedAt: snapshot.checkedAt)
             case .quiet:
                 state = .quiet(lastCheckedAt: snapshot.checkedAt)
             }
+            checkedAtLabel = label
         } catch {
             Self.log.error("Fetch status failed: \(String(describing: error), privacy: .public)")
             state = .error
+            checkedAtLabel = nil
         }
     }
 }

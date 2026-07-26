@@ -7,10 +7,6 @@ struct HomeView: View {
         AppDependencies.status
     }
 
-    private var location: LocationManager {
-        AppDependencies.location
-    }
-
     private var regions: RegionSelection {
         AppDependencies.regions
     }
@@ -30,18 +26,7 @@ struct HomeView: View {
                 controller.applyScreenshotFixture(phase)
                 return
             }
-            location.beginUpdating()
             controller.setRegion(regions.selectedRegion)
-        }
-        .onChange(of: regions.selectedRegion) { _, region in
-            controller.setRegion(region)
-        }
-        .onChange(of: location.coordinateStamp) { _, _ in
-            guard let coordinate = location.coordinate else { return }
-            regions.updateFromLocation(coordinate: coordinate)
-        }
-        .onDisappear {
-            location.endUpdating()
         }
         .fullScreenCover(isPresented: $showsOnboarding) {
             OnboardingView(purpose: .about) {

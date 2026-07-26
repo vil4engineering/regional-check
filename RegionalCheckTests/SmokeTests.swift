@@ -87,7 +87,7 @@ struct SmokeTests {
 
     @Test
     @MainActor
-    func controller_startsIdle_thenShowsQuiet() async {
+    func controller_startsUnavailable_thenShowsQuiet() async {
         let checkedAt = Date(timeIntervalSince1970: 1)
         let provider = MockStatusProvider { region in
             AlertStatusSnapshot(
@@ -99,9 +99,9 @@ struct SmokeTests {
         }
         let controller = StatusController(region: .kyivCity, provider: provider)
 
-        #expect(controller.state == .idle)
+        #expect(controller.state == .error)
         #expect(controller.regionTitle == String(localized: "Kyiv"))
-        #expect(controller.state.explanation == String(localized: "status.explanation.updating"))
+        #expect(controller.checkedAtLabel == nil)
 
         await controller.refresh()
 
@@ -113,6 +113,7 @@ struct SmokeTests {
         #expect(controller.state.title == "All Clear")
         #expect(controller.state.explanation == String(localized: "status.explanation.quiet"))
         #expect(controller.state.detailText?.hasPrefix("Updated:") == true)
+        #expect(controller.checkedAtLabel == checkedAt.formatted(date: .omitted, time: .shortened))
     }
 
     @Test

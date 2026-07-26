@@ -65,8 +65,8 @@ struct StatusView: View {
 
                     Spacer(minLength: Theme.Spacing.sm)
 
-                    if let checkedAt = controller.state.checkedAt {
-                        Text(checkedAt.formatted(date: .omitted, time: .shortened))
+                    if let checkedAtLabel = controller.checkedAtLabel {
+                        Text(checkedAtLabel)
                             .font(Theme.Typography.caption.monospacedDigit())
                             .foregroundStyle(Theme.Colors.onFillSecondary)
                     }
