@@ -5,7 +5,6 @@ import UIKit
 @MainActor
 final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegate {
     private var interfaceController: CPInterfaceController?
-    private var refreshTask: Task<Void, Never>?
     private var isConnected = false
 
     private var location: LocationManager {
@@ -61,28 +60,12 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
 
         armRegionObservation()
         armLocationObservation()
-
-        refreshTask?.cancel()
-        refreshTask = Task { @MainActor [weak self] in
-            guard let self else { return }
-
-            await status.refresh()
-            await render(animated: true)
-
-            while !Task.isCancelled {
-                try? await Task.sleep(for: .seconds(30))
-                guard !Task.isCancelled else { return }
-                await status.refresh()
-                await render(animated: true)
-            }
-        }
+        armStatusObservation()
     }
 
     private func handleDisconnect() {
         isConnected = false
         interfaceController = nil
-        refreshTask?.cancel()
-        refreshTask = nil
         location.endUpdating()
     }
 
@@ -94,9 +77,22 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
             Task { @MainActor [weak self] in
                 guard let self, isConnected else { return }
                 status.setRegion(regions.selectedRegion)
-                await status.refresh()
                 await render(animated: true)
                 armRegionObservation()
+            }
+        }
+    }
+
+    private func armStatusObservation() {
+        guard isConnected else { return }
+        withObservationTracking {
+            _ = status.state
+            _ = status.regionTitle
+        } onChange: { [weak self] in
+            Task { @MainActor [weak self] in
+                guard let self, isConnected else { return }
+                await render(animated: true)
+                armStatusObservation()
             }
         }
     }
