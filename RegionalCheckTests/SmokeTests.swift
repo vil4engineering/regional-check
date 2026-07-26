@@ -155,6 +155,11 @@ struct SmokeTests {
     }
 
     @Test
+    func statusController_periodicRefreshInterval_isFiveMinutes() {
+        #expect(StatusController.periodicRefreshInterval == .seconds(300))
+    }
+
+    @Test
     @MainActor
     func controller_updatesRegionTitle() {
         let provider = MockStatusProvider { region in

@@ -61,6 +61,7 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
         armRegionObservation()
         armLocationObservation()
         armStatusObservation()
+        status.beginPeriodicRefresh()
 
         Task { @MainActor [weak self] in
             guard let self, isConnected else { return }
@@ -72,6 +73,7 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
     private func handleDisconnect() {
         isConnected = false
         interfaceController = nil
+        status.endPeriodicRefresh()
         location.endUpdating()
     }
 
