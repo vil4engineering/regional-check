@@ -32,6 +32,7 @@ struct HomeView: View {
             }
             location.beginUpdating()
             controller.setRegion(regions.selectedRegion)
+            controller.beginPeriodicRefresh()
             Task { await controller.refresh() }
         }
         .onChange(of: regions.selectedRegion) { _, region in
@@ -43,6 +44,7 @@ struct HomeView: View {
             regions.updateFromLocation(coordinate: coordinate)
         }
         .onDisappear {
+            controller.endPeriodicRefresh()
             location.endUpdating()
         }
         .fullScreenCover(isPresented: $showsOnboarding) {

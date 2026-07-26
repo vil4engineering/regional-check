@@ -16,4 +16,6 @@ Shared `provider` / `location` / `regions` live in `RegionalCheckApp.swift` (`Ap
 
 Flow: GPS → Region → Ubilling → All Clear / Alert Active / Checking / Unavailable
 
+Status fetch policy and Ubilling rate limits: `docs/aerial-alerts-provider.md`
+
 Smoke: `./scripts/smoke-tests.sh`

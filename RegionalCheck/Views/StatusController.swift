@@ -92,6 +92,7 @@ enum StatusState: Equatable {
 @Observable
 final class StatusController {
     private static let log = Logger(subsystem: "vil4max.RegionalCheck", category: "Status")
+    static let periodicRefreshInterval: Duration = .seconds(300)
 
     private(set) var state: StatusState = .idle
     private(set) var regionTitle: String
@@ -99,6 +100,8 @@ final class StatusController {
 
     private var region: AlertRegion
     private let provider: any StatusProviding
+    private var periodicRefreshClients = 0
+    private var periodicRefreshTask: Task<Void, Never>?
 
     init(
         region: AlertRegion,
@@ -112,6 +115,26 @@ final class StatusController {
     func setRegion(_ region: AlertRegion) {
         self.region = region
         regionTitle = region.title
+    }
+
+    func beginPeriodicRefresh() {
+        periodicRefreshClients += 1
+        guard periodicRefreshTask == nil else { return }
+
+        periodicRefreshTask = Task { [weak self] in
+            while !Task.isCancelled {
+                try? await Task.sleep(for: Self.periodicRefreshInterval)
+                guard !Task.isCancelled, let self else { return }
+                await refresh()
+            }
+        }
+    }
+
+    func endPeriodicRefresh() {
+        periodicRefreshClients = max(0, periodicRefreshClients - 1)
+        guard periodicRefreshClients == 0 else { return }
+        periodicRefreshTask?.cancel()
+        periodicRefreshTask = nil
     }
 
     func applyScreenshotFixture(_ phase: String) {
