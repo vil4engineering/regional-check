@@ -61,6 +61,12 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
         armRegionObservation()
         armLocationObservation()
         armStatusObservation()
+
+        Task { @MainActor [weak self] in
+            guard let self, isConnected else { return }
+            await status.refresh()
+            await render(animated: true)
+        }
     }
 
     private func handleDisconnect() {
@@ -77,6 +83,7 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
             Task { @MainActor [weak self] in
                 guard let self, isConnected else { return }
                 status.setRegion(regions.selectedRegion)
+                await status.refresh()
                 await render(animated: true)
                 armRegionObservation()
             }

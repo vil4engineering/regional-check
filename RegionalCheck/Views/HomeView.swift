@@ -32,9 +32,11 @@ struct HomeView: View {
             }
             location.beginUpdating()
             controller.setRegion(regions.selectedRegion)
+            Task { await controller.refresh() }
         }
         .onChange(of: regions.selectedRegion) { _, region in
             controller.setRegion(region)
+            Task { await controller.refresh() }
         }
         .onChange(of: location.coordinateStamp) { _, _ in
             guard let coordinate = location.coordinate else { return }
