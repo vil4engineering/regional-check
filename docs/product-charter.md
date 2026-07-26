@@ -36,6 +36,10 @@ Domain may use `AlertStatus` / `alarm` / `quiet`. UI uses All Clear / Alert Acti
 
 Accounts, auth, ads, history, user analytics, push, social features, favorites, map product surface. Do not sell the app as an “alert monitor.”
 
+## Analytics
+
+Apple-only observability (App Analytics, crash reports, TestFlight). No third-party analytics SDK. Details: `docs/analytics.md`.
+
 ## App Store copy
 
 Paste-ready for App Store Connect (alerts only in description, not in the name).

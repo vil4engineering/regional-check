@@ -52,6 +52,10 @@ Docs: [Configuring your first Xcode Cloud workflow](https://developer.apple.com/
 
 Builds expire after 90 days in TestFlight. Xcode Cloud keeps build artifacts for 30 days — download symbols for any App Store-bound build.
 
+## App Privacy (before App Review)
+
+Before submitting or updating metadata, walk through the App Privacy checklist in `docs/analytics.md` (location when-in-use, no analytics SDK, no tracking). Privacy policy: `docs/privacy-policy.html`.
+
 ## Fallback: local Archive
 
 Only if Xcode Cloud is unavailable:
