@@ -18,4 +18,6 @@ Flow: GPS → Region → Ubilling → All Clear / Alert Active / Checking / Unav
 
 Status fetch policy and Ubilling rate limits: `docs/aerial-alerts-provider.md`
 
+Analytics and App Store privacy labels: `docs/analytics.md`
+
 Smoke: `./scripts/smoke-tests.sh`
