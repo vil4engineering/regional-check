@@ -46,7 +46,7 @@ Paste-ready for App Store Connect (alerts only in description, not in the name).
 
 | Field | Copy |
 | --- | --- |
-| Name | Drive Check |
+| Name | Drive Check UA |
 | Subtitle (≤30) | Regional alerts for CarPlay |
 | Promo / first line | Drive Check brings regional alert status to CarPlay, helping drivers stay informed without handling their phone. |
 | Description opening | Drive Check brings regional alert status to CarPlay, helping drivers stay informed without handling their phone. |
