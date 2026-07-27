@@ -6,7 +6,7 @@
 
 ## Project
 
-- Product: Drive Check (display name); App Store Name: Drive Check UA
+- Product: Drive Check (display name); App Store Name: DriveCheckUA
 - Repo / scheme: `regional-check` / `RegionalCheck` (see `runtime.yml`)
 - Context: `.cursor/project-context` → `personal`
 - Simulator: `iPhone 17`
