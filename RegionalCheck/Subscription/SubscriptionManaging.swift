@@ -1,5 +1,6 @@
 import Foundation
 
+@MainActor
 protocol SubscriptionManaging: AnyObject {
     var state: SubscriptionState { get }
     var isPro: Bool { get }

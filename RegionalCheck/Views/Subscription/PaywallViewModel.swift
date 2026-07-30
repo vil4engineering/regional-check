@@ -4,14 +4,45 @@ import Observation
 @MainActor
 @Observable
 final class PaywallViewModel {
+    enum PlansContent: Equatable {
+        case loading
+        case empty
+        case ready([SubscriptionProduct])
+    }
+
     private let manager: SubscriptionManager
 
     var selectedProductID: String = SubscriptionProductID.yearly.rawValue
     var statusMessage: String?
     var isBusy = false
+    private(set) var isLoadingProducts = false
 
     var products: [SubscriptionProduct] {
         manager.state.products
+    }
+
+    var selectedProduct: SubscriptionProduct? {
+        products.first(where: { $0.id == selectedProductID }) ?? products.first
+    }
+
+    var plansContent: PlansContent {
+        if isLoadingProducts, products.isEmpty {
+            .loading
+        } else if products.isEmpty {
+            .empty
+        } else {
+            .ready(products)
+        }
+    }
+
+    var subscribeTitle: String {
+        if let product = selectedProduct {
+            String(
+                localized: "subscription.paywall.subscribePrice \(product.displayPrice)"
+            )
+        } else {
+            String(localized: "subscription.paywall.subscribe")
+        }
     }
 
     var isPro: Bool {
@@ -24,26 +55,25 @@ final class PaywallViewModel {
 
     init(manager: SubscriptionManager) {
         self.manager = manager
-        if let yearly = manager.state.products.first(where: { $0.id == SubscriptionProductID.yearly.rawValue }) {
-            selectedProductID = yearly.id
-        } else if let first = manager.state.products.first {
-            selectedProductID = first.id
-        }
+        selectPreferredProduct()
     }
 
     func onAppear() async {
-        if manager.state.products.isEmpty {
-            await manager.refreshProducts()
-        }
-        if let yearly = manager.state.products.first(where: { $0.id == SubscriptionProductID.yearly.rawValue }) {
-            selectedProductID = yearly.id
-        }
+        await reloadProducts()
+    }
+
+    func reloadProducts() async {
+        isLoadingProducts = true
+        defer { isLoadingProducts = false }
+        await manager.refreshProducts()
+        selectPreferredProduct()
     }
 
     func purchase() async {
+        guard let productID = selectedProduct?.id else { return }
         isBusy = true
         defer { isBusy = false }
-        let result = await manager.purchase(productID: selectedProductID)
+        let result = await manager.purchase(productID: productID)
         switch result {
         case .success:
             statusMessage = String(localized: "subscription.purchase.success")
@@ -63,5 +93,13 @@ final class PaywallViewModel {
         statusMessage = manager.isPro
             ? String(localized: "subscription.restore.success")
             : String(localized: "subscription.restore.empty")
+    }
+
+    private func selectPreferredProduct() {
+        if let yearly = products.first(where: { $0.id == SubscriptionProductID.yearly.rawValue }) {
+            selectedProductID = yearly.id
+        } else if let first = products.first {
+            selectedProductID = first.id
+        }
     }
 }

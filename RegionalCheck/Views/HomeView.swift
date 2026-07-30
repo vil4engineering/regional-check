@@ -45,6 +45,9 @@ struct HomeView: View {
                 controller.applyScreenshotFixture(phase)
                 return
             }
+            if AppLaunchArguments.showsPaywallOnLaunch {
+                showsPaywall = true
+            }
             location.beginUpdating()
             controller.setRegion(regions.selectedRegion)
             controller.beginPeriodicRefresh()

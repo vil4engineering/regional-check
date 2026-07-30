@@ -1,5 +1,6 @@
 import Foundation
 
+@MainActor
 protocol LiveActivityControlling: AnyObject {
     func beginPhoneForegroundSession()
     func endPhoneForegroundSession()

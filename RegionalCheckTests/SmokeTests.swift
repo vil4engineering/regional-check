@@ -155,6 +155,7 @@ struct SmokeTests {
     }
 
     @Test
+    @MainActor
     func statusController_periodicRefreshInterval_isFiveMinutes() {
         #expect(StatusController.periodicRefreshInterval == .seconds(300))
     }

@@ -4,11 +4,15 @@ import StoreKit
 struct StoreKitSubscriptionService: SubscriptionServicing {
     func loadProducts() async throws -> [SubscriptionProduct] {
         let storeProducts = try await Product.products(for: SubscriptionProductID.allRawValues)
-        return storeProducts
+        let mapped = storeProducts
             .sorted { lhs, rhs in
                 sortRank(lhs.id) < sortRank(rhs.id)
             }
             .map(mapProduct)
+        if mapped.isEmpty {
+            return Self.debugCatalogProducts
+        }
+        return mapped
     }
 
     func purchase(productID: String) async -> PurchaseResult {
@@ -130,5 +134,26 @@ struct StoreKitSubscriptionService: SubscriptionServicing {
         case nil:
             2
         }
+    }
+
+    private static var debugCatalogProducts: [SubscriptionProduct] {
+        #if DEBUG
+            [
+                SubscriptionProduct(
+                    id: SubscriptionProductID.yearly.rawValue,
+                    displayName: String(localized: "Pro Yearly"),
+                    displayPrice: "$0.99",
+                    periodDescription: String(localized: "subscription.period.year")
+                ),
+                SubscriptionProduct(
+                    id: SubscriptionProductID.monthly.rawValue,
+                    displayName: String(localized: "Pro Monthly"),
+                    displayPrice: "$0.29",
+                    periodDescription: String(localized: "subscription.period.month")
+                ),
+            ]
+        #else
+            []
+        #endif
     }
 }

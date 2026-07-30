@@ -26,4 +26,8 @@ enum AppLaunchArguments {
     static var isScreenshotRun: Bool {
         screenshotPhase != nil
     }
+
+    static var showsPaywallOnLaunch: Bool {
+        ProcessInfo.processInfo.arguments.contains("-ShowPaywall")
+    }
 }

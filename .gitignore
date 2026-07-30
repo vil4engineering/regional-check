@@ -21,3 +21,7 @@ Package.resolved
 
 # Cursor (local only)
 .cursor/
+
+# Runtime local overrides
+runtime.local.yml
+
