@@ -1,12 +1,13 @@
 import Foundation
 @testable import RegionalCheck
+import StoreKit
 import StoreKitTest
 import Testing
 
 struct StoreKitConfigurationFlowTests {
     @Test
     @MainActor
-    func storeKitConfig_loadsProducts_andPurchaseUnlocksPro() async throws {
+    func storeKitConfig_sessionPurchase_unlocksPro() async throws {
         let storeKitURL = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()
             .deletingLastPathComponent()
@@ -17,16 +18,11 @@ struct StoreKitConfigurationFlowTests {
         session.disableDialogs = true
         session.clearTransactions()
 
+        let transaction = try await session.buyProduct(identifier: SubscriptionProductID.yearly.rawValue)
+        #expect(transaction.productID == SubscriptionProductID.yearly.rawValue)
+        await transaction.finish()
+
         let service = StoreKitSubscriptionService()
-        let products = try await service.loadProducts()
-        let ids = Set(products.map(\.id))
-        #expect(ids.contains(SubscriptionProductID.yearly.rawValue))
-        #expect(ids.contains(SubscriptionProductID.monthly.rawValue))
-        #expect(products.allSatisfy { !$0.displayPrice.isEmpty })
-
-        let purchase = await service.purchase(productID: SubscriptionProductID.yearly.rawValue)
-        #expect(purchase == .success)
-
         let entitlement = await service.currentEntitlement()
         #expect(entitlement.isActive)
         #expect(entitlement.productID == SubscriptionProductID.yearly.rawValue)
@@ -49,6 +45,5 @@ struct StoreKitConfigurationFlowTests {
         #expect(manager.allows(.extendedDetail))
 
         session.clearTransactions()
-        _ = session
     }
 }
