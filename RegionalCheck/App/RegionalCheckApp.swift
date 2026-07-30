@@ -4,10 +4,27 @@ import SwiftUI
 struct RegionalCheckApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some Scene {
         WindowGroup {
             rootContent
+                .task {
+                    await AppDependencies.subscription.start()
+                }
+                .onChange(of: scenePhase) { _, phase in
+                    switch phase {
+                    case .active:
+                        AppDependencies.liveActivity.beginPhoneForegroundSession()
+                        AppDependencies.syncLiveActivityContent()
+                    case .background:
+                        AppDependencies.liveActivity.endPhoneForegroundSession()
+                    case .inactive:
+                        break
+                    @unknown default:
+                        break
+                    }
+                }
         }
     }
 
@@ -59,4 +76,30 @@ enum AppDependencies {
     static let location = LocationManager()
     static let regions = RegionSelection()
     static let status = StatusController(region: regions.selectedRegion, provider: provider)
+    static let subscription = SubscriptionManager()
+    static let liveActivity = LiveActivityController(subscription: subscription)
+
+    static func syncLiveActivityContent() {
+        liveActivity.update(
+            phase: status.state.phase.activityPhase,
+            regionTitle: status.regionTitle,
+            checkedAt: status.state.checkedAt,
+            sourceLabel: StatusSourceLabel.displayName(for: status.lastSourceRaw)
+        )
+    }
+}
+
+extension StatusState.Phase {
+    var activityPhase: DriveCheckActivityPhase {
+        switch self {
+        case .idle:
+            .idle
+        case .quiet:
+            .quiet
+        case .alarm:
+            .alarm
+        case .error:
+            .error
+        }
+    }
 }

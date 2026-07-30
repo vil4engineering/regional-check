@@ -108,10 +108,19 @@ sim_name() {
   cfg_get "simulator.name" "iPhone 17"
 }
 
+sim_os() {
+  cfg_get "simulator.os" ""
+}
+
 destination_spec() {
-  local name
+  local name os
   name="$(sim_name)"
-  echo "platform=iOS Simulator,name=${name}"
+  os="$(sim_os)"
+  if [[ -n "$os" ]]; then
+    echo "platform=iOS Simulator,name=${name},OS=${os}"
+  else
+    echo "platform=iOS Simulator,name=${name}"
+  fi
 }
 
 harness_version() {

@@ -2,6 +2,10 @@ import SwiftUI
 
 struct OnboardingView: View {
     var purpose: OnboardingPurpose = .firstLaunch
+    var isPro = false
+    var isLiveActivityEnabled = true
+    var onToggleLiveActivity: ((Bool) -> Void)?
+    var onShowPaywall: (() -> Void)?
     var onContinue: () -> Void
 
     var body: some View {
@@ -39,6 +43,43 @@ struct OnboardingView: View {
                     .foregroundStyle(Theme.Colors.onFillSecondary)
                     .padding(.horizontal, Theme.Spacing.lg)
 
+                if purpose == .about {
+                    VStack(spacing: Theme.Spacing.sm) {
+                        if isPro {
+                            Text("subscription.badge.pro")
+                                .font(Theme.Typography.refreshLabel)
+                                .foregroundStyle(Theme.Colors.onFill)
+
+                            Toggle(
+                                "subscription.liveActivity.toggle",
+                                isOn: Binding(
+                                    get: { isLiveActivityEnabled },
+                                    set: { onToggleLiveActivity?($0) }
+                                )
+                            )
+                            .tint(Theme.Colors.normal)
+                            .foregroundStyle(Theme.Colors.onFill)
+                            .padding(.horizontal, Theme.Spacing.xl)
+                        } else {
+                            Button {
+                                onShowPaywall?()
+                            } label: {
+                                Text("subscription.paywall.open")
+                                    .font(Theme.Typography.refreshLabel)
+                                    .foregroundStyle(Theme.Colors.onFill)
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, Theme.Spacing.md)
+                                    .background(
+                                        .ultraThinMaterial,
+                                        in: RoundedRectangle(cornerRadius: 16, style: .continuous)
+                                    )
+                            }
+                            .buttonStyle(HapticButtonStyle())
+                            .padding(.horizontal, Theme.Spacing.xl)
+                        }
+                    }
+                }
+
                 Spacer(minLength: Theme.Spacing.xl)
 
                 Button(action: onContinue) {
@@ -64,5 +105,5 @@ struct OnboardingView: View {
 }
 
 #Preview("About") {
-    OnboardingView(purpose: .about, onContinue: {})
+    OnboardingView(purpose: .about, isPro: true, onContinue: {})
 }

@@ -48,3 +48,8 @@ just verify
 - Git hooks (optional): `./scripts/install-hooks.sh` — pre-commit = format+lint, pre-push = smoke tests.
 - `.cursor/` local only; `AGENTS.md` may be committed.
 - Ask before build, test, commit, push.
+
+## Planned: StoreKit 2 (Pro)
+
+Implemented on this branch: **[docs/storekit-subscription-plan.md](docs/storekit-subscription-plan.md)** + **[README_Subscriptions.md](README_Subscriptions.md)**.  
+Phase scope: StoreKit + symbolic Pro (Live Activity, badge, extended detail). Notifications not included.

@@ -14,11 +14,19 @@
 			remoteGlobalIDString = 509E636D2E5EE1BF00A13E04;
 			remoteInfo = RegionalCheck;
 		};
+		A1B2C3D40E5EE00F00WIDGET /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 509E63662E5EE1BF00A13E04 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A1B2C3D40E5EE00200WIDGET;
+			remoteInfo = RegionalCheckWidgets;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		509E636E2E5EE1BF00A13E04 /* RegionalCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RegionalCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		509E637F2E5EE1C000A13E04 /* RegionalCheckTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RegionalCheckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1B2C3D40E5EE00100WIDGET /* RegionalCheckWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RegionalCheckWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -28,6 +36,13 @@
 				Resources/Info.plist,
 			);
 			target = 509E636D2E5EE1BF00A13E04 /* RegionalCheck */;
+		};
+		A1B2C3D40E5EE00600WIDGET /* Exceptions for "RegionalCheckWidgets" folder in "RegionalCheckWidgets" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = A1B2C3D40E5EE00200WIDGET /* RegionalCheckWidgets */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -45,7 +60,33 @@
 			path = RegionalCheckTests;
 			sourceTree = "<group>";
 		};
+		A1B2C3D40E5EE00500WIDGET /* RegionalCheckWidgets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				A1B2C3D40E5EE00600WIDGET /* Exceptions for "RegionalCheckWidgets" folder in "RegionalCheckWidgets" target */,
+			);
+			path = RegionalCheckWidgets;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A1B2C3D40E5EE00D00WIDGET /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A1B2C3D40E5EE00E00WIDGET /* RegionalCheckWidgets.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXBuildFile section */
+		A1B2C3D40E5EE00E00WIDGET /* RegionalCheckWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A1B2C3D40E5EE00100WIDGET /* RegionalCheckWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		509E636B2E5EE1BF00A13E04 /* Frameworks */ = {
@@ -62,6 +103,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A1B2C3D40E5EE00800WIDGET /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -70,6 +118,7 @@
 			children = (
 				509E63702E5EE1BF00A13E04 /* RegionalCheck */,
 				509E63822E5EE1C000A13E04 /* RegionalCheckTests */,
+				A1B2C3D40E5EE00500WIDGET /* RegionalCheckWidgets */,
 				509E636F2E5EE1BF00A13E04 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -79,6 +128,7 @@
 			children = (
 				509E636E2E5EE1BF00A13E04 /* RegionalCheck.app */,
 				509E637F2E5EE1C000A13E04 /* RegionalCheckTests.xctest */,
+				A1B2C3D40E5EE00100WIDGET /* RegionalCheckWidgets.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -93,10 +143,12 @@
 				509E636A2E5EE1BF00A13E04 /* Sources */,
 				509E636B2E5EE1BF00A13E04 /* Frameworks */,
 				509E636C2E5EE1BF00A13E04 /* Resources */,
+				A1B2C3D40E5EE00D00WIDGET /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A1B2C3D40E5EE01000WIDGET /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				509E63702E5EE1BF00A13E04 /* RegionalCheck */,
@@ -131,6 +183,28 @@
 			productReference = 509E637F2E5EE1C000A13E04 /* RegionalCheckTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		A1B2C3D40E5EE00200WIDGET /* RegionalCheckWidgets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A1B2C3D40E5EE00A00WIDGET /* Build configuration list for PBXNativeTarget "RegionalCheckWidgets" */;
+			buildPhases = (
+				A1B2C3D40E5EE00700WIDGET /* Sources */,
+				A1B2C3D40E5EE00800WIDGET /* Frameworks */,
+				A1B2C3D40E5EE00900WIDGET /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				A1B2C3D40E5EE00500WIDGET /* RegionalCheckWidgets */,
+			);
+			name = RegionalCheckWidgets;
+			packageProductDependencies = (
+			);
+			productName = RegionalCheckWidgets;
+			productReference = A1B2C3D40E5EE00100WIDGET /* RegionalCheckWidgets.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -147,6 +221,9 @@
 					509E637E2E5EE1C000A13E04 = {
 						CreatedOnToolsVersion = 16.4;
 						TestTargetID = 509E636D2E5EE1BF00A13E04;
+					};
+					A1B2C3D40E5EE00200WIDGET = {
+						CreatedOnToolsVersion = 16.4;
 					};
 				};
 			};
@@ -168,6 +245,7 @@
 			targets = (
 				509E636D2E5EE1BF00A13E04 /* RegionalCheck */,
 				509E637E2E5EE1C000A13E04 /* RegionalCheckTests */,
+				A1B2C3D40E5EE00200WIDGET /* RegionalCheckWidgets */,
 			);
 		};
 /* End PBXProject section */
@@ -181,6 +259,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		509E637D2E5EE1C000A13E04 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1B2C3D40E5EE00900WIDGET /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -204,6 +289,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A1B2C3D40E5EE00700WIDGET /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -211,6 +303,11 @@
 			isa = PBXTargetDependency;
 			target = 509E636D2E5EE1BF00A13E04 /* RegionalCheck */;
 			targetProxy = 509E63802E5EE1C000A13E04 /* PBXContainerItemProxy */;
+		};
+		A1B2C3D40E5EE01000WIDGET /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A1B2C3D40E5EE00200WIDGET /* RegionalCheckWidgets */;
+			targetProxy = A1B2C3D40E5EE00F00WIDGET /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -232,6 +329,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = NO;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
@@ -263,6 +361,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = NO;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
@@ -437,6 +536,62 @@
 			};
 			name = Release;
 		};
+		A1B2C3D40E5EE00B00WIDGET /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BTHRDS7254;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RegionalCheckWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = RegionalCheckWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = vil4max.RegionalCheck.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		A1B2C3D40E5EE00C00WIDGET /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BTHRDS7254;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RegionalCheckWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = RegionalCheckWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = vil4max.RegionalCheck.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -463,6 +618,15 @@
 			buildConfigurations = (
 				509E63982E5EE1C000A13E04 /* Debug */,
 				509E63992E5EE1C000A13E04 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A1B2C3D40E5EE00A00WIDGET /* Build configuration list for PBXNativeTarget "RegionalCheckWidgets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1B2C3D40E5EE00B00WIDGET /* Debug */,
+				A1B2C3D40E5EE00C00WIDGET /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
