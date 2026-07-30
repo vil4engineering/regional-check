@@ -71,6 +71,9 @@ struct HomeView: View {
         .onChange(of: controller.state.phase) { _, _ in
             AppDependencies.syncLiveActivityContent()
         }
+        .onChange(of: subscription.isPro) { _, _ in
+            AppDependencies.syncLiveActivityContent()
+        }
         .onDisappear {
             controller.endPeriodicRefresh()
             location.endUpdating()

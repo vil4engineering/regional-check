@@ -77,6 +77,7 @@ final class PaywallViewModel {
         switch result {
         case .success:
             statusMessage = String(localized: "subscription.purchase.success")
+            AppDependencies.syncLiveActivityContent()
         case .cancelled:
             statusMessage = nil
         case .pending:
@@ -93,6 +94,7 @@ final class PaywallViewModel {
         statusMessage = manager.isPro
             ? String(localized: "subscription.restore.success")
             : String(localized: "subscription.restore.empty")
+        AppDependencies.syncLiveActivityContent()
     }
 
     private func selectPreferredProduct() {

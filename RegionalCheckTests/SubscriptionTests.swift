@@ -134,6 +134,48 @@ struct SubscriptionTests {
         #expect(recorder.clientCount == 0)
         #expect(recorder.didEndAll)
     }
+
+    @Test
+    @MainActor
+    func liveActivitySession_refcount_phoneEnds_carPlayKeeps() {
+        let recorder = RecordingLiveActivityController()
+        recorder.beginPhoneForegroundSession()
+        recorder.beginCarPlaySession()
+        #expect(recorder.clientCount == 2)
+        recorder.endPhoneForegroundSession()
+        #expect(recorder.clientCount == 1)
+        #expect(recorder.didEndAll == false)
+        recorder.endCarPlaySession()
+        #expect(recorder.clientCount == 0)
+        #expect(recorder.didEndAll)
+    }
+
+    @Test
+    func entitlementCache_expiredSnapshot_isIgnoredByManagerFilter() async {
+        let suite = "subscription.expired.\(UUID().uuidString)"
+        guard let defaults = UserDefaults(suiteName: suite) else {
+            Issue.record("Missing UserDefaults suite")
+            return
+        }
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let cache = EntitlementCache(userDefaults: defaults)
+        cache.save(
+            EntitlementSnapshot(
+                productID: SubscriptionProductID.monthly.rawValue,
+                expirationDate: Date().addingTimeInterval(-60),
+                isActive: true,
+                source: "storekit",
+                verifiedAt: Date().addingTimeInterval(-3600)
+            )
+        )
+        await MainActor.run {
+            let manager = SubscriptionManager(
+                service: FakeSubscriptionService(products: [], entitlement: .inactive()),
+                cache: EntitlementCache(userDefaults: defaults)
+            )
+            #expect(manager.isPro == false)
+        }
+    }
 }
 
 @MainActor

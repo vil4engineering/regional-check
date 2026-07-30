@@ -43,10 +43,7 @@ final class LiveActivityController: LiveActivityControlling {
         latestRegionTitle = regionTitle
         latestCheckedAt = checkedAt
         latestSourceLabel = sourceLabel
-        guard activity != nil, canRunActivity else { return }
-        Task {
-            await pushUpdate()
-        }
+        reconcileActivity()
     }
 
     func endAll() {
@@ -62,18 +59,27 @@ final class LiveActivityController: LiveActivityControlling {
     }
 
     private func insert(_ client: LiveActivitySessionClient) {
-        let wasEmpty = clients.isEmpty
         clients.insert(client)
-        if wasEmpty {
-            Task { await startIfNeeded() }
-        }
+        reconcileActivity()
     }
 
     private func remove(_ client: LiveActivitySessionClient) {
         clients.remove(client)
-        if clients.isEmpty {
-            Task { await terminate(dismissal: .immediate) }
+        reconcileActivity()
+    }
+
+    private func reconcileActivity() {
+        if !canRunActivity || clients.isEmpty {
+            if activity != nil {
+                Task { await terminate(dismissal: .immediate) }
+            }
+            return
         }
+        if activity == nil {
+            Task { await startIfNeeded() }
+            return
+        }
+        Task { await pushUpdate() }
     }
 
     private func startIfNeeded() async {

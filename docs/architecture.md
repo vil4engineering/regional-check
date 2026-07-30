@@ -2,7 +2,7 @@
 
 See `docs/product-charter.md`.
 
-MVC · single app target · no SPM packages.
+MVC · app + Live Activity widget extension · no SPM packages.
 
 ```
 RegionalCheck/
