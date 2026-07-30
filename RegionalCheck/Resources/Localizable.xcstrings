@@ -1,1614 +1,1631 @@
 {
-  "sourceLanguage": "en",
-  "strings": {
-    "About": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "About"
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@"
           }
+        }
+      }
+    },
+    "About" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About"
+          }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "О приложении"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "О приложении"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Про застосунок"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Про застосунок"
           }
         }
       }
     },
-    "Alert Active": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Alert Active"
+    "Alert Active" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alert Active"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Тревога"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тревога"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Тривога"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тривога"
           }
         }
       }
     },
-    "All Clear": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "All Clear"
+    "All Clear" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All Clear"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Всё ясно"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Всё ясно"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Все ясно"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Все ясно"
           }
         }
       }
     },
-    "Checking…": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Checking…"
+    "Checking…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Checking…"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Проверяем…"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проверяем…"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Перевіряємо…"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перевіряємо…"
           }
         }
       }
     },
-    "Drive Check": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Drive Check"
+    "Drive Check" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drive Check"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Drive Check"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drive Check"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Drive Check"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drive Check"
           }
         }
       }
     },
-    "Get Started": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Get Started"
+    "Drive Check Pro" : {
+      "comment" : "The title of the subscription paywall.",
+      "isCommentAutoGenerated" : true
+    },
+    "Get Started" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Get Started"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Начать"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Начать"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Почати"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Почати"
           }
         }
       }
     },
-    "Got It": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Got It"
+    "Got It" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Got It"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Понял"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Понял"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Зрозуміло"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зрозуміло"
           }
         }
       }
     },
-    "Kyiv": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kyiv"
+    "Kyiv" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kyiv"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Киев"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Киев"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Київ"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Київ"
           }
         }
       }
     },
-    "Onboarding body": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Regional alert status,\ndesigned for CarPlay."
+    "liveActivity.stale" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Updating…"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Статус тревоги в регионе.\nСделано для CarPlay."
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обновление…"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Статус тривоги в регіоні.\nЗроблено для CarPlay."
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Оновлення…"
           }
         }
       }
     },
-    "Refresh": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Refresh"
+    "Onboarding body" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regional alert status,\ndesigned for CarPlay."
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Обновить"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Статус тревоги в регионе.\nСделано для CarPlay."
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Оновити"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Статус тривоги в регіоні.\nЗроблено для CarPlay."
           }
         }
       }
     },
-    "status.explanation.loud": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Alert is active — stay careful; bridges may be closed."
+    "outsideUkraine.body" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drive Check shows regional alert status for Ukraine. Your location is outside Ukraine, so the app uses Kyiv by default."
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сейчас громко — будьте осторожны, мосты могут быть перекрыты."
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drive Check показывает региональный статус тревог для Украины. Ваше местоположение вне Украины, поэтому по умолчанию выбран Киев."
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Зараз гучно — будьте обережні, мости можуть бути перекриті."
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drive Check показує регіональний статус тривог для України. Ваше місце розташування поза Україною, тому за замовчуванням обрано Київ."
           }
         }
       }
     },
-    "status.explanation.quiet": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "All quiet — you can drive calmly."
+    "outsideUkraine.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ukraine regions only"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сейчас тихо — можно ехать спокойно."
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Только регионы Украины"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Зараз тихо — можна їхати спокійно."
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Лише регіони України"
           }
         }
       }
+    },
+    "Pro" : {
+
     },
-    "status.explanation.unknown": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Status unavailable right now."
+    "Refresh" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Refresh"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Статус сейчас недоступен."
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обновить"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Статус зараз недоступний."
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Оновити"
           }
         }
       }
     },
-    "status.explanation.updating": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Updating the latest status…"
+    "status.explanation.loud" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alert is active — stay careful; bridges may be closed."
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сейчас обновляем данные…"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сейчас громко — будьте осторожны, мосты могут быть перекрыты."
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Зараз оновлюємо дані…"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зараз гучно — будьте обережні, мости можуть бути перекриті."
           }
         }
       }
     },
-    "Tap Refresh to try again": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tap Refresh to try again"
+    "status.explanation.quiet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All quiet — you can drive calmly."
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Нажмите «Обновить», чтобы попробовать снова"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сейчас тихо — можно ехать спокойно."
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Натисніть «Оновити», щоб спробувати знову"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зараз тихо — можна їхати спокійно."
           }
         }
       }
     },
-    "Unavailable": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Unavailable"
+    "status.explanation.unknown" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status unavailable right now."
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Недоступно"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Статус сейчас недоступен."
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Недоступно"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Статус зараз недоступний."
           }
         }
       }
     },
-    "Updated: %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Updated: %@"
+    "status.explanation.updating" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Updating the latest status…"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Обновлено: %@"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сейчас обновляем данные…"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Оновлено: %@"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зараз оновлюємо дані…"
           }
         }
       }
     },
-    "Автономна Республіка Крим": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Autonomous Republic of Crimea"
+    "status.source.alertFeed" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alert feed"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Автономная Республика Крым"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Лента тревог"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Автономна Республіка Крим"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Стрічка тривог"
           }
         }
       }
     },
-    "Вінницька область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Vinnytsia Oblast"
+    "status.source.external" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "External feed"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Винницкая область"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Внешний источник"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Вінницька область"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зовнішнє джерело"
           }
         }
       }
     },
-    "Волинська область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Volyn Oblast"
+    "status.source.label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source:"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Волынская область"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Источник:"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Волинська область"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Джерело:"
           }
         }
       }
     },
-    "Дніпропетровська область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dnipropetrovsk Oblast"
+    "subscription.badge.pro" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Днепропетровская область"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Дніпропетровська область"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro"
           }
         }
       }
     },
-    "Донецька область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Donetsk Oblast"
+    "subscription.benefit.badge" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro badge on the status screen"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Донецкая область"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значок Pro на экране статуса"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Донецька область"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значок Pro на екрані статусу"
           }
         }
       }
     },
-    "Житомирська область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Zhytomyr Oblast"
+    "subscription.benefit.detail" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Friendly data-source label with status updates"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Житомирская область"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Понятная подпись источника данных при обновлении статуса"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Житомирська область"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зрозуміла підпис джерела даних під час оновлення статусу"
           }
         }
       }
     },
-    "Закарпатська область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Zakarpattia Oblast"
+    "subscription.benefit.liveActivity" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live Activity on Lock Screen and Dynamic Island while Drive Check is active"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Закарпатская область"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live Activity на экране блокировки и в Dynamic Island, пока Drive Check активен"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Закарпатська область"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live Activity на екрані блокування та в Dynamic Island, поки Drive Check активний"
           }
         }
       }
     },
-    "Запорізька область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Zaporizhzhia Oblast"
+    "subscription.error.offline" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Offline"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Запорожская область"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нет сети"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Запорізька область"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Немає мережі"
           }
         }
       }
     },
-    "Івано-Франківська область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ivano-Frankivsk Oblast"
+    "subscription.error.unavailable" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Products unavailable"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ивано-Франковская область"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Продукты недоступны"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Івано-Франківська область"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Продукти недоступні"
           }
         }
       }
     },
-    "Київська область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kyiv Oblast"
+    "subscription.error.verification" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not verify purchase"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Киевская область"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось проверить покупку"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Київська область"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не вдалося перевірити покупку"
           }
         }
       }
     },
-    "Кіровоградська область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kirovohrad Oblast"
+    "subscription.liveActivity.toggle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live Activity during session"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Кировоградская область"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live Activity во время сессии"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Кіровоградська область"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live Activity під час сесії"
           }
         }
       }
     },
-    "Луганська область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Luhansk Oblast"
+    "subscription.paywall.autoRenew" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Payment will be charged to your Apple ID account. Subscription renews automatically unless cancelled at least 24 hours before the end of the current period."
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Луганская область"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Оплата списывается с учётной записи Apple ID. Подписка продлевается автоматически, если её не отменить минимум за 24 часа до конца периода."
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Луганська область"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Оплата стягується з облікового запису Apple ID. Підписка подовжується автоматично, якщо її не скасувати щонайменше за 24 години до кінця періоду."
           }
         }
       }
     },
-    "Львівська область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Lviv Oblast"
+    "subscription.paywall.manage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manage Subscription"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Львовская область"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Управление подпиской"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Львівська область"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Керування підпискою"
           }
         }
       }
     },
-    "м. Севастополь": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sevastopol"
+    "subscription.paywall.open" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drive Check Pro"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "г. Севастополь"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drive Check Pro"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "м. Севастополь"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drive Check Pro"
           }
         }
       }
     },
-    "Миколаївська область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mykolaiv Oblast"
+    "subscription.paywall.privacy" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy Policy"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Николаевская область"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Политика конфиденциальности"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Миколаївська область"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Політика конфіденційності"
           }
         }
       }
     },
-    "Одеська область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Odesa Oblast"
+    "subscription.paywall.restore" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore Purchases"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Одесская область"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Восстановить покупки"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Одеська область"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відновити покупки"
           }
         }
       }
     },
-    "Полтавська область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Poltava Oblast"
+    "subscription.paywall.subscribe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subscribe"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Полтавская область"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подписаться"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Полтавська область"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Підписатися"
           }
         }
       }
     },
-    "Рівненська область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rivne Oblast"
+    "subscription.paywall.subtitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlock Live Activity and richer status detail during a Drive Check session."
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ровенская область"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Разблокируйте Live Activity и расширенные детали статуса на время сессии Drive Check."
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Рівненська область"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Розблокуйте Live Activity і розширені деталі статусу під час сесії Drive Check."
           }
         }
       }
     },
-    "Сумська область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sumy Oblast"
+    "subscription.paywall.terms" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terms of Use"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сумская область"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Условия использования"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сумська область"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Умови використання"
           }
         }
       }
     },
-    "Тернопільська область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ternopil Oblast"
+    "subscription.period.day" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Day"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Тернопольская область"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "День"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Тернопільська область"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "День"
           }
         }
       }
     },
-    "Харківська область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kharkiv Oblast"
+    "subscription.period.month" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Month"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Харьковская область"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Месяц"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Харківська область"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Місяць"
           }
         }
       }
     },
-    "Херсонська область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kherson Oblast"
+    "subscription.period.week" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Week"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Херсонская область"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неделя"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Херсонська область"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тиждень"
           }
         }
       }
     },
-    "Хмельницька область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Khmelnytskyi Oblast"
+    "subscription.period.year" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Year"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Хмельницкая область"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Год"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Хмельницька область"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Рік"
           }
         }
       }
     },
-    "Черкаська область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cherkasy Oblast"
+    "subscription.purchase.pending" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Purchase pending approval"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Черкасская область"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Покупка ожидает подтверждения"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Черкаська область"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Покупка очікує підтвердження"
           }
         }
       }
     },
-    "Чернівецька область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Chernivtsi Oblast"
+    "subscription.purchase.success" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro unlocked"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Черновицкая область"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro разблокирован"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Чернівецька область"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro розблоковано"
           }
         }
       }
     },
-    "Чернігівська область": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Chernihiv Oblast"
+    "subscription.restore.empty" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No active subscription found"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Черниговская область"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Активная подписка не найдена"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Чернігівська область"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Активну підписку не знайдено"
           }
         }
       }
     },
-    "subscription.paywall.subtitle": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Unlock Live Activity and richer status detail during a Drive Check session."
+    "subscription.restore.success" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Purchases restored"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Разблокируйте Live Activity и расширенные детали статуса на время сессии Drive Check."
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Покупки восстановлены"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Розблокуйте Live Activity і розширені деталі статусу під час сесії Drive Check."
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Покупки відновлено"
           }
         }
       }
     },
-    "subscription.benefit.liveActivity": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Live Activity on Lock Screen and Dynamic Island while Drive Check is active"
+    "Tap Refresh to try again" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap Refresh to try again"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Live Activity на экране блокировки и в Dynamic Island, пока Drive Check активен"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нажмите «Обновить», чтобы попробовать снова"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Live Activity на екрані блокування та в Dynamic Island, поки Drive Check активний"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Натисніть «Оновити», щоб спробувати знову"
           }
         }
       }
     },
-    "subscription.benefit.badge": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pro badge on the status screen"
+    "Unavailable" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unavailable"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Значок Pro на экране статуса"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Недоступно"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Значок Pro на екрані статусу"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Недоступно"
           }
         }
       }
     },
-    "subscription.benefit.detail": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Friendly data-source label with status updates"
+    "Updated: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Updated: %@"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Понятная подпись источника данных при обновлении статуса"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обновлено: %@"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Зрозуміла підпис джерела даних під час оновлення статусу"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Оновлено: %@"
           }
         }
       }
     },
-    "subscription.paywall.subscribe": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Subscribe"
+    "Автономна Республіка Крим" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Autonomous Republic of Crimea"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Подписаться"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Автономная Республика Крым"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Підписатися"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Автономна Республіка Крим"
           }
         }
       }
     },
-    "subscription.paywall.restore": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Restore Purchases"
+    "Вінницька область" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vinnytsia Oblast"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Восстановить покупки"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Винницкая область"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Відновити покупки"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вінницька область"
           }
         }
       }
     },
-    "subscription.paywall.manage": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Manage Subscription"
+    "Волинська область" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volyn Oblast"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Управление подпиской"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Волынская область"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Керування підпискою"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Волинська область"
           }
         }
       }
     },
-    "subscription.paywall.autoRenew": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Payment will be charged to your Apple ID account. Subscription renews automatically unless cancelled at least 24 hours before the end of the current period."
+    "Дніпропетровська область" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dnipropetrovsk Oblast"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Оплата списывается с учётной записи Apple ID. Подписка продлевается автоматически, если её не отменить минимум за 24 часа до конца периода."
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Днепропетровская область"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Оплата стягується з облікового запису Apple ID. Підписка подовжується автоматично, якщо її не скасувати щонайменше за 24 години до кінця періоду."
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дніпропетровська область"
           }
         }
       }
     },
-    "subscription.paywall.privacy": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Privacy Policy"
+    "Донецька область" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Donetsk Oblast"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Политика конфиденциальности"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Донецкая область"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Політика конфіденційності"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Донецька область"
           }
         }
       }
     },
-    "subscription.paywall.terms": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Terms of Use"
+    "Житомирська область" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zhytomyr Oblast"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Условия использования"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Житомирская область"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Умови використання"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Житомирська область"
           }
         }
       }
     },
-    "subscription.paywall.open": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Drive Check Pro"
+    "Закарпатська область" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zakarpattia Oblast"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Drive Check Pro"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закарпатская область"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Drive Check Pro"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закарпатська область"
           }
         }
       }
     },
-    "subscription.badge.pro": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pro"
+    "Запорізька область" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaporizhzhia Oblast"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pro"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запорожская область"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pro"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запорізька область"
           }
         }
       }
     },
-    "subscription.liveActivity.toggle": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Live Activity during session"
+    "Івано-Франківська область" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ivano-Frankivsk Oblast"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Live Activity во время сессии"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ивано-Франковская область"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Live Activity під час сесії"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Івано-Франківська область"
           }
         }
       }
     },
-    "subscription.purchase.success": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pro unlocked"
+    "Київська область" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kyiv Oblast"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pro разблокирован"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Киевская область"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pro розблоковано"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Київська область"
           }
         }
       }
     },
-    "subscription.purchase.pending": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Purchase pending approval"
+    "Кіровоградська область" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kirovohrad Oblast"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Покупка ожидает подтверждения"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кировоградская область"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Покупка очікує підтвердження"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кіровоградська область"
           }
         }
       }
     },
-    "subscription.restore.success": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Purchases restored"
+    "Луганська область" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luhansk Oblast"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Покупки восстановлены"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Луганская область"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Покупки відновлено"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Луганська область"
           }
         }
       }
     },
-    "subscription.restore.empty": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No active subscription found"
+    "Львівська область" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lviv Oblast"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Активная подписка не найдена"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Львовская область"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Активну підписку не знайдено"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Львівська область"
           }
         }
       }
     },
-    "subscription.error.unavailable": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Products unavailable"
+    "м. Севастополь" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sevastopol"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Продукты недоступны"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "г. Севастополь"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Продукти недоступні"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "м. Севастополь"
           }
         }
       }
     },
-    "subscription.error.verification": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Could not verify purchase"
+    "Миколаївська область" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mykolaiv Oblast"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Не удалось проверить покупку"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Николаевская область"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Не вдалося перевірити покупку"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Миколаївська область"
           }
         }
       }
     },
-    "subscription.error.offline": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Offline"
+    "Одеська область" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odesa Oblast"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Нет сети"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Одесская область"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Немає мережі"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Одеська область"
           }
         }
       }
     },
-    "subscription.period.year": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Year"
+    "Полтавська область" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poltava Oblast"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Год"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Полтавская область"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Рік"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Полтавська область"
           }
         }
       }
     },
-    "subscription.period.month": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Month"
+    "Рівненська область" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rivne Oblast"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Месяц"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ровенская область"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Місяць"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Рівненська область"
           }
         }
       }
     },
-    "subscription.period.week": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Week"
+    "Сумська область" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sumy Oblast"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Неделя"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сумская область"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Тиждень"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сумська область"
           }
         }
       }
     },
-    "subscription.period.day": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Day"
+    "Тернопільська область" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ternopil Oblast"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "День"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тернопольская область"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "День"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тернопільська область"
           }
         }
       }
     },
-    "status.source.label": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Source:"
+    "Харківська область" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kharkiv Oblast"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Источник:"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Харьковская область"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Джерело:"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Харківська область"
           }
         }
       }
     },
-    "status.source.alertFeed": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Alert feed"
+    "Херсонська область" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kherson Oblast"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Лента тревог"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Херсонская область"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Стрічка тривог"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Херсонська область"
           }
         }
       }
     },
-    "status.source.external": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "External feed"
+    "Хмельницька область" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Khmelnytskyi Oblast"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Внешний источник"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Хмельницкая область"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Зовнішнє джерело"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Хмельницька область"
           }
         }
       }
     },
-    "outsideUkraine.title": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ukraine regions only"
+    "Черкаська область" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cherkasy Oblast"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Только регионы Украины"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Черкасская область"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Лише регіони України"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Черкаська область"
           }
         }
       }
     },
-    "outsideUkraine.body": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Drive Check shows regional alert status for Ukraine. Your location is outside Ukraine, so the app uses Kyiv by default."
+    "Чернівецька область" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chernivtsi Oblast"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Drive Check показывает региональный статус тревог для Украины. Ваше местоположение вне Украины, поэтому по умолчанию выбран Киев."
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Черновицкая область"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Drive Check показує регіональний статус тривог для України. Ваше місце розташування поза Україною, тому за замовчуванням обрано Київ."
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чернівецька область"
           }
         }
       }
     },
-    "liveActivity.stale": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Updating…"
+    "Чернігівська область" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chernihiv Oblast"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Обновление…"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Черниговская область"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Оновлення…"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чернігівська область"
           }
         }
       }
     }
   },
-  "version": "1.1"
+  "version" : "1.1"
 }

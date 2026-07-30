@@ -14,9 +14,12 @@ struct OutsideUkraineInfoSheet: View {
                     .font(Theme.Typography.caption)
                     .foregroundStyle(Theme.Colors.onFillSecondary)
 
-                illustration
+                Image("OutsideUkraineInfo")
+                    .resizable()
+                    .scaledToFit()
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, Theme.Spacing.sm)
+                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                    .accessibilityHidden(true)
 
                 Spacer(minLength: Theme.Spacing.md)
 
@@ -35,26 +38,5 @@ struct OutsideUkraineInfoSheet: View {
             .background(Theme.Colors.dashboard.ignoresSafeArea())
         }
         .presentationDetents([.medium])
-    }
-
-    private var illustration: some View {
-        ZStack {
-            Image(systemName: "globe.europe.africa.fill")
-                .font(.system(size: 72, weight: .medium))
-                .symbolRenderingMode(.hierarchical)
-                .foregroundStyle(Theme.Colors.onFill.opacity(0.55))
-
-            Image(systemName: "mappin.and.ellipse")
-                .font(.system(size: 36, weight: .semibold))
-                .symbolRenderingMode(.hierarchical)
-                .foregroundStyle(Theme.Colors.onFill)
-                .offset(x: 28, y: 18)
-                .shadow(
-                    color: Theme.Shadows.glow,
-                    radius: Theme.Shadows.glowRadius * 0.45,
-                    y: Theme.Shadows.glowY * 0.4
-                )
-        }
-        .accessibilityHidden(true)
     }
 }
