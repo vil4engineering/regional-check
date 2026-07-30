@@ -45,7 +45,6 @@ if command -v xcbeautify >/dev/null 2>&1; then
     -scheme RegionalCheck \
     -destination "$destination" \
     -only-testing:RegionalCheckTests \
-    -skip-testing:RegionalCheckTests/StoreKitConfigurationFlowTests \
     -derivedDataPath "${SMOKE_DERIVED_DATA:-/tmp/RegionalCheck-Smoke}" \
     CODE_SIGNING_ALLOWED=YES \
     | xcbeautify
@@ -55,7 +54,6 @@ else
     -scheme RegionalCheck \
     -destination "$destination" \
     -only-testing:RegionalCheckTests \
-    -skip-testing:RegionalCheckTests/StoreKitConfigurationFlowTests \
     -derivedDataPath "${SMOKE_DERIVED_DATA:-/tmp/RegionalCheck-Smoke}" \
     CODE_SIGNING_ALLOWED=YES
 fi
