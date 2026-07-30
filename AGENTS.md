@@ -48,3 +48,8 @@ just verify
 - Git hooks (optional): `./scripts/install-hooks.sh` — pre-commit = format+lint, pre-push = smoke tests.
 - `.cursor/` local only; `AGENTS.md` may be committed.
 - Ask before build, test, commit, push.
+
+## Planned: StoreKit 2 (Pro)
+
+Plan only (no code yet): **[docs/storekit-subscription-plan.md](docs/storekit-subscription-plan.md)**.  
+Implement on a Mac with Runtime (`just verify`) + XcodeBuildMCP. Phase 1 = StoreKit + symbolic Pro (badge, extended detail, in-session notifications). Live Activity = Phase 2.

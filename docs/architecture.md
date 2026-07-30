@@ -20,4 +20,6 @@ Status fetch policy and Ubilling rate limits: `docs/aerial-alerts-provider.md`
 
 Analytics and App Store privacy labels: `docs/analytics.md`
 
+Planned StoreKit 2 / Pro entitlement (not implemented yet): `docs/storekit-subscription-plan.md`
+
 Smoke: `./scripts/smoke-tests.sh`
