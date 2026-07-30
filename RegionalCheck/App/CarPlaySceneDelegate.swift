@@ -62,10 +62,13 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
         armLocationObservation()
         armStatusObservation()
         status.beginPeriodicRefresh()
+        AppDependencies.liveActivity.beginCarPlaySession()
+        AppDependencies.syncLiveActivityContent()
 
         Task { @MainActor [weak self] in
             guard let self, isConnected else { return }
             await status.refresh()
+            AppDependencies.syncLiveActivityContent()
             await render(animated: true)
         }
     }
@@ -75,6 +78,7 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
         interfaceController = nil
         status.endPeriodicRefresh()
         location.endUpdating()
+        AppDependencies.liveActivity.endCarPlaySession()
     }
 
     private func armRegionObservation() {
@@ -86,6 +90,7 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
                 guard let self, isConnected else { return }
                 status.setRegion(regions.selectedRegion)
                 await status.refresh()
+                AppDependencies.syncLiveActivityContent()
                 await render(animated: true)
                 armRegionObservation()
             }
@@ -101,6 +106,7 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
             Task { @MainActor [weak self] in
                 guard let self, isConnected else { return }
                 await render(animated: true)
+                AppDependencies.syncLiveActivityContent()
                 armStatusObservation()
             }
         }
@@ -144,6 +150,7 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
             Task { @MainActor [weak self] in
                 guard let self else { return }
                 await status.refresh()
+                AppDependencies.syncLiveActivityContent()
                 await render(animated: true)
             }
         }

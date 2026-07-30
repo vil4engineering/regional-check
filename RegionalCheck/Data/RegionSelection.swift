@@ -7,11 +7,17 @@ import Observation
 @Observable
 final class RegionSelection {
     private(set) var selectedRegion: AlertRegion
+    private(set) var shouldShowOutsideUkraineInfo = false
 
     private var isResolving = false
+    private var didPresentOutsideUkraineThisSession = false
 
     init() {
         selectedRegion = RegionStore.shared.load() ?? .kyivCity
+    }
+
+    func acknowledgeOutsideUkraineInfo() {
+        shouldShowOutsideUkraineInfo = false
     }
 
     func updateFromLocation(coordinate: CLLocationCoordinate2D) {
@@ -28,7 +34,10 @@ final class RegionSelection {
             do {
                 let mapItems = try await request.mapItems
                 guard let address = mapItems.first?.addressRepresentations else { return }
-                guard address.region?.identifier == "UA" else { return }
+                guard address.region?.identifier == "UA" else {
+                    applyOutsideUkraine()
+                    return
+                }
 
                 let resolved: AlertRegion? = if let city = address.cityName, city == "Київ" || city == "Kyiv" {
                     .kyivCity
@@ -41,6 +50,14 @@ final class RegionSelection {
                 guard let resolved else { return }
                 apply(resolved)
             } catch {}
+        }
+    }
+
+    private func applyOutsideUkraine() {
+        apply(.kyivCity)
+        if !didPresentOutsideUkraineThisSession {
+            didPresentOutsideUkraineThisSession = true
+            shouldShowOutsideUkraineInfo = true
         }
     }
 

@@ -34,7 +34,11 @@ Domain may use `AlertStatus` / `alarm` / `quiet`. UI uses All Clear / Alert Acti
 
 ## Never
 
-Accounts, auth, ads, history, user analytics, push, social features, favorites, map product surface. Do not sell the app as an “alert monitor.”
+Accounts, auth, ads, history, user analytics, social features, favorites, map product surface. Do not sell the app as an “alert monitor.”
+
+## Symbolic Pro (exception)
+
+Drive Check Pro is a StoreKit 2 entitlement for portfolio-quality billing: Live Activity during an active Drive Check session (iPhone foreground or CarPlay scene), Pro badge, and friendly extended status detail. Core glanceable status stays free. Session-scoped Live Activity is not background monitoring and is not push notification spam.
 
 ## Analytics
 

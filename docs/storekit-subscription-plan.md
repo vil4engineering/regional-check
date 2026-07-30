@@ -1,20 +1,20 @@
 # StoreKit 2 Subscription — Feature Plan (Drive Check)
 
-Status: **plan only** — no implementation in this branch yet.  
-Audience: local agent / human implementing with iOS Engineering Runtime + project skills.  
+Status: **implemented on this branch (1.2)** — StoreKit 2 + Pro Live Activity; notifications out of scope.  
+Audience: local agent / human shipping with iOS Engineering Runtime.  
 Product: **Drive Check** (scheme/target `RegionalCheck`, bundle `vil4max.RegionalCheck`).
 
-Related docs: [product-charter.md](product-charter.md), [architecture.md](architecture.md), [testflight-readiness.md](testflight-readiness.md), [analytics.md](analytics.md), [privacy-policy.html](privacy-policy.html).
+Related docs: [product-charter.md](product-charter.md), [architecture.md](architecture.md), [testflight-readiness.md](testflight-readiness.md), [analytics.md](analytics.md), [privacy-policy.html](privacy-policy.html), [terms-of-use.html](terms-of-use.html), [README_Subscriptions.md](../README_Subscriptions.md).
 
 ---
 
 ## 1. Goal
 
-Demonstrate **production-grade StoreKit 2** (portfolio / interviewer / TestFlight), not monetization.
+Demonstrate **production-grade StoreKit 2** and session **Live Activity** (portfolio / interviewer / TestFlight), not monetization.
 
 Symbolic pricing; symbolic Pro entitlement. Core glanceable CarPlay experience stays free.
 
-Success = a Senior iOS interviewer can install from TestFlight, purchase, restore, cancel, expire/relock, and review clean architecture.
+Success = a Senior iOS interviewer can install from TestFlight, purchase, restore, cancel, expire/relock, and review clean architecture including Pro Live Activity.
 
 ---
 
@@ -25,15 +25,15 @@ Success = a Senior iOS interviewer can install from TestFlight, purchase, restor
 | Billing | Apple StoreKit 2 only — no RevenueCat / third-party SDKs |
 | Concurrency | `async/await`, no Combine |
 | UI | SwiftUI; Observation where it fits existing patterns |
-| Architecture | Dedicated `Subscription/` module; MVVM at paywall edge; DI; StoreKit behind protocols |
+| Architecture | `Subscription/` module; MVVM at paywall edge; DI; StoreKit behind protocols |
 | Product IDs | `regioncheck.pro.monthly`, `regioncheck.pro.yearly` |
-| Prices (ASC / StoreKit config) | Monthly **$0.49**, Yearly **$4.99** (symbolic) |
+| Prices | Monthly **$0.29**, Yearly **$0.99** (ASC minimum demo) |
 | Free forever | Region check (iPhone + CarPlay) — never paywall-gated |
-| Pro (Phase 1) | (A) Extended status detail + Pro badge + **in-session** local notifications on status change |
-| Not in Phase 1 | History, favorites, export, AI, multi-region, background CarPlay monitor |
-| Live Activity / Widget | Analyzed → **Phase 2 = Live Activity**; Widget deferred (see §8) |
-| CarPlay auto-poll without app open | **Not feasible** for Driving Task — do not claim in UI/ASC (see §5) |
-| Charter tension | Update charter note: Pro is a symbolic entitlement layer; notifications are session-scoped, not a monitor product |
+| Pro | Live Activity (primary) + Pro badge + friendly extended detail |
+| Not shipping | History, favorites, export, AI, multi-region, background CarPlay monitor, local/push notifications as Pro |
+| Live Activity session | iPhone **foreground** + CarPlay scene; background phone alone ends Activity (`.immediate`) |
+| Widget home-screen | Deferred |
+| CarPlay auto-poll without app open | **Not feasible** — do not claim |
 
 ---
 

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var showsOnboarding = false
+    @State private var showsPaywall = false
 
     private var controller: StatusController {
         AppDependencies.status
@@ -15,14 +16,28 @@ struct HomeView: View {
         AppDependencies.regions
     }
 
+    private var subscription: SubscriptionManager {
+        AppDependencies.subscription
+    }
+
     var body: some View {
         StatusView(
             controller: controller,
+            isPro: subscription.isPro,
+            sourceLabel: subscription.allows(.extendedDetail)
+                ? StatusSourceLabel.displayName(for: controller.lastSourceRaw)
+                : nil,
             onRefresh: {
-                Task { await controller.refresh() }
+                Task {
+                    await controller.refresh()
+                    AppDependencies.syncLiveActivityContent()
+                }
             },
             onShowInfo: {
                 showsOnboarding = true
+            },
+            onShowPaywall: {
+                showsPaywall = true
             }
         )
         .onAppear {
@@ -33,23 +48,62 @@ struct HomeView: View {
             location.beginUpdating()
             controller.setRegion(regions.selectedRegion)
             controller.beginPeriodicRefresh()
-            Task { await controller.refresh() }
+            AppDependencies.liveActivity.beginPhoneForegroundSession()
+            Task {
+                await controller.refresh()
+                AppDependencies.syncLiveActivityContent()
+            }
         }
         .onChange(of: regions.selectedRegion) { _, region in
             controller.setRegion(region)
-            Task { await controller.refresh() }
+            Task {
+                await controller.refresh()
+                AppDependencies.syncLiveActivityContent()
+            }
         }
         .onChange(of: location.coordinateStamp) { _, _ in
             guard let coordinate = location.coordinate else { return }
             regions.updateFromLocation(coordinate: coordinate)
+        }
+        .onChange(of: controller.state.phase) { _, _ in
+            AppDependencies.syncLiveActivityContent()
         }
         .onDisappear {
             controller.endPeriodicRefresh()
             location.endUpdating()
         }
         .fullScreenCover(isPresented: $showsOnboarding) {
-            OnboardingView(purpose: .about) {
-                showsOnboarding = false
+            OnboardingView(
+                purpose: .about,
+                isPro: subscription.isPro,
+                isLiveActivityEnabled: subscription.state.isLiveActivityEnabled,
+                onToggleLiveActivity: { enabled in
+                    subscription.setLiveActivityEnabled(enabled)
+                    if !enabled {
+                        AppDependencies.liveActivity.endAll()
+                    } else {
+                        AppDependencies.liveActivity.beginPhoneForegroundSession()
+                        AppDependencies.syncLiveActivityContent()
+                    }
+                },
+                onShowPaywall: {
+                    showsOnboarding = false
+                    showsPaywall = true
+                },
+                onContinue: {
+                    showsOnboarding = false
+                }
+            )
+        }
+        .sheet(isPresented: $showsPaywall) {
+            PaywallView(manager: subscription)
+        }
+        .sheet(isPresented: Binding(
+            get: { regions.shouldShowOutsideUkraineInfo },
+            set: { if !$0 { regions.acknowledgeOutsideUkraineInfo() } }
+        )) {
+            OutsideUkraineInfoSheet {
+                regions.acknowledgeOutsideUkraineInfo()
             }
         }
     }

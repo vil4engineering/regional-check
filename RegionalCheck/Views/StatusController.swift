@@ -97,6 +97,7 @@ final class StatusController {
     private(set) var state: StatusState = .idle
     private(set) var regionTitle: String
     private(set) var isLoading = false
+    private(set) var lastSourceRaw: String?
 
     private var region: AlertRegion
     private let provider: any StatusProviding
@@ -163,6 +164,7 @@ final class StatusController {
         defer { isLoading = false }
         do {
             let snapshot = try await provider.fetchStatus(region: region)
+            lastSourceRaw = snapshot.source
             switch snapshot.status {
             case .alarm:
                 state = .alarm(lastCheckedAt: snapshot.checkedAt)

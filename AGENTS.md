@@ -51,5 +51,5 @@ just verify
 
 ## Planned: StoreKit 2 (Pro)
 
-Plan only (no code yet): **[docs/storekit-subscription-plan.md](docs/storekit-subscription-plan.md)**.  
-Implement on a Mac with Runtime (`just verify`) + XcodeBuildMCP. Phase 1 = StoreKit + symbolic Pro (badge, extended detail, in-session notifications). Live Activity = Phase 2.
+Implemented on this branch: **[docs/storekit-subscription-plan.md](docs/storekit-subscription-plan.md)** + **[README_Subscriptions.md](README_Subscriptions.md)**.  
+Phase scope: StoreKit + symbolic Pro (Live Activity, badge, extended detail). Notifications not included.
