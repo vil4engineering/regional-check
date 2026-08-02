@@ -70,7 +70,7 @@ private final class FakeSubscriptionManager: SubscriptionManaging {
         restoreOutcome: RestoreOutcome = .empty,
         loadState: SubscriptionLoadState = .ready
     ) {
-        purchaseResult = purchaseResult
+        self.purchaseResult = purchaseResult
         self.restoreOutcome = restoreOutcome
         state = SubscriptionState(loadState: loadState)
         if let entitlementAfterPurchase {
@@ -96,5 +96,9 @@ private final class FakeSubscriptionManager: SubscriptionManaging {
 
     func setLiveActivityEnabled(_ enabled: Bool) {
         state.isLiveActivityEnabled = enabled
+    }
+
+    func entitlementChanges() -> AsyncStream<Void> {
+        AsyncStream { $0.finish() }
     }
 }

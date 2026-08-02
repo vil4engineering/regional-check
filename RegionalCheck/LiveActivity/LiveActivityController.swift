@@ -8,7 +8,7 @@ import os
 final class LiveActivityController: LiveActivityControlling {
     private static let log = Logger(subsystem: "vil4max.RegionalCheck", category: "LiveActivity")
 
-    private let subscription: SubscriptionManager
+    private let allowsLiveActivity: () -> Bool
     private let pipeline = LiveActivitySerialPipeline()
     private var clients: Set<LiveActivitySessionClient> = []
     private var activity: Activity<DriveCheckActivityAttributes>?
@@ -17,9 +17,18 @@ final class LiveActivityController: LiveActivityControlling {
     private var latestCheckedAt: Date?
     private var latestSourceLabel = ""
     private var latestIsStale = false
+    private var entitlementObservationTask: Task<Void, Never>?
 
-    init(subscription: SubscriptionManager) {
-        self.subscription = subscription
+    init(
+        allowsLiveActivity: @escaping () -> Bool,
+        entitlementChanges: @escaping () -> AsyncStream<Void>
+    ) {
+        self.allowsLiveActivity = allowsLiveActivity
+        entitlementObservationTask = Task { @MainActor [weak self] in
+            for await _ in entitlementChanges() {
+                self?.reconcileActivity()
+            }
+        }
     }
 
     func beginPhoneForegroundSession() {
@@ -59,7 +68,7 @@ final class LiveActivityController: LiveActivityControlling {
     }
 
     private var canRunActivity: Bool {
-        subscription.allows(.liveActivity)
+        allowsLiveActivity()
             && ActivityAuthorizationInfo().areActivitiesEnabled
     }
 

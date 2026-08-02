@@ -10,4 +10,5 @@ protocol SubscriptionManaging: AnyObject {
     func restore() async -> RestoreOutcome
     func allows(_ feature: PremiumFeature) -> Bool
     func setLiveActivityEnabled(_ enabled: Bool)
+    func entitlementChanges() -> AsyncStream<Void>
 }

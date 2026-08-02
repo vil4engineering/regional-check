@@ -10,6 +10,7 @@ final class SubscriptionManager: SubscriptionManaging {
     private let cache: any EntitlementCaching
     private let liveActivityPreferenceKey = "subscription.liveActivity.enabled"
     private var updatesTask: Task<Void, Never>?
+    private var entitlementChangeContinuations: [UUID: AsyncStream<Void>.Continuation] = [:]
 
     var isPro: Bool {
         state.isPro
@@ -91,8 +92,30 @@ final class SubscriptionManager: SubscriptionManaging {
     }
 
     func setLiveActivityEnabled(_ enabled: Bool) {
+        let previous = state.isLiveActivityEnabled
         state.isLiveActivityEnabled = enabled
         UserDefaults.standard.set(enabled, forKey: liveActivityPreferenceKey)
+        if previous != enabled {
+            notifyEntitlementChange()
+        }
+    }
+
+    func entitlementChanges() -> AsyncStream<Void> {
+        AsyncStream { continuation in
+            let id = UUID()
+            entitlementChangeContinuations[id] = continuation
+            continuation.onTermination = { [weak self] _ in
+                Task { @MainActor [weak self] in
+                    self?.entitlementChangeContinuations.removeValue(forKey: id)
+                }
+            }
+        }
+    }
+
+    private func notifyEntitlementChange() {
+        for continuation in entitlementChangeContinuations.values {
+            continuation.yield()
+        }
     }
 
     private func applyCachedEntitlement() {
@@ -101,6 +124,8 @@ final class SubscriptionManager: SubscriptionManaging {
     }
 
     private func apply(_ verification: EntitlementVerification) {
+        let wasPro = isPro
+        let wasLiveActivityEnabled = state.isLiveActivityEnabled
         switch verification {
         case let .active(snapshot):
             state.entitlement = snapshot
@@ -110,6 +135,9 @@ final class SubscriptionManager: SubscriptionManaging {
             cache.clear()
         case .unverified:
             break
+        }
+        if isPro != wasPro || state.isLiveActivityEnabled != wasLiveActivityEnabled {
+            notifyEntitlementChange()
         }
     }
 

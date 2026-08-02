@@ -95,7 +95,10 @@ enum AppDependencies {
     static let regions = RegionSelection()
     static let status = StatusController(region: regions.selectedRegion, provider: provider)
     static let subscription = SubscriptionManager()
-    static let liveActivity = LiveActivityController(subscription: subscription)
+    static let liveActivity = LiveActivityController(
+        allowsLiveActivity: { subscription.allows(.liveActivity) },
+        entitlementChanges: { subscription.entitlementChanges() }
+    )
 
     static func syncLiveActivityContent() {
         liveActivity.update(
