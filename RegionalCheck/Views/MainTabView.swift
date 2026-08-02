@@ -65,8 +65,8 @@ struct MainTabView: View {
             AppDependencies.syncLiveActivityContent()
         }
         .onChange(of: location.coordinateStamp) { _, _ in
-            guard let coordinate = location.coordinate else { return }
-            regions.updateFromLocation(coordinate: coordinate)
+            guard let fix = location.lastFix else { return }
+            regions.updateFromLocation(fix: fix)
         }
         .onChange(of: controller.state.phase) { _, _ in
             AppDependencies.syncLiveActivityContent()
@@ -110,6 +110,35 @@ struct MainTabView: View {
         )) {
             OutsideUkraineInfoSheet {
                 regions.acknowledgeOutsideUkraineInfo()
+            }
+        }
+        .safeAreaInset(edge: .bottom) {
+            if let notice = regions.regionChangeNotice {
+                HStack(spacing: Theme.Spacing.sm) {
+                    Text(notice)
+                        .font(Theme.Typography.caption)
+                        .foregroundStyle(Theme.Colors.onFill)
+                        .lineLimit(2)
+                    Spacer(minLength: Theme.Spacing.sm)
+                    if regions.previousRegionForUndo != nil {
+                        Button("regions.changed_undo") {
+                            regions.undoRegionChange()
+                        }
+                        .font(Theme.Typography.refreshLabel)
+                        .foregroundStyle(Theme.Colors.onboarding)
+                    }
+                    Button {
+                        regions.dismissRegionChangeNotice()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .foregroundStyle(Theme.Colors.onFillSecondary)
+                    }
+                    .accessibilityLabel(Text("Close"))
+                }
+                .padding(Theme.Spacing.md)
+                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+                .padding(.horizontal, Theme.Spacing.md)
+                .padding(.bottom, Theme.Spacing.sm)
             }
         }
     }

@@ -1,28 +1,27 @@
 import CoreLocation
 import Foundation
 import Observation
-import os
 
 @MainActor
 @Observable
 final class RegionSelection {
-    private static let log = Logger(subsystem: "vil4max.RegionalCheck", category: "Region")
-
     private(set) var selectedRegion: AlertRegion
     private(set) var followsLocation: Bool
     private(set) var shouldShowOutsideUkraineInfo = false
+    private(set) var regionChangeNotice: String?
+    private(set) var previousRegionForUndo: AlertRegion?
 
     private let store: RegionStore
-    private let geocoder: any ReverseGeocoding
-    private var isResolving = false
+    private let tracker: RegionTracker
     private var didPresentOutsideUkraineThisSession = false
 
     init(
         store: RegionStore = .shared,
-        geocoder: any ReverseGeocoding = MapKitReverseGeocoder()
+        geocoder: any ReverseGeocoding = MapKitReverseGeocoder(),
+        now: @escaping @Sendable () -> Date = { Date() }
     ) {
         self.store = store
-        self.geocoder = geocoder
+        tracker = RegionTracker(geocoder: geocoder, now: now)
         selectedRegion = store.load() ?? .kyivCity
         followsLocation = store.loadFollowsLocation()
     }
@@ -31,10 +30,22 @@ final class RegionSelection {
         shouldShowOutsideUkraineInfo = false
     }
 
+    func dismissRegionChangeNotice() {
+        regionChangeNotice = nil
+        previousRegionForUndo = nil
+    }
+
+    func undoRegionChange() {
+        guard let previous = previousRegionForUndo else { return }
+        apply(previous, announce: false)
+        dismissRegionChangeNotice()
+    }
+
     func pin(_ region: AlertRegion) {
         followsLocation = false
         store.saveFollowsLocation(false)
-        apply(region)
+        apply(region, announce: false)
+        dismissRegionChangeNotice()
     }
 
     func setFollowsLocation(_ enabled: Bool) {
@@ -42,46 +53,50 @@ final class RegionSelection {
         store.saveFollowsLocation(enabled)
     }
 
-    func updateFromLocation(coordinate: CLLocationCoordinate2D) {
+    func updateFromLocation(fix: LocationFix) {
         guard followsLocation else { return }
-        guard !isResolving else { return }
-        isResolving = true
 
         Task {
-            defer { isResolving = false }
-
-            do {
-                guard let address = try await geocoder.reverseGeocode(coordinate: coordinate) else {
-                    return
-                }
-                guard address.countryCode == "UA" else {
-                    applyOutsideUkraine()
-                    return
-                }
-
-                guard let resolved = AlertRegionResolver.resolve(
-                    cityName: address.cityName,
-                    administrativeArea: address.administrativeAreaName
-                ) else {
-                    return
-                }
-                apply(resolved)
-            } catch {
-                Self.log.error("Reverse geocode failed: \(String(describing: error), privacy: .public)")
+            let outcome = await tracker.evaluate(fix: fix, current: selectedRegion)
+            switch outcome {
+            case .ignored, .unchanged, .candidate:
+                break
+            case let .committed(region):
+                let previous = selectedRegion
+                apply(region, announce: true, previous: previous)
+            case .outsideUkraine:
+                applyOutsideUkraine()
             }
         }
     }
 
+    func updateFromLocation(coordinate: CLLocationCoordinate2D) {
+        let fix = LocationFix(
+            coordinate: coordinate,
+            horizontalAccuracy: 100,
+            timestamp: Date()
+        )
+        updateFromLocation(fix: fix)
+    }
+
     private func applyOutsideUkraine() {
-        apply(.kyivCity)
+        let previous = selectedRegion
+        apply(.kyivCity, announce: previous != .kyivCity, previous: previous)
         if !didPresentOutsideUkraineThisSession {
             didPresentOutsideUkraineThisSession = true
             shouldShowOutsideUkraineInfo = true
         }
     }
 
-    private func apply(_ region: AlertRegion) {
+    private func apply(_ region: AlertRegion, announce: Bool, previous: AlertRegion? = nil) {
         guard region != selectedRegion else { return }
+        if announce {
+            previousRegionForUndo = previous ?? selectedRegion
+            regionChangeNotice = String(
+                format: String(localized: "regions.changed_notice"),
+                region.title
+            )
+        }
         selectedRegion = region
         store.save(region)
     }

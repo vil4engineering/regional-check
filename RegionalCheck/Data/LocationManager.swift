@@ -6,6 +6,7 @@ import Observation
 final class LocationManager: NSObject, CLLocationManagerDelegate {
     private var authorizationStatus: CLAuthorizationStatus
     private(set) var coordinate: CLLocationCoordinate2D?
+    private(set) var lastFix: LocationFix?
     private(set) var coordinateStamp: Int = 0
 
     private let manager: CLLocationManager
@@ -16,6 +17,9 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
         self.manager = manager
         authorizationStatus = manager.authorizationStatus
         super.init()
+        manager.desiredAccuracy = kCLLocationAccuracyKilometer
+        manager.distanceFilter = 2_000
+        manager.activityType = .automotiveNavigation
         manager.delegate = self
     }
 
@@ -55,9 +59,11 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
     }
 
     nonisolated func locationManager(_: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let last = locations.last?.coordinate else { return }
+        guard let last = locations.last else { return }
+        let fix = LocationFix(location: last)
         Task { @MainActor in
-            coordinate = last
+            coordinate = fix.coordinate
+            lastFix = fix
             coordinateStamp &+= 1
         }
     }
