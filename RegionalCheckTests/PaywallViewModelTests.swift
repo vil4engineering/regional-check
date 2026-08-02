@@ -73,6 +73,14 @@ private final class FakeSubscriptionManager: SubscriptionManaging {
         self.purchaseResult = purchaseResult
         self.restoreOutcome = restoreOutcome
         state = SubscriptionState(loadState: loadState)
+        state.products = [
+            SubscriptionProduct(
+                id: SubscriptionProductID.yearly.rawValue,
+                displayName: "Yearly",
+                displayPrice: "$0.99",
+                periodDescription: "Year"
+            ),
+        ]
         if let entitlementAfterPurchase {
             state.entitlement = entitlementAfterPurchase
         }

@@ -6,20 +6,26 @@ struct CarPlayConnectionTests {
     @Test
     func connect_isIdempotent() {
         var gate = CarPlayConnectionGate()
-        #expect(gate.connect())
+        let first = gate.connect()
+        #expect(first)
         #expect(gate.isConnected)
-        #expect(gate.connect() == false)
+        let second = gate.connect()
+        #expect(second == false)
         #expect(gate.isConnected)
     }
 
     @Test
     func disconnect_isIdempotent() {
         var gate = CarPlayConnectionGate()
-        #expect(gate.disconnect() == false)
-        #expect(gate.connect())
-        #expect(gate.disconnect())
+        let firstDisconnect = gate.disconnect()
+        #expect(firstDisconnect == false)
+        let connected = gate.connect()
+        #expect(connected)
+        let disconnected = gate.disconnect()
+        #expect(disconnected)
         #expect(gate.isConnected == false)
-        #expect(gate.disconnect() == false)
+        let secondDisconnect = gate.disconnect()
+        #expect(secondDisconnect == false)
     }
 
     @Test

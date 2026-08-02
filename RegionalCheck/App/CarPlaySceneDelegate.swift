@@ -82,7 +82,7 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
     }
 
     private func armRegionObservation() {
-        armObservation {
+        armObservation { [self] in
             _ = regions.selectedRegion
         } onChange: { [weak self] in
             guard let self else { return }
@@ -94,7 +94,7 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
     }
 
     private func armStatusObservation() {
-        armObservation {
+        armObservation { [self] in
             _ = status.state
             _ = status.regionTitle
         } onChange: { [weak self] in
@@ -105,7 +105,7 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
     }
 
     private func armLocationObservation() {
-        armObservation {
+        armObservation { [self] in
             _ = location.coordinateStamp
             _ = location.authorizationStatus
         } onChange: { [weak self] in
