@@ -49,11 +49,11 @@ App-local recipes live in the root `justfile` (`import 'Tooling/justfile'`). Do 
 
 ## Release / TestFlight
 
-- App Store: **1.0** live (or Ready); **1.1** submitted / in review (build **18**). Repo next: **1.2** / build **1**.
-- New marketing version → reset `CURRENT_PROJECT_VERSION` to **1** (builds do not carry over from the previous marketing version).
+- **Next release:** **2.0** / build **1** (app + widget extension aligned). Checklist: [docs/release-2.0.md](docs/release-2.0.md).
+- New marketing version → reset `CURRENT_PROJECT_VERSION` to **1**.
 - Same marketing version → bump `CURRENT_PROJECT_VERSION` above the highest build already uploaded for that version.
-- Before Archive → ASC / TestFlight: `MARKETING_VERSION` must be above what is already live or in flight when starting a new version line.
-- Symptom if forgotten: Xcode Cloud Archive fails with **Preparing build for App Store Connect failed** (`action_required`) while Test still passes and local archive succeeds.
+- App Group entitlements require refreshed profiles before first 2.0 Archive.
+- Symptom if versions diverge: ASC validation fails on extension/container mismatch.
 
 ## Notes
 
@@ -63,7 +63,6 @@ App-local recipes live in the root `justfile` (`import 'Tooling/justfile'`). Do 
 - `.cursor/` local only; `AGENTS.md` may be committed.
 - Ask before build, test, commit, push.
 
-## Planned: StoreKit 2 (Pro)
+## StoreKit 2 (Pro)
 
-Implemented on this branch: **[docs/storekit-subscription-plan.md](docs/storekit-subscription-plan.md)** + **[README_Subscriptions.md](README_Subscriptions.md)**.  
-Phase scope: StoreKit + symbolic Pro (Live Activity, badge, extended detail). Notifications not included.
+Shipped in **2.0**: [docs/storekit-subscription-plan.md](docs/storekit-subscription-plan.md), [docs/surfaces.md](docs/surfaces.md), [README_Subscriptions.md](README_Subscriptions.md). Notifications not included.
