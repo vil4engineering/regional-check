@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		227BD423301F1893004CFBC9 /* DriveCheckKit in Frameworks */ = {isa = PBXBuildFile; productRef = P6DCKIT002PRODUCTAPP /* DriveCheckKit */; };
-		227BD424301F1893004CFBC9 /* DriveCheckKit in Frameworks */ = {isa = PBXBuildFile; productRef = P6DCKIT002PRODUCTWIDGET /* DriveCheckKit */; };
-		227BD425301F1893004CFBC9 /* DriveCheckKit in Frameworks */ = {isa = PBXBuildFile; productRef = P6DCKIT002PRODUCTTESTS /* DriveCheckKit */; };
+		227BD423301F1893004CFBC9 /* DriveCheckKit in Frameworks */ = {isa = PBXBuildFile; productRef = 60D2A67AC797438EA606AD59 /* DriveCheckKit */; };
+		227BD424301F1893004CFBC9 /* DriveCheckKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6E5A123F4C3C4C96824D3101 /* DriveCheckKit */; };
+		227BD425301F1893004CFBC9 /* DriveCheckKit in Frameworks */ = {isa = PBXBuildFile; productRef = D6644782E6C64C05ACC09AE7 /* DriveCheckKit */; };
 		A1B2C3D40E5EE00E00WIDGET /* RegionalCheckWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A1B2C3D40E5EE00100WIDGET /* RegionalCheckWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -164,7 +164,7 @@
 			);
 			name = RegionalCheck;
 			packageProductDependencies = (
-				P6DCKIT002PRODUCTAPP /* DriveCheckKit */,
+				60D2A67AC797438EA606AD59 /* DriveCheckKit */,
 			);
 			productName = RegionalCheck;
 			productReference = 509E636E2E5EE1BF00A13E04 /* RegionalCheck.app */;
@@ -188,7 +188,7 @@
 			);
 			name = RegionalCheckTests;
 			packageProductDependencies = (
-				P6DCKIT002PRODUCTTESTS /* DriveCheckKit */,
+				D6644782E6C64C05ACC09AE7 /* DriveCheckKit */,
 			);
 			productName = RegionalCheckTests;
 			productReference = 509E637F2E5EE1C000A13E04 /* RegionalCheckTests.xctest */;
@@ -211,7 +211,7 @@
 			);
 			name = RegionalCheckWidgets;
 			packageProductDependencies = (
-				P6DCKIT002PRODUCTWIDGET /* DriveCheckKit */,
+				6E5A123F4C3C4C96824D3101 /* DriveCheckKit */,
 			);
 			productName = RegionalCheckWidgets;
 			productReference = A1B2C3D40E5EE00100WIDGET /* RegionalCheckWidgets.appex */;
@@ -251,7 +251,7 @@
 			mainGroup = 509E63652E5EE1BF00A13E04;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				P6DCKIT001PACKAGE001 /* XCLocalSwiftPackageReference "Packages/DriveCheckKit" */,
+				D2D12FC43BDF47C8BF763B2A /* XCLocalSwiftPackageReference "Packages/DriveCheckKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 509E636F2E5EE1BF00A13E04 /* Products */;
@@ -655,26 +655,26 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		P6DCKIT001PACKAGE001 /* XCLocalSwiftPackageReference "Packages/DriveCheckKit" */ = {
+		D2D12FC43BDF47C8BF763B2A /* XCLocalSwiftPackageReference "Packages/DriveCheckKit" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/DriveCheckKit;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		P6DCKIT002PRODUCTAPP /* DriveCheckKit */ = {
+		60D2A67AC797438EA606AD59 /* DriveCheckKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = P6DCKIT001PACKAGE001 /* XCLocalSwiftPackageReference "Packages/DriveCheckKit" */;
+			package = D2D12FC43BDF47C8BF763B2A /* XCLocalSwiftPackageReference "Packages/DriveCheckKit" */;
 			productName = DriveCheckKit;
 		};
-		P6DCKIT002PRODUCTTESTS /* DriveCheckKit */ = {
+		D6644782E6C64C05ACC09AE7 /* DriveCheckKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = P6DCKIT001PACKAGE001 /* XCLocalSwiftPackageReference "Packages/DriveCheckKit" */;
+			package = D2D12FC43BDF47C8BF763B2A /* XCLocalSwiftPackageReference "Packages/DriveCheckKit" */;
 			productName = DriveCheckKit;
 		};
-		P6DCKIT002PRODUCTWIDGET /* DriveCheckKit */ = {
+		6E5A123F4C3C4C96824D3101 /* DriveCheckKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = P6DCKIT001PACKAGE001 /* XCLocalSwiftPackageReference "Packages/DriveCheckKit" */;
+			package = D2D12FC43BDF47C8BF763B2A /* XCLocalSwiftPackageReference "Packages/DriveCheckKit" */;
 			productName = DriveCheckKit;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -10,6 +10,7 @@ let package = Package(
     products: [
         .library(
             name: "DriveCheckKit",
+            type: .static,
             targets: ["DriveCheckKit"]
         ),
     ],
@@ -18,6 +19,11 @@ let package = Package(
             name: "DriveCheckKit",
             resources: [
                 .process("Resources"),
+            ],
+            linkerSettings: [
+                .linkedFramework("ActivityKit"),
+                .linkedFramework("AppIntents"),
+                .linkedFramework("WidgetKit"),
             ]
         ),
     ]
