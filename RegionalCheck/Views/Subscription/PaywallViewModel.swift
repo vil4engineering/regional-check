@@ -62,6 +62,66 @@ final class PaywallViewModel {
         return nil
     }
 
+    var accessStatusLine: String {
+        if isPro {
+            String(localized: "subscription.status.access.pro")
+        } else {
+            String(localized: "subscription.status.access.free")
+        }
+    }
+
+    var entitlementStatusLine: String {
+        guard let entitlement = manager.state.entitlement, entitlement.isActive else {
+            return String(localized: "subscription.status.entitlement.none")
+        }
+        if let expiration = entitlement.expirationDate {
+            let formatted = expiration.formatted(date: .abbreviated, time: .shortened)
+            return String(
+                format: String(localized: "subscription.status.entitlement.active %@ %@"),
+                entitlement.productID,
+                formatted
+            )
+        }
+        return String(
+            format: String(localized: "subscription.status.entitlement.active_no_expiry %@"),
+            entitlement.productID
+        )
+    }
+
+    var storeKitStatusLine: String {
+        let count = products.count
+        if count == 0 {
+            return String(localized: "subscription.status.storekit.empty")
+        }
+        return String(
+            format: String(localized: "subscription.status.storekit.ready %lld"),
+            Int64(count)
+        )
+    }
+
+    var expectedProductIDsLine: String {
+        String(
+            format: String(localized: "subscription.status.storekit.ids %@"),
+            SubscriptionProductID.allRawValues.joined(separator: ", ")
+        )
+    }
+
+    var catalogSourceLine: String {
+        if products.isEmpty {
+            String(localized: "subscription.status.storekit.hint")
+        } else {
+            String(localized: "subscription.status.storekit.live")
+        }
+    }
+
+    var runtimeLine: String {
+        #if targetEnvironment(simulator)
+            String(localized: "subscription.status.runtime.simulator")
+        #else
+            String(localized: "subscription.status.runtime.device")
+        #endif
+    }
+
     init(
         manager: any SubscriptionManaging,
         syncLiveActivity: @escaping () -> Void = {},

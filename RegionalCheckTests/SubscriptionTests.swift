@@ -97,6 +97,22 @@ struct SubscriptionTests {
 
     @Test
     @MainActor
+    func subscriptionManager_emptyProducts_surfacesStoreKitError() async throws {
+        try await TestDefaults.withTemporaryDefaults { defaults in
+            let service = FakeSubscriptionService(products: [], entitlement: .none)
+            let manager = SubscriptionManager(
+                service: service,
+                cache: EntitlementCache(userDefaults: defaults),
+                userDefaults: defaults
+            )
+            await manager.refreshProducts()
+            #expect(manager.state.products.isEmpty)
+            #expect(manager.state.loadState == .error(String(localized: "subscription.error.storekit_empty")))
+        }
+    }
+
+    @Test
+    @MainActor
     func subscriptionManager_keepsCacheWhenVerificationFails() async throws {
         try await TestDefaults.withTemporaryDefaults { defaults in
             let cache = EntitlementCache(userDefaults: defaults)

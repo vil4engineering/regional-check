@@ -36,6 +36,35 @@ struct RegionSelectionFollowTests {
     }
 
     @Test
+    func setFollowsLocation_enabledAppliesImmediateGeoRegion() async throws {
+        let suite = "RegionSelectionFollowTests.resumeGeo.\(UUID().uuidString)"
+        let defaults = try #require(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = RegionStore(sharedStore: SharedStore(userDefaults: defaults))
+        let geocoder = StubGeocoder(result: GeocodedAddress(
+            countryCode: "UA",
+            cityName: "Харків",
+            administrativeAreaName: "Харківська область"
+        ))
+        let selection = RegionSelection(store: store, geocoder: geocoder)
+        selection.pin(.lviv)
+        #expect(selection.selectedRegion == .lviv)
+
+        let fix = LocationFix(
+            coordinate: CLLocationCoordinate2D(latitude: 50, longitude: 36),
+            horizontalAccuracy: 80,
+            timestamp: Date()
+        )
+        selection.setFollowsLocation(true, immediateFix: fix)
+        for _ in 0 ..< 40 where selection.selectedRegion != .kharkiv {
+            await Task.yield()
+        }
+        #expect(selection.followsLocation == true)
+        #expect(selection.selectedRegion == .kharkiv)
+        #expect(geocoder.callCount == 1)
+    }
+
+    @Test
     func updateFromLocation_ignoredWhenPinned() async throws {
         let suite = "RegionSelectionFollowTests.pinIgnore.\(UUID().uuidString)"
         let defaults = try #require(UserDefaults(suiteName: suite))

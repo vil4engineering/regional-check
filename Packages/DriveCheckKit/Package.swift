@@ -10,7 +10,6 @@ let package = Package(
     products: [
         .library(
             name: "DriveCheckKit",
-            type: .static,
             targets: ["DriveCheckKit"]
         ),
     ],

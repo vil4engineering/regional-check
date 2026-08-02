@@ -5,7 +5,6 @@ struct OnboardingView: View {
     var isPro = false
     var isLiveActivityEnabled = true
     var onToggleLiveActivity: ((Bool) -> Void)?
-    var onShowPaywall: (() -> Void)?
     var onContinue: () -> Void
 
     var body: some View {
@@ -69,22 +68,6 @@ struct OnboardingView: View {
                             )
                             .tint(Theme.Colors.normal)
                             .foregroundStyle(Theme.Colors.onFill)
-                            .padding(.horizontal, Theme.Spacing.xl)
-                        } else {
-                            Button {
-                                onShowPaywall?()
-                            } label: {
-                                Text("subscription.paywall.open")
-                                    .font(Theme.Typography.refreshLabel)
-                                    .foregroundStyle(Theme.Colors.onFill)
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.vertical, Theme.Spacing.md)
-                                    .background(
-                                        .ultraThinMaterial,
-                                        in: RoundedRectangle(cornerRadius: 16, style: .continuous)
-                                    )
-                            }
-                            .buttonStyle(HapticButtonStyle())
                             .padding(.horizontal, Theme.Spacing.xl)
                         }
                     }

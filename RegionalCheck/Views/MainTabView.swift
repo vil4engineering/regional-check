@@ -92,10 +92,6 @@ struct MainTabView: View {
                         AppDependencies.syncLiveActivityContent()
                     }
                 },
-                onShowPaywall: {
-                    showsOnboarding = false
-                    showsPaywall = true
-                },
                 onContinue: {
                     AlternateIconManager.sync(isPro: subscription.isPro)
                     showsOnboarding = false

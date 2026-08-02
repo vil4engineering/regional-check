@@ -1,314 +1,328 @@
 {
-  "sourceLanguage": "en",
-  "strings": {
-    "Alert Active": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Alert Active"
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Alert Active" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alert Active"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Тревога"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тревога"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Тривога"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тривога"
           }
         }
       }
     },
-    "All Clear": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "All Clear"
+    "All Clear" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All Clear"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Всё ясно"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Всё ясно"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Все ясно"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Все ясно"
           }
         }
       }
     },
-    "Checking…": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Checking…"
+    "Checking…" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Checking…"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Проверяем…"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проверяем…"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Перевіряємо…"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перевіряємо…"
           }
         }
       }
     },
-    "liveActivity.stale": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Updating…"
+    "control.open.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Drive Check"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Обновление…"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открыть Drive Check"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Оновлення…"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відкрити Drive Check"
           }
         }
       }
     },
-    "Unavailable": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Unavailable"
+    "control.status.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drive Check Status"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Недоступно"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Статус Drive Check"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Недоступно"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Статус Drive Check"
           }
         }
       }
     },
-    "widget.status.title": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Alert Status"
+    "intent.check.shortTitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check Status"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Статус тривоги"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Статус"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Статус тревоги"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Статус"
           }
         }
       }
     },
-    "widget.status.description": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Current regional alert status"
+    "intent.refresh.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Refresh Status"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Поточний статус тривоги в області"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обновить статус"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Текущий статус тревоги в области"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Оновити статус"
           }
         }
       }
     },
-    "intent.refresh.title": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Refresh Status"
+    "intent.region.parameter" : {
+
+    },
+    "liveActivity.stale" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Updating…"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Оновити статус"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обновление…"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Обновить статус"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Оновлення…"
           }
         }
       }
     },
-    "intent.check.shortTitle": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Check Status"
+    "Refresh" : {
+
+    },
+    "subscription.paywall.open" : {
+
+    },
+    "Unavailable" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unavailable"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Статус"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Недоступно"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Статус"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Недоступно"
           }
         }
       }
     },
-    "control.status.title": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Drive Check Status"
+    "widget.secondary.configure" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose secondary region"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Статус Drive Check"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбрать второй регион"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Статус Drive Check"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обрати другий регіон"
           }
         }
       }
     },
-    "control.open.title": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Open Drive Check"
+    "widget.secondary.description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status for a pinned second region (Pro)"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Відкрити Drive Check"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Статус закреплённого второго региона (Pro)"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Открыть Drive Check"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Статус закріпленого другого регіону (Pro)"
           }
         }
       }
     },
-    "widget.secondary.title": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Secondary Region"
+    "widget.secondary.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Secondary Region"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Другий регіон"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Второй регион"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Второй регион"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Другий регіон"
           }
         }
       }
     },
-    "widget.secondary.description": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Status for a pinned second region (Pro)"
+    "widget.status.description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current regional alert status"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Статус закріпленого другого регіону (Pro)"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Текущий статус тревоги в области"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Статус закреплённого второго региона (Pro)"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поточний статус тривоги в області"
           }
         }
       }
     },
-    "widget.secondary.configure": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Choose secondary region"
+    "widget.status.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alert Status"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Обрати другий регіон"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Статус тревоги"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Выбрать второй регион"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Статус тривоги"
           }
         }
       }
     }
   },
-  "version": "1.1"
+  "version" : "1.1"
 }

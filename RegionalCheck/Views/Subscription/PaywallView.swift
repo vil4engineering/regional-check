@@ -29,6 +29,9 @@ struct PaywallView: View {
                 VStack(spacing: Theme.Spacing.lg) {
                     header
                     benefitsCard
+                    #if DEBUG
+                        storeStatusCard
+                    #endif
                     plansSection
                     if let message = viewModel.statusMessage {
                         Text(message)
@@ -104,6 +107,32 @@ struct PaywallView: View {
             RoundedRectangle(cornerRadius: 16, style: .continuous)
                 .strokeBorder(Theme.Colors.separator, lineWidth: 1)
         )
+    }
+
+    private var storeStatusCard: some View {
+        VStack(alignment: .leading, spacing: Theme.Spacing.sm) {
+            Text("subscription.status.title")
+                .font(Theme.Typography.refreshLabel)
+                .foregroundStyle(Theme.Colors.onFillSecondary)
+
+            statusLine(viewModel.accessStatusLine)
+            statusLine(viewModel.entitlementStatusLine)
+            statusLine(viewModel.runtimeLine)
+            statusLine(viewModel.storeKitStatusLine)
+            statusLine(viewModel.expectedProductIDsLine)
+            statusLine(viewModel.catalogSourceLine)
+        }
+        .padding(Theme.Spacing.md)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .fill(Color.white.opacity(0.04))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .strokeBorder(Theme.Colors.separator, lineWidth: 1)
+        )
+        .accessibilityElement(children: .combine)
     }
 
     private var plansSection: some View {
@@ -245,6 +274,14 @@ struct PaywallView: View {
                 .fixedSize(horizontal: false, vertical: true)
         }
         .accessibilityElement(children: .combine)
+    }
+
+    private func statusLine(_ text: String) -> some View {
+        Text(text)
+            .font(Theme.Typography.caption)
+            .foregroundStyle(Theme.Colors.onFill)
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private func productRow(_ product: SubscriptionProduct) -> some View {

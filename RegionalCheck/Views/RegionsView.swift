@@ -10,6 +10,10 @@ struct RegionsView: View {
         AppDependencies.regions
     }
 
+    private var location: LocationManager {
+        AppDependencies.location
+    }
+
     private var subscription: SubscriptionManager {
         AppDependencies.subscription
     }
@@ -142,7 +146,12 @@ struct RegionsView: View {
     private var followsLocationBinding: Binding<Bool> {
         Binding(
             get: { regions.followsLocation },
-            set: { regions.setFollowsLocation($0) }
+            set: { enabled in
+                regions.setFollowsLocation(
+                    enabled,
+                    immediateFix: enabled ? location.lastFix : nil
+                )
+            }
         )
     }
 }

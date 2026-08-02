@@ -59,6 +59,8 @@ Paste-ready for App Store Connect (alerts only in description, not in the name).
 
 Keywords: put alert-related terms in keywords / description only — not in the app name.
 
+Full paste-ready **2.0** ASC fields (Description, What’s New, Review Notes, Privacy URL): [docs/release-2.0.md](release-2.0.md#asc-copy-20--english-us).
+
 ## Next
 
 Apple Release: assets, metadata, CarPlay entitlement, TestFlight, Review.

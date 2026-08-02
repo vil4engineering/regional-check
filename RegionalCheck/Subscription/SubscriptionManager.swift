@@ -1,10 +1,13 @@
 import DriveCheckKit
 import Foundation
 import Observation
+import os
 
 @MainActor
 @Observable
 final class SubscriptionManager: SubscriptionManaging {
+    private static let log = Logger(subsystem: "vil4max.RegionalCheck", category: "Subscription")
+
     private(set) var state = SubscriptionState()
 
     private let service: any SubscriptionServicing
@@ -33,6 +36,7 @@ final class SubscriptionManager: SubscriptionManaging {
     }
 
     func start() async {
+        Self.log.info("manager.start begin isPro=\(self.isPro, privacy: .public)")
         applyCachedEntitlement()
         state.loadState = .loading
         await apply(service.currentEntitlement())
@@ -46,42 +50,70 @@ final class SubscriptionManager: SubscriptionManaging {
                 }
             }
         }
+        Self.log.info(
+            """
+            manager.start done isPro=\(self.isPro, privacy: .public) \
+            products=\(self.state.products.count, privacy: .public) \
+            loadState=\(String(describing: self.state.loadState), privacy: .public)
+            """
+        )
     }
 
     func refreshProducts() async {
+        Self.log.info("manager.refreshProducts begin")
         do {
             let products = try await service.loadProducts()
             state.products = products
-            if state.loadState != .purchasing {
+            if state.loadState == .purchasing {
+                Self.log.info("manager.refreshProducts skip state while purchasing")
+                return
+            }
+            if products.isEmpty {
+                state.loadState = .error(String(localized: "subscription.error.storekit_empty"))
+                Self.log.error("manager.refreshProducts empty catalog")
+            } else {
                 state.loadState = .ready
+                Self.log.info("manager.refreshProducts ready count=\(products.count, privacy: .public)")
             }
         } catch {
+            state.products = []
             state.loadState = .error(error.localizedDescription)
+            Self.log.error(
+                "manager.refreshProducts error=\(error.localizedDescription, privacy: .public)"
+            )
         }
     }
 
     func purchase(productID: String) async -> PurchaseResult {
+        Self.log.info("manager.purchase begin productID=\(productID, privacy: .public)")
         state.loadState = .purchasing
         let result = await service.purchase(productID: productID)
         await apply(service.currentEntitlement())
         state.loadState = .ready
+        Self.log.info(
+            "manager.purchase done result=\(String(describing: result), privacy: .public) isPro=\(self.isPro, privacy: .public)"
+        )
         return result
     }
 
     func restore() async -> RestoreOutcome {
+        Self.log.info("manager.restore begin")
         state.loadState = .loading
         let verification = await service.restore()
         switch verification {
         case .active:
             apply(verification)
             state.loadState = .ready
+            Self.log.info("manager.restore restored isPro=\(self.isPro, privacy: .public)")
             return .restored
         case .none:
             apply(verification)
             state.loadState = .ready
+            Self.log.info("manager.restore empty")
             return .empty
         case .unverified:
             state.loadState = .ready
+            Self.log.error("manager.restore failed unverified")
             return .failed
         }
     }

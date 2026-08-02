@@ -49,9 +49,21 @@ final class RegionSelection {
         dismissRegionChangeNotice()
     }
 
-    func setFollowsLocation(_ enabled: Bool) {
+    func setFollowsLocation(_ enabled: Bool, immediateFix: LocationFix? = nil) {
         followsLocation = enabled
         store.saveFollowsLocation(enabled)
+        guard enabled, let fix = immediateFix else { return }
+        Task {
+            let outcome = await tracker.evaluateImmediate(fix: fix, current: selectedRegion)
+            switch outcome {
+            case let .committed(region):
+                apply(region, announce: false)
+            case .outsideUkraine:
+                applyOutsideUkraine()
+            case .ignored, .unchanged, .candidate:
+                break
+            }
+        }
     }
 
     func updateFromLocation(fix: LocationFix) {

@@ -7,7 +7,15 @@
 | `regioncheck.pro.monthly` | month | $0.29 |
 | `regioncheck.pro.yearly` | year | $0.99 |
 
-Local StoreKit config: `RegionalCheck/Resources/Products.storekit` (wired in the `RegionalCheck` scheme).
+Local StoreKit config: `RegionalCheck/Resources/Products.storekit` (wired in the `RegionalCheck` scheme Run action as `RegionalCheck/Resources/Products.storekit`).
+
+If the paywall shows **StoreKit catalog: 0 products**:
+
+1. Confirm Scheme → Run → Options → StoreKit Configuration = `Products.storekit` (name must not be red).
+2. Do **not** enable a custom working directory on Run.
+3. Delete the app from the device/simulator, then Run from Xcode (not a cold icon tap).
+4. Prefer **Simulator** for local `.storekit`; on a physical device an empty catalog usually means the configuration was not injected and StoreKit queried ASC instead.
+5. Filter the console for subsystem category `Subscription` (`vil4max.RegionalCheck`).
 
 ## Architecture
 
