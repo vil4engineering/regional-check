@@ -45,6 +45,16 @@ struct OnboardingView: View {
 
                 if purpose == .about {
                     VStack(spacing: Theme.Spacing.sm) {
+                        Text("about.disclaimer")
+                            .font(Theme.Typography.caption)
+                            .multilineTextAlignment(.center)
+                            .foregroundStyle(Theme.Colors.onFillSecondary)
+                            .padding(.horizontal, Theme.Spacing.lg)
+                        Link(destination: URL(string: "https://wiki.ubilling.net.ua/doku.php?id=aerialalertsapi")!) {
+                            Text("about.source_link")
+                                .font(Theme.Typography.caption)
+                                .foregroundStyle(Theme.Colors.onboarding)
+                        }
                         if isPro {
                             Text("subscription.badge.pro")
                                 .font(Theme.Typography.refreshLabel)
