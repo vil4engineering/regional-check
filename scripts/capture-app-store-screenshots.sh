@@ -14,12 +14,15 @@ SIM="${SCREENSHOT_SIM:-iPhone 17}"
 HEIGHT=2778
 WIDTH=1284
 
+# Status phases render HomeView above TabView (no tab bar).
+# "regions" boots MainTabView for the Regions tab shell.
 phases=(
   "launch:00-launch"
   "allClear:01-all-clear-kyiv"
   "alertActive:02-alert-active-kharkiv"
   "unavailable:04-unavailable-kyiv"
   "onboarding:05-onboarding-get-started"
+  "regions:06-regions-tab"
 )
 
 udid="$(xcrun simctl list devices available -j | python3 -c "

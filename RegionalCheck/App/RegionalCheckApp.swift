@@ -44,7 +44,7 @@ struct RegionalCheckApp: App {
     @ViewBuilder
     private var standardRoot: some View {
         if hasCompletedOnboarding {
-            HomeView()
+            MainTabView()
         } else {
             OnboardingView(purpose: .firstLaunch) {
                 hasCompletedOnboarding = true
@@ -62,8 +62,10 @@ struct RegionalCheckApp: App {
                 OnboardingView(purpose: .firstLaunch, onContinue: {})
             case "about":
                 OnboardingView(purpose: .about, onContinue: {})
+            case "regions":
+                MainTabView(initialTab: .regions)
             default:
-                HomeView()
+                HomeView(showsOnboarding: .constant(false), showsPaywall: .constant(false))
             }
         }
     #endif

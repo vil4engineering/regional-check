@@ -1,19 +1,11 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State private var showsOnboarding = false
-    @State private var showsPaywall = false
+    @Binding var showsOnboarding: Bool
+    @Binding var showsPaywall: Bool
 
     private var controller: StatusController {
         AppDependencies.status
-    }
-
-    private var location: LocationManager {
-        AppDependencies.location
-    }
-
-    private var regions: RegionSelection {
-        AppDependencies.regions
     }
 
     private var subscription: SubscriptionManager {
@@ -44,73 +36,12 @@ struct HomeView: View {
             #if DEBUG
                 if let phase = AppLaunchArguments.screenshotPhase {
                     controller.applyScreenshotFixture(phase)
-                    return
-                }
-                if AppLaunchArguments.showsPaywallOnLaunch {
-                    showsPaywall = true
                 }
             #endif
-            location.beginUpdating()
-            controller.setRegion(regions.selectedRegion)
-            controller.beginPeriodicRefresh()
-            AppDependencies.liveActivity.beginPhoneForegroundSession()
-            AppDependencies.syncLiveActivityContent()
-        }
-        .onChange(of: regions.selectedRegion) { _, region in
-            controller.setRegion(region)
-            AppDependencies.syncLiveActivityContent()
-        }
-        .onChange(of: location.coordinateStamp) { _, _ in
-            guard let coordinate = location.coordinate else { return }
-            regions.updateFromLocation(coordinate: coordinate)
-        }
-        .onChange(of: controller.state.phase) { _, _ in
-            AppDependencies.syncLiveActivityContent()
-        }
-        .onChange(of: subscription.isPro) { _, _ in
-            AppDependencies.syncLiveActivityContent()
-        }
-        .onDisappear {
-            controller.endPeriodicRefresh()
-            location.endUpdating()
-        }
-        .fullScreenCover(isPresented: $showsOnboarding) {
-            OnboardingView(
-                purpose: .about,
-                isPro: subscription.isPro,
-                isLiveActivityEnabled: subscription.state.isLiveActivityEnabled,
-                onToggleLiveActivity: { enabled in
-                    subscription.setLiveActivityEnabled(enabled)
-                    if !enabled {
-                        AppDependencies.liveActivity.endAll()
-                    } else {
-                        AppDependencies.liveActivity.beginPhoneForegroundSession()
-                        AppDependencies.syncLiveActivityContent()
-                    }
-                },
-                onShowPaywall: {
-                    showsOnboarding = false
-                    showsPaywall = true
-                },
-                onContinue: {
-                    showsOnboarding = false
-                }
-            )
-        }
-        .sheet(isPresented: $showsPaywall) {
-            PaywallView(manager: subscription)
-        }
-        .sheet(isPresented: Binding(
-            get: { regions.shouldShowOutsideUkraineInfo },
-            set: { if !$0 { regions.acknowledgeOutsideUkraineInfo() } }
-        )) {
-            OutsideUkraineInfoSheet {
-                regions.acknowledgeOutsideUkraineInfo()
-            }
         }
     }
 }
 
 #Preview {
-    HomeView()
+    HomeView(showsOnboarding: .constant(false), showsPaywall: .constant(false))
 }
