@@ -23,8 +23,8 @@ A glanceable CarPlay utility for drivers: open, see the regional alert status, c
 
 ## Product principles
 
-- One Screen
-- One Region
+- One Screen (CarPlay) · tabbed companion on phone (Status + Regions)
+- One current region (auto or manual) · optional Pro second pin
 - One State
 - One Data Provider
 - One User Action (Refresh)
@@ -34,11 +34,11 @@ Domain may use `AlertStatus` / `alarm` / `quiet`. UI uses All Clear / Alert Acti
 
 ## Never
 
-Accounts, auth, ads, history, user analytics, social features, favorites, map product surface. Do not sell the app as an “alert monitor.”
+Accounts, auth, ads, history, user analytics, social features, favorites, map product surface. Do not sell the app as an “alert monitor.” Do not paywall the current region’s alarm vs clear signal.
 
 ## Symbolic Pro (exception)
 
-Drive Check Pro is a StoreKit 2 entitlement for portfolio-quality billing: Live Activity during an active Drive Check session (iPhone foreground or CarPlay scene), Pro badge, and friendly extended status detail. Core glanceable status stays free. Session-scoped Live Activity is not background monitoring and is not push notification spam.
+Drive Check Pro is a StoreKit 2 entitlement: session Live Activity, Pro badge, extended detail (phone, CarPlay, widget, Siri), home-screen widgets with refresh, Control Center control, pinned secondary region, and alternate app icon. Core glanceable status stays free everywhere.
 
 ## Analytics
 

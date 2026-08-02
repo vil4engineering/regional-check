@@ -2,8 +2,14 @@
 
 CarPlay utility for drivers: see your region’s current alert status without reaching for the phone. Open, glance, close — not a monitor, map, or notification product.
 
+**Version 2.0** adds home-screen widgets, Control Center control, Siri shortcuts, a Regions tab, and Pro extras (extended detail, secondary region pin, alternate icon). Current-region status remains free.
+
 **Org:** [vil4engineering](https://github.com/vil4engineering) · **Repo:** [vil4engineering/regional-check](https://github.com/vil4engineering/regional-check)
 
 ## Stack
 
-iOS 26+ · Xcode · Swift · SwiftUI · CarPlay (Driving Task) · CoreLocation · MapKit · URLSession · String Catalogs (en/ru/uk) · Swift Testing · MVC
+iOS 26+ · Swift · SwiftUI · CarPlay · DriveCheckKit (SPM) · App Group · WidgetKit · App Intents · StoreKit 2 · String Catalogs (en/ru/uk) · Swift Testing
+
+## Docs
+
+- [Architecture](docs/architecture.md) · [Surfaces & Pro](docs/surfaces.md) · [Subscriptions](README_Subscriptions.md)
