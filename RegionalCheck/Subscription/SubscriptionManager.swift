@@ -36,7 +36,8 @@ final class SubscriptionManager: SubscriptionManaging {
     }
 
     func start() async {
-        Self.log.info("manager.start begin isPro=\(self.isPro, privacy: .public)")
+        let startIsPro = isPro
+        Self.log.info("manager.start begin isPro=\(startIsPro, privacy: .public)")
         applyCachedEntitlement()
         state.loadState = .loading
         await apply(service.currentEntitlement())
@@ -50,11 +51,14 @@ final class SubscriptionManager: SubscriptionManaging {
                 }
             }
         }
+        let doneIsPro = isPro
+        let productCount = state.products.count
+        let loadStateDescription = String(describing: state.loadState)
         Self.log.info(
             """
-            manager.start done isPro=\(self.isPro, privacy: .public) \
-            products=\(self.state.products.count, privacy: .public) \
-            loadState=\(String(describing: self.state.loadState), privacy: .public)
+            manager.start done isPro=\(doneIsPro, privacy: .public) \
+            products=\(productCount, privacy: .public) \
+            loadState=\(loadStateDescription, privacy: .public)
             """
         )
     }
@@ -90,8 +94,10 @@ final class SubscriptionManager: SubscriptionManaging {
         let result = await service.purchase(productID: productID)
         await apply(service.currentEntitlement())
         state.loadState = .ready
+        let purchaseIsPro = isPro
+        let resultDescription = String(describing: result)
         Self.log.info(
-            "manager.purchase done result=\(String(describing: result), privacy: .public) isPro=\(self.isPro, privacy: .public)"
+            "manager.purchase done result=\(resultDescription, privacy: .public) isPro=\(purchaseIsPro, privacy: .public)"
         )
         return result
     }
@@ -104,7 +110,8 @@ final class SubscriptionManager: SubscriptionManaging {
         case .active:
             apply(verification)
             state.loadState = .ready
-            Self.log.info("manager.restore restored isPro=\(self.isPro, privacy: .public)")
+            let restoreIsPro = isPro
+            Self.log.info("manager.restore restored isPro=\(restoreIsPro, privacy: .public)")
             return .restored
         case .none:
             apply(verification)

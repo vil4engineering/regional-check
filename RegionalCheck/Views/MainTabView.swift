@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct MainTabView: View {
     enum Tab: Hashable {
@@ -6,12 +7,16 @@ struct MainTabView: View {
         case regions
     }
 
+    @AppStorage("hasCompletedOnboarding") private var hasSeenFirstLaunchInfo = false
     @State private var selectedTab: Tab
     @State private var showsOnboarding = false
     @State private var showsPaywall = false
 
     init(initialTab: Tab = .status) {
         _selectedTab = State(initialValue: initialTab)
+        let tabBar = UITabBar.appearance()
+        tabBar.tintColor = UIColor.white
+        tabBar.unselectedItemTintColor = UIColor.white.withAlphaComponent(0.62)
     }
 
     private var controller: StatusController {
@@ -47,7 +52,7 @@ struct MainTabView: View {
                 }
                 .tag(Tab.regions)
         }
-        .tint(Theme.Colors.onboarding)
+        .tint(Theme.Colors.tabSelected)
         .onAppear {
             #if DEBUG
                 if AppLaunchArguments.showsPaywallOnLaunch {
@@ -106,15 +111,22 @@ struct MainTabView: View {
             )
         }
         .sheet(isPresented: Binding(
-            get: { regions.shouldShowOutsideUkraineInfo },
-            set: {
-                if !$0 {
-                    regions.acknowledgeOutsideUkraineInfo()
+            get: {
+                #if DEBUG
+                    if AppLaunchArguments.screenshotPhase != nil {
+                        return false
+                    }
+                #endif
+                return !hasSeenFirstLaunchInfo
+            },
+            set: { isPresented in
+                if !isPresented {
+                    hasSeenFirstLaunchInfo = true
                 }
             }
         )) {
             OutsideUkraineInfoSheet {
-                regions.acknowledgeOutsideUkraineInfo()
+                hasSeenFirstLaunchInfo = true
             }
         }
         .safeAreaInset(edge: .bottom) {

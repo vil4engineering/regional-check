@@ -6,6 +6,7 @@ enum Theme {
         static let attention = Color(red: 0.88, green: 0.48, blue: 0.48)
         static let checking = Color(red: 0.55, green: 0.57, blue: 0.60)
         static let onboarding = Color(red: 0.86, green: 0.68, blue: 0.28)
+        static let tabSelected = Color.white
         static let unavailable = Color("Unavailable")
         static let onFill = Color.white.opacity(0.92)
         static let onFillSecondary = Color.white.opacity(0.72)

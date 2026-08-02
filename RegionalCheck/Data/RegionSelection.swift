@@ -8,13 +8,11 @@ import Observation
 final class RegionSelection {
     private(set) var selectedRegion: AlertRegion
     private(set) var followsLocation: Bool
-    private(set) var shouldShowOutsideUkraineInfo = false
     private(set) var regionChangeNotice: String?
     private(set) var previousRegionForUndo: AlertRegion?
 
     private let store: RegionStore
     private let tracker: RegionTracker
-    private var didPresentOutsideUkraineThisSession = false
 
     init(
         store: RegionStore = .shared,
@@ -25,10 +23,6 @@ final class RegionSelection {
         tracker = RegionTracker(geocoder: geocoder, now: now)
         selectedRegion = store.load() ?? .kyivCity
         followsLocation = store.loadFollowsLocation()
-    }
-
-    func acknowledgeOutsideUkraineInfo() {
-        shouldShowOutsideUkraineInfo = false
     }
 
     func dismissRegionChangeNotice() {
@@ -95,10 +89,6 @@ final class RegionSelection {
     private func applyOutsideUkraine() {
         let previous = selectedRegion
         apply(.kyivCity, announce: previous != .kyivCity, previous: previous)
-        if !didPresentOutsideUkraineThisSession {
-            didPresentOutsideUkraineThisSession = true
-            shouldShowOutsideUkraineInfo = true
-        }
     }
 
     private func apply(_ region: AlertRegion, announce: Bool, previous: AlertRegion? = nil) {

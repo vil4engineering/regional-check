@@ -424,19 +424,19 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Drive Check shows regional alert status for Ukraine. Your location is outside Ukraine, so the app uses Kyiv by default."
+            "value" : "Drive Check shows air-raid alert status for Ukrainian regions — built for drivers and CarPlay. Pick a region or follow your location while you drive."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Drive Check показывает региональный статус тревог для Украины. Ваше местоположение вне Украины, поэтому по умолчанию выбран Киев."
+            "value" : "Drive Check показывает статус воздушной тревоги по регионам Украины — для водителей и CarPlay. Выберите регион или следуйте за геолокацией в пути."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Drive Check показує регіональний статус тривог для України. Ваше місце розташування поза Україною, тому за замовчуванням обрано Київ."
+            "value" : "Drive Check показує статус повітряної тривоги по регіонах України — для водіїв і CarPlay. Оберіть регіон або слідкуйте за геолокацією в дорозі."
           }
         }
       }
@@ -446,19 +446,19 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ukraine regions only"
+            "value" : "Drive Check"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Только регионы Украины"
+            "value" : "Drive Check"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Лише регіони України"
+            "value" : "Drive Check"
           }
         }
       }
@@ -1746,6 +1746,7 @@
       }
     },
     "subscription.status.runtime.device" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

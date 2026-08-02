@@ -4,7 +4,6 @@ import SwiftUI
 @main
 struct RegionalCheckApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
-    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some Scene {
@@ -35,22 +34,11 @@ struct RegionalCheckApp: App {
             if let phase = AppLaunchArguments.screenshotPhase {
                 screenshotRoot(phase: phase)
             } else {
-                standardRoot
+                MainTabView()
             }
         #else
-            standardRoot
-        #endif
-    }
-
-    @ViewBuilder
-    private var standardRoot: some View {
-        if hasCompletedOnboarding {
             MainTabView()
-        } else {
-            OnboardingView(purpose: .firstLaunch) {
-                hasCompletedOnboarding = true
-            }
-        }
+        #endif
     }
 
     #if DEBUG
@@ -87,7 +75,6 @@ struct RegionalCheckApp: App {
         }
     }
 #endif
-
 
 @MainActor
 enum AppDependencies {
