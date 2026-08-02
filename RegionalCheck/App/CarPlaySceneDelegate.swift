@@ -5,7 +5,7 @@ import UIKit
 @MainActor
 final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegate {
     private var interfaceController: CPInterfaceController?
-    private var isConnected = false
+    private var connectionGate = CarPlayConnectionGate()
 
     private var location: LocationManager {
         AppDependencies.location
@@ -50,8 +50,8 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
     }
 
     private func handleConnect(_ interfaceController: CPInterfaceController) {
+        guard connectionGate.connect() else { return }
         self.interfaceController = interfaceController
-        isConnected = true
         location.beginUpdating()
         status.setRegion(regions.selectedRegion)
 
@@ -66,7 +66,7 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
         AppDependencies.syncLiveActivityContent()
 
         Task { @MainActor [weak self] in
-            guard let self, isConnected else { return }
+            guard let self, connectionGate.isConnected else { return }
             await status.refresh()
             AppDependencies.syncLiveActivityContent()
             await render(animated: true)
@@ -74,7 +74,7 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
     }
 
     private func handleDisconnect() {
-        isConnected = false
+        guard connectionGate.disconnect() else { return }
         interfaceController = nil
         status.endPeriodicRefresh()
         location.endUpdating()
@@ -82,12 +82,12 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
     }
 
     private func armRegionObservation() {
-        guard isConnected else { return }
+        guard connectionGate.isConnected else { return }
         withObservationTracking {
             _ = regions.selectedRegion
         } onChange: { [weak self] in
             Task { @MainActor [weak self] in
-                guard let self, isConnected else { return }
+                guard let self, connectionGate.isConnected else { return }
                 status.setRegion(regions.selectedRegion)
                 await status.refresh()
                 AppDependencies.syncLiveActivityContent()
@@ -98,13 +98,13 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
     }
 
     private func armStatusObservation() {
-        guard isConnected else { return }
+        guard connectionGate.isConnected else { return }
         withObservationTracking {
             _ = status.state
             _ = status.regionTitle
         } onChange: { [weak self] in
             Task { @MainActor [weak self] in
-                guard let self, isConnected else { return }
+                guard let self, connectionGate.isConnected else { return }
                 await render(animated: true)
                 AppDependencies.syncLiveActivityContent()
                 armStatusObservation()
@@ -113,13 +113,13 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
     }
 
     private func armLocationObservation() {
-        guard isConnected else { return }
+        guard connectionGate.isConnected else { return }
         withObservationTracking {
             _ = location.coordinateStamp
             _ = location.authorizationStatus
         } onChange: { [weak self] in
             Task { @MainActor [weak self] in
-                guard let self, isConnected else { return }
+                guard let self, connectionGate.isConnected else { return }
                 if let fix = location.lastFix {
                     regions.updateFromLocation(fix: fix)
                 }
