@@ -1,6 +1,6 @@
 # StoreKit 2 Subscription — Feature Plan (Drive Check)
 
-Status: **implemented on this branch (1.2)** — StoreKit 2 + Pro Live Activity; notifications out of scope.  
+Status: **2.0** — StoreKit 2 + Pro surfaces (widgets, control, intents, secondary region).  
 Audience: local agent / human shipping with iOS Engineering Runtime.  
 Product: **Drive Check** (scheme/target `RegionalCheck`, bundle `vil4max.RegionalCheck`).
 
@@ -29,10 +29,9 @@ Success = a Senior iOS interviewer can install from TestFlight, purchase, restor
 | Product IDs | `regioncheck.pro.monthly`, `regioncheck.pro.yearly` |
 | Prices | Monthly **$0.29**, Yearly **$0.99** (ASC minimum demo) |
 | Free forever | Region check (iPhone + CarPlay) — never paywall-gated |
-| Pro | Live Activity (primary) + Pro badge + friendly extended detail |
-| Not shipping | History, favorites, export, AI, multi-region, background CarPlay monitor, local/push notifications as Pro |
-| Live Activity session | iPhone **foreground** + CarPlay scene; background phone alone ends Activity (`.immediate`) |
-| Widget home-screen | Deferred |
+| Pro | Live Activity + badge + extended detail + home-screen widget refresh/source + Control Center control + Siri extended answer + secondary region pin + alternate icon |
+| Not shipping | History, favorites, export, AI, background CarPlay monitor, local/push notifications as Pro |
+| Widget home-screen | **Shipped in 2.0** — status + secondary region; timeline reads `SharedStore` only |
 | CarPlay auto-poll without app open | **Not feasible** — do not claim |
 
 ---

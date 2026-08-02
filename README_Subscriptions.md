@@ -14,8 +14,9 @@ Local StoreKit config: `RegionalCheck/Resources/Products.storekit` (wired in the
 - `Subscription/` — protocols, StoreKit service, entitlement cache, `SubscriptionManager`, `PremiumAccess`
 - Views never import StoreKit except `PaywallView` for `manageSubscriptionsSheet`
 - Entitlement comes from verified StoreKit transactions + offline cache with expiry
-- Pro features: session Live Activity, Pro badge, friendly extended source label
-- Core region status stays free
+- Pro features: session Live Activity, Pro badge, extended source detail, widgets (refresh + source), Siri extended answer, secondary pinned region, alternate icon
+- Core region status stays free on phone, CarPlay, widgets, and Siri
+- Shared state: App Group `group.vil4max.RegionalCheck` via `SharedStore` — see `docs/surfaces.md`
 
 ## Live Activity session
 

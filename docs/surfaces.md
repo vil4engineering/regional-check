@@ -1,0 +1,31 @@
+# Surfaces and Pro gating
+
+Drive Check 2.0 exposes the same underlying `AlertsSnapshot` across phone, CarPlay, widgets, controls, Siri, and session Live Activity. **Current-region status is free everywhere.** Pro adds detail, extra surfaces, and a pinned second region.
+
+## Matrix
+
+| Surface | Data source | Free | Pro |
+|---------|-------------|------|-----|
+| Phone Status tab | Live fetch + `StatusController` | State, region, time | Badge, source label, secondary region line |
+| Phone Regions tab | Same snapshot | All regions, manual pin | Pin secondary region (context menu) |
+| CarPlay template | `StatusController` | Title, region, explanation, refresh | Source line (length-limited) |
+| Live Activity | Push from app session | Phase, region, time | Source label, stale marker |
+| Status widget | `SharedStore` | Phase, region, stale | Source + refresh button |
+| Secondary widget | `SharedStore` | Hidden (paywall copy) | Configured second region |
+| Control Center / Lock Screen control | `SharedStore` | Open app + region label | Same (not paywalled) |
+| Siri / Shortcuts | `SharedStore` | Region + status dialog | Source + checked time in dialog |
+
+## Principles
+
+1. **No paywall on safety signal** — alarm vs clear for the active region is never locked.
+2. **One fetch, many readers** — extensions read `SharedStore`; only the app and `RefreshStatusIntent` fetch Ubilling.
+3. **Honest age** — widgets and Live Activity show stale state; they do not pretend to poll in the background.
+4. **Secondary region is attention, not data** — pinning a second oblast does not add network cost; it surfaces an existing snapshot row.
+
+## Pro loss behavior
+
+- Extended strings and secondary UI hide immediately.
+- Secondary region **remains stored** in `shared.secondaryRegion.v1`.
+- Alternate app icon reverts to primary via `AlternateIconManager`.
+
+See ADR 0007.
