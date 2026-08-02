@@ -1,13 +1,6 @@
 import Foundation
 
-enum AlertStatus: Equatable {
+enum AlertStatus: Equatable, Sendable {
     case quiet
     case alarm
-}
-
-struct AlertStatusSnapshot: Equatable {
-    let region: AlertRegion
-    let status: AlertStatus
-    let checkedAt: Date
-    let source: String
 }

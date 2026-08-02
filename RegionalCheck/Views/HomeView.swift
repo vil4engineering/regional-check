@@ -54,17 +54,11 @@ struct HomeView: View {
             controller.setRegion(regions.selectedRegion)
             controller.beginPeriodicRefresh()
             AppDependencies.liveActivity.beginPhoneForegroundSession()
-            Task {
-                await controller.refresh()
-                AppDependencies.syncLiveActivityContent()
-            }
+            AppDependencies.syncLiveActivityContent()
         }
         .onChange(of: regions.selectedRegion) { _, region in
             controller.setRegion(region)
-            Task {
-                await controller.refresh()
-                AppDependencies.syncLiveActivityContent()
-            }
+            AppDependencies.syncLiveActivityContent()
         }
         .onChange(of: location.coordinateStamp) { _, _ in
             guard let coordinate = location.coordinate else { return }

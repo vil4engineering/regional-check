@@ -10,16 +10,19 @@ struct SmokeTests {
         let quiet = StatusState.quiet(lastCheckedAt: checkedAt)
         let alarm = StatusState.alarm(lastCheckedAt: checkedAt)
         let error = StatusState.error
+        let regionUnavailable = StatusState.regionUnavailable
 
         #expect(idle.title == "Checking…")
         #expect(quiet.title == "All Clear")
         #expect(alarm.title == "Alert Active")
         #expect(error.title == "Unavailable")
+        #expect(regionUnavailable.title == "Region Unavailable")
 
         #expect(idle.phase == .idle)
         #expect(quiet.phase == .quiet)
         #expect(alarm.phase == .alarm)
         #expect(error.phase == .error)
+        #expect(regionUnavailable.phase == .regionUnavailable)
         #expect(StatusState.quiet(lastCheckedAt: checkedAt).phase
             == StatusState.quiet(lastCheckedAt: Date(timeIntervalSince1970: 2)).phase)
 
@@ -57,9 +60,14 @@ struct SmokeTests {
     @Test
     @MainActor
     func controller_appliesScreenshotFixtures() {
-        let provider = MockStatusProvider { region in
-            AlertStatusSnapshot(region: region, status: .quiet, checkedAt: Date(), source: "test")
-        }
+        let provider = MockStatusProvider(
+            snapshot: AlertsSnapshot(
+                source: "test",
+                serverCachedAt: Date(),
+                fetchedAt: Date(),
+                statuses: [.kyivCity: .quiet]
+            )
+        )
         let controller = StatusController(region: .kyivCity, provider: provider)
 
         controller.applyScreenshotFixture("allClear")
@@ -86,14 +94,14 @@ struct SmokeTests {
     @MainActor
     func controller_startsIdle_thenShowsQuiet() async {
         let checkedAt = Date(timeIntervalSince1970: 1)
-        let provider = MockStatusProvider { region in
-            AlertStatusSnapshot(
-                region: region,
-                status: .quiet,
-                checkedAt: checkedAt,
-                source: "test"
+        let provider = MockStatusProvider(
+            snapshot: AlertsSnapshot(
+                source: "test",
+                serverCachedAt: checkedAt,
+                fetchedAt: checkedAt,
+                statuses: [.kyivCity: .quiet]
             )
-        }
+        )
         let controller = StatusController(region: .kyivCity, provider: provider)
 
         #expect(controller.state == .idle)
@@ -116,14 +124,14 @@ struct SmokeTests {
     @MainActor
     func controller_showsAlarmFromProvider() async {
         let checkedAt = Date(timeIntervalSince1970: 1)
-        let provider = MockStatusProvider { region in
-            AlertStatusSnapshot(
-                region: region,
-                status: .alarm,
-                checkedAt: checkedAt,
-                source: "test"
+        let provider = MockStatusProvider(
+            snapshot: AlertsSnapshot(
+                source: "test",
+                serverCachedAt: checkedAt,
+                fetchedAt: checkedAt,
+                statuses: [.kyivCity: .alarm]
             )
-        }
+        )
         let controller = StatusController(region: .kyivCity, provider: provider)
 
         await controller.refresh()
@@ -141,7 +149,7 @@ struct SmokeTests {
     @MainActor
     func controller_showsUnknownOnFailure() async {
         struct TestError: Error {}
-        let provider = MockStatusProvider { _ in throw TestError() }
+        let provider = MockStatusProvider(error: TestError())
         let controller = StatusController(region: .kyivCity, provider: provider)
 
         await controller.refresh()
@@ -160,9 +168,14 @@ struct SmokeTests {
     @Test
     @MainActor
     func controller_updatesRegionTitle() {
-        let provider = MockStatusProvider { region in
-            AlertStatusSnapshot(region: region, status: .quiet, checkedAt: Date(), source: "test")
-        }
+        let provider = MockStatusProvider(
+            snapshot: AlertsSnapshot(
+                source: "test",
+                serverCachedAt: Date(),
+                fetchedAt: Date(),
+                statuses: [.kyivCity: .quiet, .kyivOblast: .quiet]
+            )
+        )
         let controller = StatusController(region: .kyivCity, provider: provider)
         controller.setRegion(.kyivOblast)
         #expect(controller.regionTitle == String(localized: "Київська область"))
@@ -171,17 +184,17 @@ struct SmokeTests {
     @Test
     func provider_parsesKyivAlarmFromJSON() async throws {
         let provider = try makeProvider(json: kyivJSON(alertnow: true), now: Date(timeIntervalSince1970: 123))
-        let snapshot = try await provider.fetchStatus(region: .kyivCity)
-        #expect(snapshot.status == .alarm)
+        let snapshot = try await provider.fetchAlerts()
+        #expect(snapshot.status(for: .kyivCity) == .alarm)
         #expect(snapshot.source == "test")
-        #expect(snapshot.checkedAt == Date(timeIntervalSince1970: 123))
+        #expect(snapshot.fetchedAt == Date(timeIntervalSince1970: 123))
     }
 
     @Test
     func provider_parsesKyivQuietFromJSON() async throws {
         let provider = try makeProvider(json: kyivJSON(alertnow: false))
-        let snapshot = try await provider.fetchStatus(region: .kyivCity)
-        #expect(snapshot.status == .quiet)
+        let snapshot = try await provider.fetchAlerts()
+        #expect(snapshot.status(for: .kyivCity) == .quiet)
     }
 
     @Test
@@ -196,18 +209,16 @@ struct SmokeTests {
         }
         """
         let provider = try makeProvider(json: json)
-        let region = AlertRegion.lviv
-        let snapshot = try await provider.fetchStatus(region: region)
-        #expect(snapshot.status == .alarm)
-        #expect(snapshot.region == region)
+        let snapshot = try await provider.fetchAlerts()
+        #expect(snapshot.status(for: .lviv) == .alarm)
     }
 
     @Test
-    func provider_throwsWhenRegionMissing() async throws {
+    func provider_omitsMissingRegionFromSnapshot() async throws {
         let provider = try makeProvider(json: kyivJSON(alertnow: true))
-        await #expect(throws: UbillingError.missingRegionKey("Одеська область")) {
-            _ = try await provider.fetchStatus(region: .odesa)
-        }
+        let snapshot = try await provider.fetchAlerts()
+        #expect(snapshot.status(for: .odesa) == nil)
+        #expect(snapshot.status(for: .kyivCity) == .alarm)
     }
 
     @Test
@@ -223,7 +234,7 @@ struct SmokeTests {
         let provider = UbillingProvider(httpClient: http)
 
         do {
-            _ = try await provider.fetchStatus(region: .kyivCity)
+            _ = try await provider.fetchAlerts()
             Issue.record("Expected HTTP error")
         } catch let error as UbillingError {
             guard case let .unexpectedResponse(statusCode, _, _) = error else {
@@ -276,14 +287,22 @@ private func makeProvider(json: String, now: Date = Date()) throws -> UbillingPr
 }
 
 private struct MockStatusProvider: StatusProviding {
-    let statusForRegion: @Sendable (AlertRegion) async throws -> AlertStatusSnapshot
+    var snapshot: AlertsSnapshot?
+    var error: (any Error)?
 
-    func fetchStatus(region: AlertRegion) async throws -> AlertStatusSnapshot {
-        try await statusForRegion(region)
+    func fetchAlerts() async throws -> AlertsSnapshot {
+        if let error {
+            throw error
+        }
+        guard let snapshot else {
+            struct MissingSnapshot: Error {}
+            throw MissingSnapshot()
+        }
+        return snapshot
     }
 }
 
-private struct MockHTTPClient: HTTPClient {
+struct MockHTTPClient: HTTPClient {
     let data: Data
     let response: URLResponse
 

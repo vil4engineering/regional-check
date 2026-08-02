@@ -106,7 +106,9 @@ struct StatusView: View {
                         .padding(.top, Theme.Spacing.sm)
                 }
 
-                if case .error = controller.state, let detail = controller.state.detailText {
+                if let detail = controller.state.detailText,
+                   controller.state.phase == .error || controller.state.phase == .regionUnavailable
+                {
                     Text(detail)
                         .font(Theme.Typography.caption)
                         .multilineTextAlignment(.center)
@@ -176,7 +178,7 @@ struct StatusView: View {
                 .warning
             case .quiet:
                 .impact(flexibility: .soft, intensity: 0.7)
-            case .error:
+            case .error, .regionUnavailable:
                 .error
             case .idle:
                 nil
@@ -238,7 +240,12 @@ struct StatusView: View {
 }
 
 private struct PreviewProvider: StatusProviding {
-    func fetchStatus(region: AlertRegion) async throws -> AlertStatusSnapshot {
-        AlertStatusSnapshot(region: region, status: .quiet, checkedAt: Date(), source: "preview")
+    func fetchAlerts() async throws -> AlertsSnapshot {
+        AlertsSnapshot(
+            source: "preview",
+            serverCachedAt: Date(),
+            fetchedAt: Date(),
+            statuses: Dictionary(uniqueKeysWithValues: AlertRegion.allCases.map { ($0, .quiet) })
+        )
     }
 }

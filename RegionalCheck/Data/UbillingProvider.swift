@@ -2,7 +2,6 @@ import Foundation
 import os
 
 enum UbillingError: Error, Equatable {
-    case missingRegionKey(String)
     case unexpectedResponse(statusCode: Int?, contentType: String?, bodyPrefix: String)
 }
 
@@ -17,18 +16,25 @@ struct UbillingProvider: StatusProviding {
         self.now = now
     }
 
-    func fetchStatus(region: AlertRegion) async throws -> AlertStatusSnapshot {
+    func fetchAlerts() async throws -> AlertsSnapshot {
         let response = try await fetchResponse()
-        let regionKey = region.apiKey
-        guard let state = response.states[regionKey] else {
-            throw UbillingError.missingRegionKey(regionKey)
+        let fetchedAt = now()
+        var statuses: [AlertRegion: AlertStatus] = [:]
+        statuses.reserveCapacity(AlertRegion.allCases.count)
+
+        for (key, state) in response.states {
+            guard let region = AlertRegion.from(apiKey: key) else {
+                Self.log.error("Ignoring unknown Ubilling region key=\(key, privacy: .public)")
+                continue
+            }
+            statuses[region] = state.alertnow ? .alarm : .quiet
         }
 
-        return AlertStatusSnapshot(
-            region: region,
-            status: state.alertnow ? .alarm : .quiet,
-            checkedAt: now(),
-            source: response.source
+        return AlertsSnapshot(
+            source: response.source,
+            serverCachedAt: Self.parseCachedAt(response.cachedat),
+            fetchedAt: fetchedAt,
+            statuses: statuses
         )
     }
 
@@ -74,6 +80,14 @@ struct UbillingProvider: StatusProviding {
         }
     }
 
+    private static func parseCachedAt(_ raw: String) -> Date? {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return formatter.date(from: raw)
+    }
+
     private static func bodyPrefix(_ data: Data, maxBytes: Int = 240) -> String {
         guard !data.isEmpty else { return "<empty>" }
         let slice = data.prefix(maxBytes)
@@ -86,6 +100,7 @@ struct UbillingProvider: StatusProviding {
         }
 
         let source: String
+        let cachedat: String
         let states: [String: Region]
     }
 }

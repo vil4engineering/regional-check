@@ -114,7 +114,7 @@ extension StatusState.Phase {
             .quiet
         case .alarm:
             .alarm
-        case .error:
+        case .error, .regionUnavailable:
             .error
         }
     }

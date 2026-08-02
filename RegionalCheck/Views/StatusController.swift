@@ -8,12 +8,14 @@ enum StatusState: Equatable {
         case quiet
         case alarm
         case error
+        case regionUnavailable
     }
 
     case idle
     case quiet(lastCheckedAt: Date)
     case alarm(lastCheckedAt: Date)
     case error
+    case regionUnavailable
 
     var phase: Phase {
         switch self {
@@ -25,6 +27,8 @@ enum StatusState: Equatable {
             .alarm
         case .error:
             .error
+        case .regionUnavailable:
+            .regionUnavailable
         }
     }
 
@@ -38,6 +42,8 @@ enum StatusState: Equatable {
             String(localized: "Checking…")
         case .error:
             String(localized: "Unavailable")
+        case .regionUnavailable:
+            String(localized: "Region Unavailable")
         }
     }
 
@@ -49,7 +55,7 @@ enum StatusState: Equatable {
             "checkmark.circle.fill"
         case .idle:
             "arrow.triangle.2.circlepath"
-        case .error:
+        case .error, .regionUnavailable:
             "questionmark.circle.fill"
         }
     }
@@ -64,6 +70,8 @@ enum StatusState: Equatable {
             String(localized: "status.explanation.updating")
         case .error:
             String(localized: "status.explanation.unknown")
+        case .regionUnavailable:
+            String(localized: "status.explanation.region_unavailable")
         }
     }
 
@@ -73,6 +81,8 @@ enum StatusState: Equatable {
             String(format: String(localized: "Updated: %@"), lastCheckedAt.formatted(date: .omitted, time: .shortened))
         case .error:
             String(localized: "Tap Refresh to try again")
+        case .regionUnavailable:
+            String(localized: "status.detail.region_unavailable")
         case .idle:
             nil
         }
@@ -82,7 +92,7 @@ enum StatusState: Equatable {
         switch self {
         case let .alarm(lastCheckedAt), let .quiet(lastCheckedAt):
             lastCheckedAt
-        case .idle, .error:
+        case .idle, .error, .regionUnavailable:
             nil
         }
     }
@@ -98,6 +108,7 @@ final class StatusController {
     private(set) var regionTitle: String
     private(set) var isLoading = false
     private(set) var lastSourceRaw: String?
+    private(set) var lastSnapshot: AlertsSnapshot?
 
     private var region: AlertRegion
     private let provider: any StatusProviding
@@ -116,6 +127,8 @@ final class StatusController {
     func setRegion(_ region: AlertRegion) {
         self.region = region
         regionTitle = region.title
+        applySnapshotToState()
+        Task { await refresh() }
     }
 
     func beginPeriodicRefresh() {
@@ -143,16 +156,20 @@ final class StatusController {
             let checkedAt = Date(timeIntervalSince1970: 1_720_000_000)
             switch phase {
             case "allClear":
-                setRegion(.kyivCity)
+                region = .kyivCity
+                regionTitle = AlertRegion.kyivCity.title
                 state = .quiet(lastCheckedAt: checkedAt)
             case "alertActive":
-                setRegion(.kharkiv)
+                region = .kharkiv
+                regionTitle = AlertRegion.kharkiv.title
                 state = .alarm(lastCheckedAt: checkedAt)
             case "checking":
-                setRegion(.kharkiv)
+                region = .kharkiv
+                regionTitle = AlertRegion.kharkiv.title
                 state = .idle
             case "unavailable":
-                setRegion(.kyivCity)
+                region = .kyivCity
+                regionTitle = AlertRegion.kyivCity.title
                 state = .error
             default:
                 break
@@ -165,17 +182,27 @@ final class StatusController {
         isLoading = true
         defer { isLoading = false }
         do {
-            let snapshot = try await provider.fetchStatus(region: region)
+            let snapshot = try await provider.fetchAlerts()
+            lastSnapshot = snapshot
             lastSourceRaw = snapshot.source
-            switch snapshot.status {
-            case .alarm:
-                state = .alarm(lastCheckedAt: snapshot.checkedAt)
-            case .quiet:
-                state = .quiet(lastCheckedAt: snapshot.checkedAt)
-            }
+            applySnapshotToState()
         } catch {
             Self.log.error("Fetch status failed: \(String(describing: error), privacy: .public)")
             state = .error
+        }
+    }
+
+    private func applySnapshotToState() {
+        guard let snapshot = lastSnapshot else { return }
+        let checkedAt = snapshot.checkedAt
+        switch snapshot.status(for: region) {
+        case .alarm:
+            state = .alarm(lastCheckedAt: checkedAt)
+        case .quiet:
+            state = .quiet(lastCheckedAt: checkedAt)
+        case nil:
+            Self.log.error("Region missing from snapshot: \(self.region.apiKey, privacy: .public)")
+            state = .regionUnavailable
         }
     }
 }

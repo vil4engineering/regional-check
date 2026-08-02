@@ -20,7 +20,7 @@ enum Theme {
                 normal
             case .idle:
                 checking
-            case .error:
+            case .error, .regionUnavailable:
                 unavailable
             }
         }

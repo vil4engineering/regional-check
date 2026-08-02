@@ -1,5 +1,5 @@
 import Foundation
 
 protocol StatusProviding: Sendable {
-    func fetchStatus(region: AlertRegion) async throws -> AlertStatusSnapshot
+    func fetchAlerts() async throws -> AlertsSnapshot
 }
