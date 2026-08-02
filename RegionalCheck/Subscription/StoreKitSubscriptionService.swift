@@ -3,18 +3,23 @@ import StoreKit
 
 struct StoreKitSubscriptionService: SubscriptionServicing {
     private let updates: @Sendable () -> AsyncStream<FinishableTransactionUpdate>
-    private let entitlements: @Sendable () async -> EntitlementSnapshot
+    private let entitlements: @Sendable () async -> EntitlementVerification
+    private let syncPurchases: @Sendable () async throws -> Void
 
     init(
         updates: @escaping @Sendable () -> AsyncStream<FinishableTransactionUpdate> = {
             StoreKitSubscriptionService.liveUpdates()
         },
-        entitlements: (@Sendable () async -> EntitlementSnapshot)? = nil
+        entitlements: (@Sendable () async -> EntitlementVerification)? = nil,
+        syncPurchases: @escaping @Sendable () async throws -> Void = {
+            try await AppStore.sync()
+        }
     ) {
         self.updates = updates
         self.entitlements = entitlements ?? {
-            await StoreKitSubscriptionService.mapEntitlements()
+            await StoreKitSubscriptionService.verifyEntitlements()
         }
+        self.syncPurchases = syncPurchases
     }
 
     func loadProducts() async throws -> [SubscriptionProduct] {
@@ -63,22 +68,25 @@ struct StoreKitSubscriptionService: SubscriptionServicing {
         }
     }
 
-    func currentEntitlement() async -> EntitlementSnapshot {
+    func currentEntitlement() async -> EntitlementVerification {
         await entitlements()
     }
 
-    func restore() async -> EntitlementSnapshot {
-        try? await AppStore.sync()
+    func restore() async -> EntitlementVerification {
+        do {
+            try await syncPurchases()
+        } catch {
+            return .unverified
+        }
         return await entitlements()
     }
 
-    func listenForUpdates() -> AsyncStream<EntitlementSnapshot> {
+    func listenForUpdates() -> AsyncStream<EntitlementVerification> {
         AsyncStream { continuation in
             let task = Task {
                 for await update in updates() {
                     await update.finish()
-                    let snapshot = await entitlements()
-                    continuation.yield(snapshot)
+                    continuation.yield(await entitlements())
                 }
                 continuation.finish()
             }
@@ -119,37 +127,48 @@ struct StoreKitSubscriptionService: SubscriptionServicing {
         }
     }
 
-    private static func mapEntitlements() async -> EntitlementSnapshot {
+    private static func verifyEntitlements() async -> EntitlementVerification {
         var best: EntitlementSnapshot?
+        var sawUnverified = false
         for await result in Transaction.currentEntitlements {
-            guard case let .verified(transaction) = result else { continue }
-            guard SubscriptionProductID(rawValue: transaction.productID) != nil else { continue }
-            let expiration = transaction.expirationDate
-            let active: Bool = if let expiration {
-                expiration > Date()
-            } else {
-                transaction.revocationDate == nil
-            }
-            let candidate = EntitlementSnapshot(
-                productID: transaction.productID,
-                expirationDate: expiration,
-                isActive: active && transaction.revocationDate == nil,
-                source: "storekit",
-                verifiedAt: Date()
-            )
-            if candidate.isActive {
-                if let current = best {
-                    let currentExp = current.expirationDate ?? .distantPast
-                    let nextExp = candidate.expirationDate ?? .distantPast
-                    if nextExp >= currentExp {
+            switch result {
+            case let .verified(transaction):
+                guard SubscriptionProductID(rawValue: transaction.productID) != nil else { continue }
+                let expiration = transaction.expirationDate
+                let active: Bool = if let expiration {
+                    expiration > Date()
+                } else {
+                    transaction.revocationDate == nil
+                }
+                let candidate = EntitlementSnapshot(
+                    productID: transaction.productID,
+                    expirationDate: expiration,
+                    isActive: active && transaction.revocationDate == nil,
+                    source: "storekit",
+                    verifiedAt: Date()
+                )
+                if candidate.isActive {
+                    if let current = best {
+                        let currentExp = current.expirationDate ?? .distantPast
+                        let nextExp = candidate.expirationDate ?? .distantPast
+                        if nextExp >= currentExp {
+                            best = candidate
+                        }
+                    } else {
                         best = candidate
                     }
-                } else {
-                    best = candidate
                 }
+            case .unverified:
+                sawUnverified = true
             }
         }
-        return best ?? .inactive()
+        if let best, best.isActive {
+            return .active(best)
+        }
+        if sawUnverified {
+            return .unverified
+        }
+        return .none
     }
 
     private func mapProduct(_ product: Product) -> SubscriptionProduct {

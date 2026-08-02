@@ -1500,6 +1500,28 @@
         }
       }
     },
+    "subscription.restore.failed" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not restore purchases. Try again when you're online."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось восстановить покупки. Попробуйте снова, когда будет интернет."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не вдалося відновити покупки. Спробуйте знову, коли буде інтернет."
+          }
+        }
+      }
+    },
     "subscription.restore.success" : {
       "localizations" : {
         "en" : {

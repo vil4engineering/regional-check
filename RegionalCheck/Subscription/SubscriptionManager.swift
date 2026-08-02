@@ -30,15 +30,14 @@ final class SubscriptionManager: SubscriptionManaging {
     func start() async {
         applyCachedEntitlement()
         state.loadState = .loading
-        let entitlement = await service.currentEntitlement()
-        apply(entitlement)
+        apply(await service.currentEntitlement())
         await refreshProducts()
         updatesTask?.cancel()
         updatesTask = Task { [weak self] in
             guard let self else { return }
-            for await snapshot in service.listenForUpdates() {
+            for await verification in service.listenForUpdates() {
                 await MainActor.run {
-                    self.apply(snapshot)
+                    self.apply(verification)
                 }
             }
         }
@@ -59,17 +58,27 @@ final class SubscriptionManager: SubscriptionManaging {
     func purchase(productID: String) async -> PurchaseResult {
         state.loadState = .purchasing
         let result = await service.purchase(productID: productID)
-        let entitlement = await service.currentEntitlement()
-        apply(entitlement)
+        apply(await service.currentEntitlement())
         state.loadState = .ready
         return result
     }
 
-    func restore() async {
+    func restore() async -> RestoreOutcome {
         state.loadState = .loading
-        let entitlement = await service.restore()
-        apply(entitlement)
-        state.loadState = .ready
+        let verification = await service.restore()
+        switch verification {
+        case .active:
+            apply(verification)
+            state.loadState = .ready
+            return .restored
+        case .none:
+            apply(verification)
+            state.loadState = .ready
+            return .empty
+        case .unverified:
+            state.loadState = .ready
+            return .failed
+        }
     }
 
     func allows(_ feature: PremiumFeature) -> Bool {
@@ -91,12 +100,16 @@ final class SubscriptionManager: SubscriptionManaging {
         state.entitlement = Self.cachedEntitlementIfValid(cached)
     }
 
-    private func apply(_ entitlement: EntitlementSnapshot) {
-        state.entitlement = entitlement
-        if entitlement.isActive {
-            cache.save(entitlement)
-        } else {
+    private func apply(_ verification: EntitlementVerification) {
+        switch verification {
+        case let .active(snapshot):
+            state.entitlement = snapshot
+            cache.save(snapshot)
+        case .none:
+            state.entitlement = nil
             cache.clear()
+        case .unverified:
+            break
         }
     }
 

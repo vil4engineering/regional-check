@@ -81,7 +81,7 @@ struct SubscriptionTests {
                     periodDescription: "Year"
                 ),
             ],
-            entitlement: .inactive()
+            entitlement: .none
         )
         let manager = SubscriptionManager(service: service, cache: cache)
         #expect(manager.isPro)
@@ -108,7 +108,7 @@ struct SubscriptionTests {
                     periodDescription: "Year"
                 ),
             ],
-            entitlement: .inactive(),
+            entitlement: .none,
             purchaseResult: .success,
             entitlementAfterPurchase: EntitlementSnapshot(
                 productID: SubscriptionProductID.yearly.rawValue,
@@ -122,6 +122,96 @@ struct SubscriptionTests {
         let result = await manager.purchase(productID: SubscriptionProductID.yearly.rawValue)
         #expect(result == .success)
         #expect(manager.isPro)
+    }
+
+    @Test
+    @MainActor
+    func subscriptionManager_keepsCacheWhenVerificationFails() async {
+        let suite = "subscription.unverified.\(UUID().uuidString)"
+        guard let defaults = UserDefaults(suiteName: suite) else {
+            Issue.record("Missing UserDefaults suite")
+            return
+        }
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let cache = EntitlementCache(userDefaults: defaults)
+        cache.save(
+            EntitlementSnapshot(
+                productID: SubscriptionProductID.monthly.rawValue,
+                expirationDate: Date().addingTimeInterval(86400),
+                isActive: true,
+                source: "storekit",
+                verifiedAt: Date()
+            )
+        )
+        let service = FakeSubscriptionService(
+            products: [],
+            entitlement: .unverified
+        )
+        let manager = SubscriptionManager(service: service, cache: cache)
+        #expect(manager.isPro)
+        await manager.start()
+        #expect(manager.isPro)
+    }
+
+    @Test
+    @MainActor
+    func subscriptionManager_restoreFailed_keepsCache() async {
+        let suite = "subscription.restore.\(UUID().uuidString)"
+        guard let defaults = UserDefaults(suiteName: suite) else {
+            Issue.record("Missing UserDefaults suite")
+            return
+        }
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let cache = EntitlementCache(userDefaults: defaults)
+        cache.save(
+            EntitlementSnapshot(
+                productID: SubscriptionProductID.yearly.rawValue,
+                expirationDate: Date().addingTimeInterval(86400),
+                isActive: true,
+                source: "storekit",
+                verifiedAt: Date()
+            )
+        )
+        let service = FakeSubscriptionService(
+            products: [],
+            entitlement: .unverified,
+            restoreEntitlement: .unverified
+        )
+        let manager = SubscriptionManager(service: service, cache: cache)
+        let outcome = await manager.restore()
+        #expect(outcome == .failed)
+        #expect(manager.isPro)
+    }
+
+    @Test
+    @MainActor
+    func subscriptionManager_restoreEmpty_clearsCache() async {
+        let suite = "subscription.restore.empty.\(UUID().uuidString)"
+        guard let defaults = UserDefaults(suiteName: suite) else {
+            Issue.record("Missing UserDefaults suite")
+            return
+        }
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let cache = EntitlementCache(userDefaults: defaults)
+        cache.save(
+            EntitlementSnapshot(
+                productID: SubscriptionProductID.yearly.rawValue,
+                expirationDate: Date().addingTimeInterval(86400),
+                isActive: true,
+                source: "storekit",
+                verifiedAt: Date()
+            )
+        )
+        let service = FakeSubscriptionService(
+            products: [],
+            entitlement: .none,
+            restoreEntitlement: .none
+        )
+        let manager = SubscriptionManager(service: service, cache: cache)
+        let outcome = await manager.restore()
+        #expect(outcome == .empty)
+        #expect(manager.isPro == false)
+        #expect(cache.load() == nil)
     }
 
     @Test
@@ -170,7 +260,7 @@ struct SubscriptionTests {
         )
         await MainActor.run {
             let manager = SubscriptionManager(
-                service: FakeSubscriptionService(products: [], entitlement: .inactive()),
+                service: FakeSubscriptionService(products: [], entitlement: .none),
                 cache: EntitlementCache(userDefaults: defaults)
             )
             #expect(manager.isPro == false)
@@ -227,20 +317,23 @@ private final class RecordingLiveActivityController: LiveActivityControlling {
 
 private final class FakeSubscriptionService: SubscriptionServicing, @unchecked Sendable {
     let products: [SubscriptionProduct]
-    var entitlement: EntitlementSnapshot
+    var entitlement: EntitlementVerification
     let purchaseResult: PurchaseResult
     let entitlementAfterPurchase: EntitlementSnapshot?
+    var restoreEntitlement: EntitlementVerification?
 
     init(
         products: [SubscriptionProduct],
-        entitlement: EntitlementSnapshot,
+        entitlement: EntitlementVerification,
         purchaseResult: PurchaseResult = .cancelled,
-        entitlementAfterPurchase: EntitlementSnapshot? = nil
+        entitlementAfterPurchase: EntitlementSnapshot? = nil,
+        restoreEntitlement: EntitlementVerification? = nil
     ) {
         self.products = products
         self.entitlement = entitlement
         self.purchaseResult = purchaseResult
         self.entitlementAfterPurchase = entitlementAfterPurchase
+        self.restoreEntitlement = restoreEntitlement
     }
 
     func loadProducts() async throws -> [SubscriptionProduct] {
@@ -248,23 +341,27 @@ private final class FakeSubscriptionService: SubscriptionServicing, @unchecked S
     }
 
     func purchase(productID _: String) async -> PurchaseResult {
-        if let entitlementAfterPurchase {
-            entitlement = entitlementAfterPurchase
+        if purchaseResult == .success, let entitlementAfterPurchase {
+            entitlement = .active(entitlementAfterPurchase)
         }
         return purchaseResult
     }
 
-    func currentEntitlement() async -> EntitlementSnapshot {
+    func currentEntitlement() async -> EntitlementVerification {
         entitlement
     }
 
-    func listenForUpdates() -> AsyncStream<EntitlementSnapshot> {
+    func listenForUpdates() -> AsyncStream<EntitlementVerification> {
         AsyncStream { continuation in
             continuation.finish()
         }
     }
 
-    func restore() async -> EntitlementSnapshot {
-        entitlement
+    func restore() async -> EntitlementVerification {
+        if let restoreEntitlement {
+            entitlement = restoreEntitlement
+            return restoreEntitlement
+        }
+        return entitlement
     }
 }

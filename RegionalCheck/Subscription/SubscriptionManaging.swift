@@ -7,7 +7,7 @@ protocol SubscriptionManaging: AnyObject {
     func start() async
     func refreshProducts() async
     func purchase(productID: String) async -> PurchaseResult
-    func restore() async
+    func restore() async -> RestoreOutcome
     func allows(_ feature: PremiumFeature) -> Bool
     func setLiveActivityEnabled(_ enabled: Bool)
 }

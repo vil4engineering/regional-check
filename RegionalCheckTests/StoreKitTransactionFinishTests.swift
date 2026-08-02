@@ -19,7 +19,7 @@ struct StoreKitTransactionFinishTests {
                     continuation.finish()
                 }
             },
-            entitlements: { .inactive() }
+            entitlements: { .none }
         )
 
         var yielded = 0
@@ -47,7 +47,7 @@ struct StoreKitTransactionFinishTests {
                     continuation.finish()
                 }
             },
-            entitlements: { .inactive() }
+            entitlements: { .none }
         )
 
         for await _ in service.listenForUpdates() {}
