@@ -97,7 +97,7 @@ final class LiveActivityController: LiveActivityControlling {
         let state = contentState()
         let content = ActivityContent(
             state: state,
-            staleDate: Date().addingTimeInterval(600)
+            staleDate: activityStaleDate
         )
         do {
             activity = try Activity.request(
@@ -114,7 +114,7 @@ final class LiveActivityController: LiveActivityControlling {
         guard let activity else { return }
         let content = ActivityContent(
             state: contentState(),
-            staleDate: Date().addingTimeInterval(600)
+            staleDate: activityStaleDate
         )
         await activity.update(content)
     }
@@ -124,6 +124,16 @@ final class LiveActivityController: LiveActivityControlling {
         self.activity = nil
         let content = ActivityContent(state: contentState(), staleDate: nil)
         await activity.end(content, dismissalPolicy: dismissal)
+    }
+
+    private var activityStaleDate: Date {
+        let interval = StatusController.periodicRefreshInterval
+        let seconds = Double(interval.components.seconds)
+            + Double(interval.components.attoseconds) / 1_000_000_000_000_000_000
+        return LiveActivityStaleDate.make(
+            checkedAt: latestCheckedAt,
+            refreshInterval: seconds
+        )
     }
 
     private func contentState() -> DriveCheckActivityAttributes.ContentState {
