@@ -1,3 +1,4 @@
+import DriveCheckKit
 import SwiftUI
 import UIKit
 
@@ -25,6 +26,7 @@ struct HomeView: View {
                 ? StatusSourceLabel.displayName(for: controller.lastSourceRaw)
                 : nil,
             showsLocationAccessDenied: location.isAuthorizationBlocked,
+            secondaryRegionTitle: secondaryRegionLine(isPro: subscription.isPro),
             onRefresh: {
                 Task {
                     await controller.refresh()
@@ -49,6 +51,11 @@ struct HomeView: View {
                 }
             #endif
         }
+    }
+
+    private func secondaryRegionLine(isPro: Bool) -> String? {
+        guard isPro, let region = SharedStore.shared.loadSecondaryRegion() else { return nil }
+        return String(format: String(localized: "status.secondary_region"), region.title)
     }
 }
 

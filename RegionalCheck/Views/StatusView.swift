@@ -6,6 +6,7 @@ struct StatusView: View {
     var isPro = false
     var sourceLabel: String?
     var showsLocationAccessDenied = false
+    var secondaryRegionTitle: String?
     var onRefresh: () -> Void = {}
     var onShowInfo: (() -> Void)?
     var onShowPaywall: (() -> Void)?
@@ -90,6 +91,13 @@ struct StatusView: View {
                 .padding(.horizontal, Theme.Spacing.xl)
                 .padding(.vertical, Theme.Spacing.md)
                 .accessibilityElement(children: .combine)
+
+                if isPro, let secondary = secondaryRegionTitle {
+                    Text(secondary)
+                        .font(Theme.Typography.caption)
+                        .foregroundStyle(Theme.Colors.onFillSecondary)
+                        .padding(.horizontal, Theme.Spacing.xl)
+                }
 
                 instrumentDivider
 

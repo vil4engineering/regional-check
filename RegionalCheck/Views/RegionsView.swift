@@ -10,6 +10,10 @@ struct RegionsView: View {
         AppDependencies.regions
     }
 
+    private var subscription: SubscriptionManager {
+        AppDependencies.subscription
+    }
+
     private var model: RegionsListModel {
         RegionsListModel(snapshot: controller.lastSnapshot, selected: regions.selectedRegion)
     }
@@ -96,6 +100,14 @@ struct RegionsView: View {
         }
         .accessibilityLabel(rowAccessibilityLabel(for: region))
         .listRowBackground(Theme.Colors.dashboard.opacity(0.92))
+        .contextMenu {
+            if subscription.isPro {
+                Button("regions.pin_secondary") {
+                    SharedStore.shared.saveSecondaryRegion(region)
+                    WidgetReloader.reloadAllTimelines()
+                }
+            }
+        }
     }
 
     @ViewBuilder

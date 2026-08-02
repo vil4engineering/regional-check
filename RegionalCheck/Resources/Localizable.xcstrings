@@ -2179,6 +2179,94 @@
           }
         }
       }
+    },
+    "status.secondary_region": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Also watching: %@"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Також стежимо: %@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Также следим: %@"
+          }
+        }
+      }
+    },
+    "regions.pin_secondary": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pin as secondary region"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закріпити другим регіоном"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрепить вторым регионом"
+          }
+        }
+      }
+    },
+    "about.disclaimer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alert data is informational only. Do not rely on it for critical decisions."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дані тривог мають інформаційний характер. Не покладайтеся на них при критичних рішеннях."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Данные тревог носят информационный характер. Не полагайтесь на них при критических решениях."
+          }
+        }
+      }
+    },
+    "about.source_link": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Data source (Ubilling)"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Джерело даних (Ubilling)"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Источник данных (Ubilling)"
+          }
+        }
+      }
     }
   },
   "version": "1.1"
