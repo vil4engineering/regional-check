@@ -86,10 +86,25 @@ struct OnboardingView: View {
                 .buttonStyle(HapticButtonStyle(feedback: Theme.Haptics.button))
                 .accessibilityLabel(Text(LocalizedStringKey(purpose.ctaTitleKey)))
                 .padding(.horizontal, Theme.Spacing.xl)
-                .padding(.bottom, Theme.Spacing.xl)
+
+                if purpose == .about {
+                    Text(versionBuildText)
+                        .font(.system(.caption2, design: .rounded))
+                        .foregroundStyle(Theme.Colors.onFillSecondary.opacity(0.7))
+                        .multilineTextAlignment(.center)
+                        .padding(.top, Theme.Spacing.sm)
+                        .accessibilityAddTraits(.isStaticText)
+                }
             }
             .padding(Theme.Spacing.md)
+            .padding(.bottom, Theme.Spacing.lg)
         }
+    }
+
+    private var versionBuildText: String {
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "—"
+        let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "—"
+        return String(format: String(localized: "about.version_build %@ %@"), version, build)
     }
 }
 

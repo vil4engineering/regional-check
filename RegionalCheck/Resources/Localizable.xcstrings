@@ -81,6 +81,28 @@
         }
       }
     },
+    "about.version_build %@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version %@ (%@)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Версия %@ (%@)"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Версія %@ (%@)"
+          }
+        }
+      }
+    },
     "Alert Active" : {
       "localizations" : {
         "en" : {
@@ -1063,6 +1085,28 @@
       }
     },
     "subscription.error.storekit_empty" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subscriptions are unavailable. In App Store Connect, confirm regioncheck.pro.monthly and regioncheck.pro.yearly are Ready and linked to this version, then try again."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подписки недоступны. В App Store Connect проверьте, что regioncheck.pro.monthly и regioncheck.pro.yearly в статусе Ready и привязаны к этой версии, затем повторите."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Підписки недоступні. В App Store Connect перевірте, що regioncheck.pro.monthly і regioncheck.pro.yearly у статусі Ready і прив’язані до цієї версії, потім спробуйте знову."
+          }
+        }
+      }
+    },
+    "subscription.error.storekit_empty_debug" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {

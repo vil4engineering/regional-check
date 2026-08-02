@@ -40,32 +40,41 @@ struct DriveCheckSecondaryRegionProvider: AppIntentTimelineProvider {
     typealias Intent = SelectSecondaryRegionIntent
 
     func placeholder(in _: Context) -> DriveCheckSecondaryRegionEntry {
-        DriveCheckSecondaryRegionEntry(date: Date(), region: .lviv, presentation: nil)
+        .previewSample(region: .lviv)
     }
 
     func snapshot(for configuration: SelectSecondaryRegionIntent,
                   in _: Context) async -> DriveCheckSecondaryRegionEntry
     {
-        makeEntry(configuration: configuration)
+        makeEntry(configuration: configuration, allowPreviewSample: true)
     }
 
     func timeline(for configuration: SelectSecondaryRegionIntent,
                   in _: Context) async -> Timeline<DriveCheckSecondaryRegionEntry>
     {
-        let entry = makeEntry(configuration: configuration)
+        let entry = makeEntry(configuration: configuration, allowPreviewSample: false)
         return Timeline(entries: [entry], policy: .after(WidgetTimelineBuilder.reloadDate(from: entry.date)))
     }
 
-    private func makeEntry(configuration: SelectSecondaryRegionIntent) -> DriveCheckSecondaryRegionEntry {
+    private func makeEntry(configuration: SelectSecondaryRegionIntent,
+                           allowPreviewSample: Bool) -> DriveCheckSecondaryRegionEntry
+    {
         let store = SharedStore.shared
         if let configured = configuration.region {
             store.saveSecondaryRegion(configured)
         }
-        let region = store.loadSecondaryRegion() ?? .kyivCity
-        let presentation = store.loadIsPro()
-            ? WidgetTimelineBuilder.presentation(store: store, region: region)
-            : nil
-        return DriveCheckSecondaryRegionEntry(date: Date(), region: region, presentation: presentation)
+        let region = store.loadSecondaryRegion() ?? configuration.region ?? .kyivCity
+        if store.loadIsPro() {
+            return DriveCheckSecondaryRegionEntry(
+                date: Date(),
+                region: region,
+                presentation: WidgetTimelineBuilder.presentation(store: store, region: region)
+            )
+        }
+        if allowPreviewSample {
+            return .previewSample(region: region)
+        }
+        return DriveCheckSecondaryRegionEntry(date: Date(), region: region, presentation: nil)
     }
 }
 
@@ -73,6 +82,19 @@ struct DriveCheckSecondaryRegionEntry: TimelineEntry {
     let date: Date
     let region: AlertRegion
     let presentation: WidgetStatusPresentation?
+
+    static func previewSample(region: AlertRegion) -> DriveCheckSecondaryRegionEntry {
+        DriveCheckSecondaryRegionEntry(
+            date: Date(),
+            region: region,
+            presentation: WidgetStatusPresentation(
+                phase: .quiet,
+                regionTitle: region.title,
+                checkedAt: Date(),
+                isStale: false
+            )
+        )
+    }
 }
 
 struct DriveCheckSecondaryRegionView: View {
@@ -89,9 +111,15 @@ struct DriveCheckSecondaryRegionView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
             .containerBackground(for: .widget) { Color(.systemBackground) }
         } else {
-            Text("subscription.paywall.open")
-                .font(.caption)
-                .containerBackground(for: .widget) { Color(.systemBackground) }
+            VStack(alignment: .leading, spacing: 6) {
+                Text(entry.region.title)
+                    .font(.headline)
+                Text("widget.secondary.proRequired")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+            .containerBackground(for: .widget) { Color(.systemBackground) }
         }
     }
 }
