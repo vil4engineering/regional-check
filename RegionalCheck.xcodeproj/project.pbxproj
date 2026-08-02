@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		227BD423301F1893004CFBC9 /* DriveCheckKit in Frameworks */ = {isa = PBXBuildFile; productRef = P6DCKIT002PRODUCT001 /* DriveCheckKit */; };
-		227BD424301F1893004CFBC9 /* DriveCheckKit in Frameworks */ = {isa = PBXBuildFile; productRef = P6DCKIT002PRODUCT001 /* DriveCheckKit */; };
-		227BD425301F1893004CFBC9 /* DriveCheckKit in Frameworks */ = {isa = PBXBuildFile; productRef = P6DCKIT002PRODUCT001 /* DriveCheckKit */; };
+		227BD423301F1893004CFBC9 /* DriveCheckKit in Frameworks */ = {isa = PBXBuildFile; productRef = P6DCKIT002PRODUCTAPP /* DriveCheckKit */; };
+		227BD424301F1893004CFBC9 /* DriveCheckKit in Frameworks */ = {isa = PBXBuildFile; productRef = P6DCKIT002PRODUCTWIDGET /* DriveCheckKit */; };
+		227BD425301F1893004CFBC9 /* DriveCheckKit in Frameworks */ = {isa = PBXBuildFile; productRef = P6DCKIT002PRODUCTTESTS /* DriveCheckKit */; };
 		A1B2C3D40E5EE00E00WIDGET /* RegionalCheckWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A1B2C3D40E5EE00100WIDGET /* RegionalCheckWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -164,7 +164,7 @@
 			);
 			name = RegionalCheck;
 			packageProductDependencies = (
-				P6DCKIT002PRODUCT001 /* DriveCheckKit */,
+				P6DCKIT002PRODUCTAPP /* DriveCheckKit */,
 			);
 			productName = RegionalCheck;
 			productReference = 509E636E2E5EE1BF00A13E04 /* RegionalCheck.app */;
@@ -188,7 +188,7 @@
 			);
 			name = RegionalCheckTests;
 			packageProductDependencies = (
-				P6DCKIT002PRODUCT001 /* DriveCheckKit */,
+				P6DCKIT002PRODUCTTESTS /* DriveCheckKit */,
 			);
 			productName = RegionalCheckTests;
 			productReference = 509E637F2E5EE1C000A13E04 /* RegionalCheckTests.xctest */;
@@ -211,7 +211,7 @@
 			);
 			name = RegionalCheckWidgets;
 			packageProductDependencies = (
-				P6DCKIT002PRODUCT001 /* DriveCheckKit */,
+				P6DCKIT002PRODUCTWIDGET /* DriveCheckKit */,
 			);
 			productName = RegionalCheckWidgets;
 			productReference = A1B2C3D40E5EE00100WIDGET /* RegionalCheckWidgets.appex */;
@@ -662,7 +662,17 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		P6DCKIT002PRODUCT001 /* DriveCheckKit */ = {
+		P6DCKIT002PRODUCTAPP /* DriveCheckKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = P6DCKIT001PACKAGE001 /* XCLocalSwiftPackageReference "Packages/DriveCheckKit" */;
+			productName = DriveCheckKit;
+		};
+		P6DCKIT002PRODUCTTESTS /* DriveCheckKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = P6DCKIT001PACKAGE001 /* XCLocalSwiftPackageReference "Packages/DriveCheckKit" */;
+			productName = DriveCheckKit;
+		};
+		P6DCKIT002PRODUCTWIDGET /* DriveCheckKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = P6DCKIT001PACKAGE001 /* XCLocalSwiftPackageReference "Packages/DriveCheckKit" */;
 			productName = DriveCheckKit;
