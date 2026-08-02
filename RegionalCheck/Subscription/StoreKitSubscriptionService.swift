@@ -2,6 +2,21 @@ import Foundation
 import StoreKit
 
 struct StoreKitSubscriptionService: SubscriptionServicing {
+    private let updates: @Sendable () -> AsyncStream<FinishableTransactionUpdate>
+    private let entitlements: @Sendable () async -> EntitlementSnapshot
+
+    init(
+        updates: @escaping @Sendable () -> AsyncStream<FinishableTransactionUpdate> = {
+            StoreKitSubscriptionService.liveUpdates()
+        },
+        entitlements: (@Sendable () async -> EntitlementSnapshot)? = nil
+    ) {
+        self.updates = updates
+        self.entitlements = entitlements ?? {
+            await StoreKitSubscriptionService.mapEntitlements()
+        }
+    }
+
     func loadProducts() async throws -> [SubscriptionProduct] {
         let storeProducts = try await Product.products(for: SubscriptionProductID.allRawValues)
         let mapped = storeProducts
@@ -26,10 +41,15 @@ struct StoreKitSubscriptionService: SubscriptionServicing {
             case let .success(verification):
                 switch verification {
                 case let .verified(transaction):
-                    await transaction.finish()
-                    return .success
-                case .unverified:
-                    return .failed(String(localized: "subscription.error.verification"))
+                    return await StoreKitPurchaseVerification.handleSuccess(
+                        isVerified: true,
+                        finish: { await transaction.finish() }
+                    )
+                case let .unverified(transaction, _):
+                    return await StoreKitPurchaseVerification.handleSuccess(
+                        isVerified: false,
+                        finish: { await transaction.finish() }
+                    )
                 }
             case .userCancelled:
                 return .cancelled
@@ -44,19 +64,20 @@ struct StoreKitSubscriptionService: SubscriptionServicing {
     }
 
     func currentEntitlement() async -> EntitlementSnapshot {
-        await mapEntitlements()
+        await entitlements()
     }
 
     func restore() async -> EntitlementSnapshot {
         try? await AppStore.sync()
-        return await mapEntitlements()
+        return await entitlements()
     }
 
     func listenForUpdates() -> AsyncStream<EntitlementSnapshot> {
         AsyncStream { continuation in
             let task = Task {
-                for await _ in Transaction.updates {
-                    let snapshot = await mapEntitlements()
+                for await update in updates() {
+                    await update.finish()
+                    let snapshot = await entitlements()
                     continuation.yield(snapshot)
                 }
                 continuation.finish()
@@ -67,7 +88,38 @@ struct StoreKitSubscriptionService: SubscriptionServicing {
         }
     }
 
-    private func mapEntitlements() async -> EntitlementSnapshot {
+    private static func liveUpdates() -> AsyncStream<FinishableTransactionUpdate> {
+        AsyncStream { continuation in
+            let task = Task {
+                for await result in Transaction.updates {
+                    switch result {
+                    case let .verified(transaction):
+                        continuation.yield(
+                            FinishableTransactionUpdate(
+                                productID: transaction.productID,
+                                isVerified: true,
+                                finish: { await transaction.finish() }
+                            )
+                        )
+                    case let .unverified(transaction, _):
+                        continuation.yield(
+                            FinishableTransactionUpdate(
+                                productID: transaction.productID,
+                                isVerified: false,
+                                finish: { await transaction.finish() }
+                            )
+                        )
+                    }
+                }
+                continuation.finish()
+            }
+            continuation.onTermination = { _ in
+                task.cancel()
+            }
+        }
+    }
+
+    private static func mapEntitlements() async -> EntitlementSnapshot {
         var best: EntitlementSnapshot?
         for await result in Transaction.currentEntitlements {
             guard case let .verified(transaction) = result else { continue }
