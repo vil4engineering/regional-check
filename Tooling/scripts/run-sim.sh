@@ -4,13 +4,18 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=lib.sh
 source "$SCRIPT_DIR/lib.sh"
+# shellcheck source=capabilities.sh
+source "$SCRIPT_DIR/capabilities.sh"
 
 usage() {
   cat <<'EOF'
 Usage: run-sim.sh [--] [launch-arg ...]
 
-Build for the configured simulator, install, and launch the app with optional
-process launch arguments (passed through to the app).
+Build with xcodebuild for the configured simulator, install, and launch the app
+with optional process launch arguments.
+
+Note: run-sim always uses xcodebuild (needed for a local .app + simctl), even when
+Tooling/runtime.yml backend.prefer selects another adapter for just build/test.
 
 Examples:
   just run-sim
@@ -35,11 +40,10 @@ PROJ="$(find_xcodeproj)"
 WS="$(find_xcworkspace)"
 DEST="$(destination_spec)"
 SIM="$(sim_name)"
-
-BUNDLE_ID="$(bundle_id_for_scheme)" || {
-  echo "could not resolve PRODUCT_BUNDLE_IDENTIFIER for scheme $SCHEME" >&2
-  exit 1
-}
+PREFER="$(cfg_get backend.prefer auto)"
+if [[ "$PREFER" != "auto" && "$PREFER" != "xcodebuild" ]]; then
+  echo "run-sim: note — backend.prefer=$PREFER is ignored here; run-sim uses xcodebuild for simctl install/launch" >&2
+fi
 
 DERIVED="$(mktemp -d "${TMPDIR:-/tmp}/harness-run-sim.XXXXXX")"
 cleanup() { rm -rf "$DERIVED"; }
@@ -62,8 +66,41 @@ else
   xcodebuild "${XB_ARGS[@]}"
 fi
 
-APP_PATH="$(find "$DERIVED/Build/Products" -name "*.app" -type d | head -n 1 || true)"
-[[ -n "$APP_PATH" ]] || { echo "no .app produced under $DERIVED" >&2; exit 1; }
+APP_PATH="$(
+  /usr/bin/python3 - "$DERIVED" "$SCHEME" <<'PY'
+import os, sys
+derived, scheme = sys.argv[1], sys.argv[2]
+products = os.path.join(derived, "Build", "Products")
+if not os.path.isdir(products):
+    raise SystemExit(0)
+preferred = []
+others = []
+for root, dirs, _files in os.walk(products):
+    # Prefer top-level products, not nested copies inside other bundles
+    depth = root[len(products):].count(os.sep)
+    for d in list(dirs):
+        if not d.endswith(".app"):
+            continue
+        path = os.path.join(root, d)
+        if depth <= 2:
+            (preferred if d == f"{scheme}.app" else others).append(path)
+        dirs.remove(d)
+if preferred:
+    print(preferred[0])
+elif others:
+    # Prefer iphonesimulator products over others
+    others.sort(key=lambda p: (0 if "iphonesimulator" in p else 1, len(p)))
+    print(others[0])
+PY
+)"
+[[ -n "$APP_PATH" && -d "$APP_PATH" ]] || { echo "no .app produced under $DERIVED (expected ${SCHEME}.app)" >&2; exit 1; }
+
+BUNDLE_ID="$(
+  /usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$APP_PATH/Info.plist" 2>/dev/null \
+    || plutil -extract CFBundleIdentifier raw "$APP_PATH/Info.plist" 2>/dev/null \
+    || true
+)"
+[[ -n "$BUNDLE_ID" ]] || { echo "could not read CFBundleIdentifier from $APP_PATH/Info.plist" >&2; exit 1; }
 
 UDID="$(
   xcrun simctl list devices available -j 2>/dev/null \
@@ -89,7 +126,7 @@ fi
 open -a Simulator 2>/dev/null || true
 
 TARGET="${UDID:-booted}"
-echo "run-sim: install $APP_PATH"
+echo "run-sim: install $APP_PATH ($BUNDLE_ID)"
 xcrun simctl install "$TARGET" "$APP_PATH"
 
 echo "run-sim: launch $BUNDLE_ID ${ARGS[*]:-}"

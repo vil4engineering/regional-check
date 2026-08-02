@@ -26,7 +26,7 @@ Brain (behavior) comes from global Cursor rules/skills (`agents-kit`). Do not co
 | Scheme / target | `RegionalCheck` |
 | Tests | `RegionalCheckTests` |
 | Simulator | `iPhone 17` (see `Tooling/runtime.yml`) |
-| Runtime | `Tooling/` (ios-agent-harness 0.2.1) |
+| Runtime | `Tooling/` (ios-agent-harness 0.2.2) |
 | Context | `personal` |
 
 ## Definition of Ready (before Edit)

@@ -188,15 +188,29 @@ harness_version() {
 }
 
 bundle_id_for_scheme() {
-  local root proj scheme plist
-  root="$(project_root)"
+  local proj ws scheme settings id
   scheme="$(scheme_name)"
+  [[ -n "$scheme" ]] || return 1
   proj="$(find_xcodeproj)"
-  [[ -n "$proj" && -n "$scheme" ]] || return 1
-  plist="$(
-    xcodebuild -project "$proj" -scheme "$scheme" -showBuildSettings 2>/dev/null \
-      | awk -F' = ' '/PRODUCT_BUNDLE_IDENTIFIER/ { print $2; exit }'
+  ws="$(find_xcworkspace)"
+  if [[ -n "$ws" ]]; then
+    settings="$(xcodebuild -workspace "$ws" -scheme "$scheme" -showBuildSettings 2>/dev/null || true)"
+  elif [[ -n "$proj" ]]; then
+    settings="$(xcodebuild -project "$proj" -scheme "$scheme" -showBuildSettings 2>/dev/null || true)"
+  else
+    return 1
+  fi
+  id="$(
+    printf '%s\n' "$settings" | awk -F' = ' '
+      /PRODUCT_TYPE = com.apple.product-type.application/ { app=1 }
+      /PRODUCT_BUNDLE_IDENTIFIER/ {
+        id=$2
+        if (app) { print id; exit }
+        if (!first) first=id
+      }
+      END { if (first != "") print first }
+    '
   )"
-  [[ -n "$plist" ]] || return 1
-  echo "$plist"
+  [[ -n "$id" ]] || return 1
+  echo "$id"
 }
