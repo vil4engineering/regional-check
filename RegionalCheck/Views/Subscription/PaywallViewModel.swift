@@ -10,7 +10,9 @@ final class PaywallViewModel {
         case ready([SubscriptionProduct])
     }
 
-    private let manager: SubscriptionManager
+    private let manager: any SubscriptionManaging
+    private let syncLiveActivity: () -> Void
+    private let onDismiss: () -> Void
 
     var selectedProductID: String = SubscriptionProductID.yearly.rawValue
     var statusMessage: String?
@@ -53,8 +55,21 @@ final class PaywallViewModel {
         manager.state.loadState
     }
 
-    init(manager: SubscriptionManager) {
+    var loadErrorMessage: String? {
+        if case let .error(message) = loadState {
+            return message
+        }
+        return nil
+    }
+
+    init(
+        manager: any SubscriptionManaging,
+        syncLiveActivity: @escaping () -> Void = {},
+        onDismiss: @escaping () -> Void = {}
+    ) {
         self.manager = manager
+        self.syncLiveActivity = syncLiveActivity
+        self.onDismiss = onDismiss
         selectPreferredProduct()
     }
 
@@ -71,30 +86,39 @@ final class PaywallViewModel {
 
     func purchase() async {
         guard let productID = selectedProduct?.id else { return }
+        guard !isBusy else { return }
         isBusy = true
-        defer { isBusy = false }
         let result = await manager.purchase(productID: productID)
         switch result {
         case .success:
-            statusMessage = String(localized: "subscription.purchase.success")
-            AppDependencies.syncLiveActivityContent()
+            syncLiveActivity()
+            isBusy = false
+            onDismiss()
         case .cancelled:
             statusMessage = nil
+            isBusy = false
         case .pending:
             statusMessage = String(localized: "subscription.purchase.pending")
         case let .failed(message):
             statusMessage = message
+            isBusy = false
         }
     }
 
     func restore() async {
+        guard !isBusy else { return }
         isBusy = true
         defer { isBusy = false }
-        await manager.restore()
-        statusMessage = manager.isPro
-            ? String(localized: "subscription.restore.success")
-            : String(localized: "subscription.restore.empty")
-        AppDependencies.syncLiveActivityContent()
+        let outcome = await manager.restore()
+        switch outcome {
+        case .restored:
+            statusMessage = String(localized: "subscription.restore.success")
+            syncLiveActivity()
+        case .empty:
+            statusMessage = String(localized: "subscription.restore.empty")
+        case .failed:
+            statusMessage = String(localized: "subscription.restore.failed")
+        }
     }
 
     private func selectPreferredProduct() {

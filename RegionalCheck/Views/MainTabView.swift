@@ -102,7 +102,11 @@ struct MainTabView: View {
             )
         }
         .sheet(isPresented: $showsPaywall) {
-            PaywallView(manager: subscription)
+            PaywallView(
+                manager: subscription,
+                syncLiveActivity: AppDependencies.syncLiveActivityContent,
+                onDismiss: { showsPaywall = false }
+            )
         }
         .sheet(isPresented: Binding(
             get: { regions.shouldShowOutsideUkraineInfo },

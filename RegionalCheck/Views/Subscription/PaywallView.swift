@@ -9,8 +9,18 @@ struct PaywallView: View {
     private let privacyURL = URL(string: "https://vil4max.github.io/regional-check/privacy-policy.html")!
     private let termsURL = URL(string: "https://vil4max.github.io/regional-check/terms-of-use.html")!
 
-    init(manager: SubscriptionManager) {
-        _viewModel = State(initialValue: PaywallViewModel(manager: manager))
+    init(
+        manager: any SubscriptionManaging,
+        syncLiveActivity: @escaping () -> Void,
+        onDismiss: @escaping () -> Void
+    ) {
+        _viewModel = State(
+            initialValue: PaywallViewModel(
+                manager: manager,
+                syncLiveActivity: syncLiveActivity,
+                onDismiss: onDismiss
+            )
+        )
     }
 
     var body: some View {
@@ -111,10 +121,17 @@ struct PaywallView: View {
                     .accessibilityLabel(Text("subscription.paywall.loading"))
             case .empty:
                 VStack(spacing: Theme.Spacing.md) {
-                    Text("subscription.paywall.empty")
-                        .font(Theme.Typography.caption)
-                        .foregroundStyle(Theme.Colors.onFillSecondary)
-                        .multilineTextAlignment(.center)
+                    if let errorMessage = viewModel.loadErrorMessage {
+                        Text(errorMessage)
+                            .font(Theme.Typography.caption)
+                            .foregroundStyle(Theme.Colors.onFillSecondary)
+                            .multilineTextAlignment(.center)
+                    } else {
+                        Text("subscription.paywall.empty")
+                            .font(Theme.Typography.caption)
+                            .foregroundStyle(Theme.Colors.onFillSecondary)
+                            .multilineTextAlignment(.center)
+                    }
                     Button {
                         Task { await viewModel.reloadProducts() }
                     } label: {
