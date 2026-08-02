@@ -2,6 +2,8 @@ import DriveCheckKit
 import Foundation
 @testable import RegionalCheck
 
+private final class TestBundleToken {}
+
 enum TestFixtures {
     static let activeEntitlement = EntitlementSnapshot(
         productID: SubscriptionProductID.yearly.rawValue,
@@ -10,6 +12,17 @@ enum TestFixtures {
         source: "storekit",
         verifiedAt: Date()
     )
+
+    static func aerialAlertsFixtureData() throws -> Data {
+        let bundle = Bundle(for: TestBundleToken.self)
+        let url = bundle.url(forResource: "aerialalerts", withExtension: "json", subdirectory: "Fixtures")
+            ?? bundle.url(forResource: "aerialalerts", withExtension: "json")
+        guard let url else {
+            struct MissingAerialAlertsFixture: Error {}
+            throw MissingAerialAlertsFixture()
+        }
+        return try Data(contentsOf: url)
+    }
 
     static func kyivJSON(alertnow: Bool) -> String {
         """

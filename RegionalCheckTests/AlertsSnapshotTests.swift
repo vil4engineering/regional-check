@@ -6,11 +6,7 @@ import Testing
 struct AlertsSnapshotTests {
     @Test
     func provider_decodesAllRegionsFromFixture() async throws {
-        let data = try Data(
-            contentsOf: URL(fileURLWithPath: #filePath)
-                .deletingLastPathComponent()
-                .appendingPathComponent("Fixtures/aerialalerts.json")
-        )
+        let data = try TestFixtures.aerialAlertsFixtureData()
         let url = try #require(URL(string: "https://ubilling.net.ua/aerialalerts/"))
         let response = try #require(HTTPURLResponse(
             url: url,

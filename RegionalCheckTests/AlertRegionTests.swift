@@ -6,11 +6,7 @@ import Testing
 struct AlertRegionTests {
     @Test
     func allCases_matchLiveFixtureApiKeys() throws {
-        let data = try Data(
-            contentsOf: URL(fileURLWithPath: #filePath)
-                .deletingLastPathComponent()
-                .appendingPathComponent("Fixtures/aerialalerts.json")
-        )
+        let data = try TestFixtures.aerialAlertsFixtureData()
         let response = try JSONDecoder().decode(Fixture.self, from: data)
         let fixtureKeys = Set(response.states.keys)
         let apiKeys = Set(AlertRegion.allCases.map(\.apiKey))

@@ -55,10 +55,7 @@ struct AerialAlertsFixtureTests {
     }
 
     private static func loadFixture() throws -> Data {
-        let url = URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent()
-            .appendingPathComponent("Fixtures/aerialalerts.json")
-        return try Data(contentsOf: url)
+        try TestFixtures.aerialAlertsFixtureData()
     }
 }
 
