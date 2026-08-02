@@ -30,9 +30,20 @@ struct RegionalCheckApp: App {
 
     @ViewBuilder
     private var rootContent: some View {
-        if let phase = AppLaunchArguments.screenshotPhase {
-            screenshotRoot(phase: phase)
-        } else if hasCompletedOnboarding {
+        #if DEBUG
+            if let phase = AppLaunchArguments.screenshotPhase {
+                screenshotRoot(phase: phase)
+            } else {
+                standardRoot
+            }
+        #else
+            standardRoot
+        #endif
+    }
+
+    @ViewBuilder
+    private var standardRoot: some View {
+        if hasCompletedOnboarding {
             HomeView()
         } else {
             OnboardingView(purpose: .firstLaunch) {
@@ -41,34 +52,39 @@ struct RegionalCheckApp: App {
         }
     }
 
-    @ViewBuilder
-    private func screenshotRoot(phase: String) -> some View {
-        switch phase {
-        case "launch":
-            LaunchScreenCaptureView()
-        case "onboarding":
-            OnboardingView(purpose: .firstLaunch, onContinue: {})
-        case "about":
-            OnboardingView(purpose: .about, onContinue: {})
-        default:
-            HomeView()
+    #if DEBUG
+        @ViewBuilder
+        private func screenshotRoot(phase: String) -> some View {
+            switch phase {
+            case "launch":
+                LaunchScreenCaptureView()
+            case "onboarding":
+                OnboardingView(purpose: .firstLaunch, onContinue: {})
+            case "about":
+                OnboardingView(purpose: .about, onContinue: {})
+            default:
+                HomeView()
+            }
         }
-    }
+    #endif
 }
 
-private struct LaunchScreenCaptureView: View {
-    var body: some View {
-        ZStack {
-            Color("LaunchBackground")
-                .ignoresSafeArea()
-            Image("LaunchScreen")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
+#if DEBUG
+    private struct LaunchScreenCaptureView: View {
+        var body: some View {
+            ZStack {
+                Color("LaunchBackground")
+                    .ignoresSafeArea()
+                Image("LaunchScreen")
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
+            }
+            .accessibilityHidden(true)
         }
-        .accessibilityHidden(true)
     }
-}
+#endif
+
 
 @MainActor
 enum AppDependencies {

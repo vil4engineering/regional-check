@@ -41,13 +41,15 @@ struct HomeView: View {
             }
         )
         .onAppear {
-            if let phase = AppLaunchArguments.screenshotPhase {
-                controller.applyScreenshotFixture(phase)
-                return
-            }
-            if AppLaunchArguments.showsPaywallOnLaunch {
-                showsPaywall = true
-            }
+            #if DEBUG
+                if let phase = AppLaunchArguments.screenshotPhase {
+                    controller.applyScreenshotFixture(phase)
+                    return
+                }
+                if AppLaunchArguments.showsPaywallOnLaunch {
+                    showsPaywall = true
+                }
+            #endif
             location.beginUpdating()
             controller.setRegion(regions.selectedRegion)
             controller.beginPeriodicRefresh()

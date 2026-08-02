@@ -138,25 +138,27 @@ final class StatusController {
         periodicRefreshTask = nil
     }
 
-    func applyScreenshotFixture(_ phase: String) {
-        let checkedAt = Date(timeIntervalSince1970: 1_720_000_000)
-        switch phase {
-        case "allClear":
-            setRegion(.kyivCity)
-            state = .quiet(lastCheckedAt: checkedAt)
-        case "alertActive":
-            setRegion(AlertRegion(kind: .oblast(name: "Харківська область")))
-            state = .alarm(lastCheckedAt: checkedAt)
-        case "checking":
-            setRegion(AlertRegion(kind: .oblast(name: "Харківська область")))
-            state = .idle
-        case "unavailable":
-            setRegion(.kyivCity)
-            state = .error
-        default:
-            break
+    #if DEBUG
+        func applyScreenshotFixture(_ phase: String) {
+            let checkedAt = Date(timeIntervalSince1970: 1_720_000_000)
+            switch phase {
+            case "allClear":
+                setRegion(.kyivCity)
+                state = .quiet(lastCheckedAt: checkedAt)
+            case "alertActive":
+                setRegion(AlertRegion(kind: .oblast(name: "Харківська область")))
+                state = .alarm(lastCheckedAt: checkedAt)
+            case "checking":
+                setRegion(AlertRegion(kind: .oblast(name: "Харківська область")))
+                state = .idle
+            case "unavailable":
+                setRegion(.kyivCity)
+                state = .error
+            default:
+                break
+            }
         }
-    }
+    #endif
 
     func refresh() async {
         guard !isLoading else { return }
