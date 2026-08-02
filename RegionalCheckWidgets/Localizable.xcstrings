@@ -1,116 +1,160 @@
 {
-  "sourceLanguage" : "en",
-  "strings" : {
-    "Alert Active" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Alert Active"
+  "sourceLanguage": "en",
+  "strings": {
+    "Alert Active": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alert Active"
           }
         },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Тревога"
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тревога"
           }
         },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Тривога"
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тривога"
           }
         }
       }
     },
-    "All Clear" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "All Clear"
+    "All Clear": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All Clear"
           }
         },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Всё ясно"
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Всё ясно"
           }
         },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Все ясно"
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все ясно"
           }
         }
       }
     },
-    "Checking…" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Checking…"
+    "Checking…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checking…"
           }
         },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Проверяем…"
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проверяем…"
           }
         },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Перевіряємо…"
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перевіряємо…"
           }
         }
       }
     },
-    "liveActivity.stale" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Updating…"
+    "liveActivity.stale": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Updating…"
           }
         },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Обновление…"
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обновление…"
           }
         },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Оновлення…"
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оновлення…"
           }
         }
       }
     },
-    "Unavailable" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Unavailable"
+    "Unavailable": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unavailable"
           }
         },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Недоступно"
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Недоступно"
           }
         },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Недоступно"
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Недоступно"
+          }
+        }
+      }
+    },
+    "widget.status.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alert Status"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Статус тривоги"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Статус тревоги"
+          }
+        }
+      }
+    },
+    "widget.status.description": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Current regional alert status"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поточний статус тривоги в області"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Текущий статус тревоги в области"
           }
         }
       }
     }
   },
-  "version" : "1.1"
+  "version": "1.1"
 }

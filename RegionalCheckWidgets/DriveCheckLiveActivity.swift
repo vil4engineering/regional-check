@@ -7,6 +7,7 @@ import WidgetKit
 struct RegionalCheckWidgetsBundle: WidgetBundle {
     var body: some Widget {
         DriveCheckLiveActivity()
+        DriveCheckStatusWidget()
     }
 }
 
