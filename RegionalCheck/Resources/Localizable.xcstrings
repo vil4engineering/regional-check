@@ -603,19 +603,19 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Live Activity on Lock Screen and Dynamic Island while Drive Check is active"
+            "value" : "Live Activity on Lock Screen and Dynamic Island during an active Drive Check session (app open or CarPlay)"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Live Activity на экране блокировки и в Dynamic Island, пока Drive Check активен"
+            "value" : "Live Activity на экране блокировки и в Dynamic Island во время активной сессии Drive Check (приложение открыто или CarPlay)"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Live Activity на екрані блокування та в Dynamic Island, поки Drive Check активний"
+            "value" : "Live Activity на екрані блокування та в Dynamic Island під час активної сесії Drive Check (застосунок відкритий або CarPlay)"
           }
         }
       }
@@ -955,19 +955,19 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unlock Live Activity and richer status detail during a Drive Check session."
+            "value" : "Unlock session Live Activity and richer status detail while the app or CarPlay is active."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Разблокируйте Live Activity и расширенные детали статуса на время сессии Drive Check."
+            "value" : "Разблокируйте сессионный Live Activity и расширенные детали статуса, пока открыто приложение или подключён CarPlay."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Розблокуйте Live Activity і розширені деталі статусу під час сесії Drive Check."
+            "value" : "Розблокуйте сесійний Live Activity і розширені деталі статусу, поки відкритий застосунок або підключено CarPlay."
           }
         }
       }

@@ -14,17 +14,19 @@ Local StoreKit config: `RegionalCheck/Resources/Products.storekit` (wired in the
 - `Subscription/` — protocols, StoreKit service, entitlement cache, `SubscriptionManager`, `PremiumAccess`
 - Views never import StoreKit except `PaywallView` for `manageSubscriptionsSheet`
 - Entitlement comes from verified StoreKit transactions + offline cache with expiry
-- Pro features: Live Activity, Pro badge, friendly extended source label
+- Pro features: session Live Activity, Pro badge, friendly extended source label
 - Core region status stays free
 
 ## Live Activity session
+
+Live Activity is **session-scoped on purpose**. There is no background polling of the alert feed, so a Lock Screen Activity that outlives the session would show a stale air-raid status — worse than showing nothing. Ending the Activity when the phone backgrounds (unless CarPlay still holds a session) is a safety choice, not an unfinished feature.
 
 | Client | Holds Activity | Ends when |
 | --- | --- | --- |
 | iPhone foreground | `scenePhase == .active` | background → end if no CarPlay (`dismissalPolicy: .immediate`) |
 | CarPlay scene | connected | disconnect |
 
-Updates are silent (no alert configuration). `staleDate` ≈ 10 minutes.
+Updates are silent (no alert configuration). `staleDate` is derived from the last `checkedAt` plus twice the current refresh interval, so aged content is marked stale instead of looking fresh forever.
 
 ## Testing
 
@@ -47,4 +49,4 @@ Unit tests use fakes for StoreKit. Manual: purchase/restore via StoreKit Configu
 
 - Verified transactions + `Transaction.updates`, not a purchase-button bool
 - Cache is UX with expiry, not source of truth
-- Honest CarPlay / foreground session scope
+- Honest CarPlay / foreground session scope — no background monitoring claim
