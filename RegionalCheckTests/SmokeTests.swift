@@ -161,8 +161,15 @@ struct SmokeTests {
 
     @Test
     @MainActor
-    func statusController_periodicRefreshInterval_isFiveMinutes() {
-        #expect(StatusController.periodicRefreshInterval == .seconds(300))
+    func refreshPolicy_baselineIsOneMinute() {
+        let env = RefreshEnvironment(
+            isAlarmActive: false,
+            isLowPowerModeEnabled: false,
+            thermalState: .nominal,
+            isExpensiveNetwork: false,
+            isConstrainedNetwork: false
+        )
+        #expect(RefreshPolicy.baseIntervalSeconds(for: env) == 60)
     }
 
     @Test

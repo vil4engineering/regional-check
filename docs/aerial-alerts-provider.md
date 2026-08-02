@@ -59,12 +59,17 @@ The app keeps requests well below Ubilling limits. Polling runs only while an iP
 
 ### Polling interval
 
-`StatusController.beginPeriodicRefresh()` starts a shared timer used by both iPhone (`HomeView`) and CarPlay (`CarPlaySceneDelegate`). Reference counting ensures one timer when both surfaces are active.
+`StatusController.beginPeriodicRefresh()` starts a shared timer used by both iPhone (`MainTabView`) and CarPlay (`CarPlaySceneDelegate`). Reference counting ensures one timer when both surfaces are active. Interval comes from `RefreshPolicy` (±10 % jitter), recomputed each cycle and when Low Power Mode changes.
 
-- Current interval: `StatusController.periodicRefreshInterval` = **300 seconds (5 minutes)**
-- Planned (Drive Check 2.0): adaptive policy — **60 s** baseline, **30 s** while the current region is in alarm, **300 s** under Low Power Mode, serious thermal state, or expensive/constrained network
+| Condition | Interval |
+| --- | ---: |
+| Baseline | **60 s** |
+| Current region in alarm | **30 s** |
+| Low Power Mode, thermal ≥ serious, or expensive/constrained path | **300 s** (wins over alarm) |
+
 - First fetch on open/connect is still immediate; the timer only schedules later checks
-- Stops when the iPhone home screen disappears and CarPlay disconnects
+- Stops when the phone tab shell disappears and CarPlay disconnects
+- Full app policy: `docs/refresh-policy.md`
 
 At 60-second intervals the app sends about **0.017 rps** from periodic polling alone — far below the 2 rps host limit. Event-driven refreshes (open, region change, manual) may add a few extra requests but remain safe in normal use.
 

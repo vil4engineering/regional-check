@@ -127,12 +127,9 @@ final class LiveActivityController: LiveActivityControlling {
     }
 
     private var activityStaleDate: Date {
-        let interval = StatusController.periodicRefreshInterval
-        let seconds = Double(interval.components.seconds)
-            + Double(interval.components.attoseconds) / 1_000_000_000_000_000_000
         return LiveActivityStaleDate.make(
             checkedAt: latestCheckedAt,
-            refreshInterval: seconds
+            refreshInterval: RefreshPolicy.baselineSeconds
         )
     }
 

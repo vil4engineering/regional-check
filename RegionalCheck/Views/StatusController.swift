@@ -102,26 +102,43 @@ enum StatusState: Equatable {
 @Observable
 final class StatusController {
     private static let log = Logger(subsystem: "vil4max.RegionalCheck", category: "Status")
-    static let periodicRefreshInterval: Duration = .seconds(300)
 
     private(set) var state: StatusState = .idle
     private(set) var regionTitle: String
     private(set) var isLoading = false
     private(set) var lastSourceRaw: String?
     private(set) var lastSnapshot: AlertsSnapshot?
+    private(set) var lastRefreshInterval: Duration?
 
     private var region: AlertRegion
     private let provider: any StatusProviding
+    private let environmentProvider: any RefreshEnvironmentProviding
+    private let jitterUnitInterval: () -> Double
     private var periodicRefreshClients = 0
     private var periodicRefreshTask: Task<Void, Never>?
+    private var powerStateObserver: NSObjectProtocol?
 
     init(
         region: AlertRegion,
-        provider: any StatusProviding
+        provider: any StatusProviding,
+        environmentProvider: (any RefreshEnvironmentProviding)? = nil,
+        jitterUnitInterval: @escaping () -> Double = { Double.random(in: 0 ... 1) }
     ) {
         self.region = region
         self.provider = provider
+        self.environmentProvider = environmentProvider ?? SystemRefreshEnvironmentProvider()
+        self.jitterUnitInterval = jitterUnitInterval
         regionTitle = region.title
+    }
+
+    var currentRegion: AlertRegion { region }
+
+    func refreshEnvironment() -> RefreshEnvironment {
+        environmentProvider.current(isAlarmActive: state.phase == .alarm)
+    }
+
+    func nextRefreshInterval() -> Duration {
+        RefreshPolicy.interval(for: refreshEnvironment(), jitterUnitInterval: jitterUnitInterval())
     }
 
     func setRegion(_ region: AlertRegion) {
@@ -134,21 +151,51 @@ final class StatusController {
     func beginPeriodicRefresh() {
         periodicRefreshClients += 1
         guard periodicRefreshTask == nil else { return }
-
-        periodicRefreshTask = Task { [weak self] in
-            while !Task.isCancelled {
-                try? await Task.sleep(for: Self.periodicRefreshInterval)
-                guard !Task.isCancelled, let self else { return }
-                await refresh()
-            }
-        }
+        observePowerStateChanges()
+        startPeriodicRefreshLoop()
     }
 
     func endPeriodicRefresh() {
         periodicRefreshClients = max(0, periodicRefreshClients - 1)
         guard periodicRefreshClients == 0 else { return }
+        stopPeriodicRefreshLoop()
+        if let powerStateObserver {
+            NotificationCenter.default.removeObserver(powerStateObserver)
+            self.powerStateObserver = nil
+        }
+    }
+
+    private func startPeriodicRefreshLoop() {
+        periodicRefreshTask = Task { [weak self] in
+            while !Task.isCancelled {
+                guard let self else { return }
+                let interval = nextRefreshInterval()
+                lastRefreshInterval = interval
+                try? await Task.sleep(for: interval)
+                guard !Task.isCancelled else { return }
+                await refresh()
+            }
+        }
+    }
+
+    private func stopPeriodicRefreshLoop() {
         periodicRefreshTask?.cancel()
         periodicRefreshTask = nil
+    }
+
+    private func observePowerStateChanges() {
+        guard powerStateObserver == nil else { return }
+        powerStateObserver = NotificationCenter.default.addObserver(
+            forName: .NSProcessInfoPowerStateDidChange,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor in
+                guard let self, self.periodicRefreshClients > 0 else { return }
+                self.stopPeriodicRefreshLoop()
+                self.startPeriodicRefreshLoop()
+            }
+        }
     }
 
     #if DEBUG
