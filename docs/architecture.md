@@ -2,47 +2,55 @@
 
 See `docs/product-charter.md`.
 
-MVC · app + Live Activity widget extension · no SPM packages yet (DriveCheckKit planned).
+MVC · app + widget extension · local SPM `DriveCheckKit` · App Group shared store.
 
 ```
+Packages/DriveCheckKit/   AlertRegion, AlertsSnapshot, UbillingProvider, SharedStore, intents
 RegionalCheck/
-  App/           lifecycle, CarPlay, Theme, MainTabView root
-  Views/         HomeView (Status tab), RegionsView, StatusView, StatusController, paywall
-  Data/          AlertRegion, AlertsSnapshot, StatusProviding, Ubilling,
-                 RegionStore / RegionSelection / RegionTracker / AlertRegionResolver,
-                 LocationManager, ReverseGeocoding
-  Subscription/  StoreKit 2 protocols, service, cache, manager
-  LiveActivity/  Activity attributes + session controller
-  Resources/
+  App/           lifecycle, CarPlay, Theme, MainTabView, WidgetReloader
+  Views/         HomeView, RegionsView, StatusView, StatusController, paywall
+  Data/          RegionStore, RegionSelection, RegionTracker, LocationManager
+  Subscription/  StoreKit 2, EntitlementCache (App Group suite)
+  LiveActivity/  session controller (attributes in DriveCheckKit)
+  Resources/     entitlements, privacy manifest
 RegionalCheckWidgets/
-  Live Activity UI (Lock Screen, Dynamic Island, small family)
+  Live Activity, status widget, secondary widget, control, App Intents provider
 Tooling/
   ios-agent-harness Runtime (just API, doctor, verify)
 ```
 
-Shared `provider` / `location` / `regions` / `status` / `subscription` / `liveActivity` live in `RegionalCheckApp.swift` (`AppDependencies`) for phone + CarPlay.
+Shared dependencies live in `RegionalCheckApp.swift` (`AppDependencies`) for phone + CarPlay.
 
 ## Data flow
 
 ```text
-Ubilling JSON ──► AlertsSnapshot [AlertRegion: AlertStatus]
+Ubilling JSON ──► AlertsSnapshot ──► SharedStore.shared.snapshot
+                         │                      │
+GPS ──► RegionTracker ──► region ──────────────┤
+                         │                      │
+                    StatusController ◄───────────┘
                          │
-GPS ──► RegionTracker ──► selectedRegion ──► StatusController (local select)
-                         │                         │
-                    Regions list ◄─────────────────┘
+              Widget / Control / Siri (read SharedStore only)
 ```
 
-One network fetch fills all regions. Tab **Regions** reads the same snapshot (no extra request). Region switch applies snapshot immediately, then refreshes in the background.
+One network fetch fills all regions. Extensions never poll on timeline; interactive refresh uses `RefreshStatusIntent`.
 
-Phone shell: `MainTabView` → Status | Regions. Onboarding and screenshot roots stay above the tab shell. CarPlay stays a single information template (no full region list while driving).
+## SharedStore contract
+
+- **Writer:** app (`StatusController`, `RegionStore`, `SubscriptionManager`)
+- **Readers:** widgets, control, App Intents
+- **After write:** `WidgetReloader.reloadAllTimelines()`
+- **Localization in package:** always `String(localized:bundle: .module)`
 
 ## Docs map
 
 | Topic | Doc |
 |-------|-----|
-| Region catalog, resolver, hysteresis | `docs/region-model.md` + ADR 0002 / 0003 / 0005 |
-| Ubilling limits / polling rationale | `docs/aerial-alerts-provider.md` |
-| Analytics / privacy labels | `docs/analytics.md` |
+| Shared module + App Group | this file + ADR 0006 |
+| Surfaces + Pro gating | `docs/surfaces.md` + ADR 0007 |
+| Region catalog, resolver | `docs/region-model.md` + ADR 0002 / 0003 / 0005 |
+| Ubilling limits | `docs/aerial-alerts-provider.md` |
+| Refresh policy | `docs/refresh-policy.md` |
 | StoreKit / Pro | `docs/storekit-subscription-plan.md`, `README_Subscriptions.md` |
 | Agent pilot | `docs/agent-pilot-brief.md`, root `AGENTS.md` |
 
