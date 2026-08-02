@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct HomeView: View {
     @Binding var showsOnboarding: Bool
@@ -6,6 +7,10 @@ struct HomeView: View {
 
     private var controller: StatusController {
         AppDependencies.status
+    }
+
+    private var location: LocationManager {
+        AppDependencies.location
     }
 
     private var subscription: SubscriptionManager {
@@ -19,6 +24,7 @@ struct HomeView: View {
             sourceLabel: subscription.allows(.extendedDetail)
                 ? StatusSourceLabel.displayName(for: controller.lastSourceRaw)
                 : nil,
+            showsLocationAccessDenied: location.isAuthorizationBlocked,
             onRefresh: {
                 Task {
                     await controller.refresh()
@@ -30,6 +36,10 @@ struct HomeView: View {
             },
             onShowPaywall: {
                 showsPaywall = true
+            },
+            onOpenLocationSettings: {
+                guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+                UIApplication.shared.open(url)
             }
         )
         .onAppear {

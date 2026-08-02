@@ -1,13 +1,20 @@
 import CoreLocation
 import Observation
+import os
 
 @MainActor
 @Observable
 final class LocationManager: NSObject, CLLocationManagerDelegate {
-    private var authorizationStatus: CLAuthorizationStatus
+    private static let log = Logger(subsystem: "vil4max.RegionalCheck", category: "Location")
+
+    private(set) var authorizationStatus: CLAuthorizationStatus
     private(set) var coordinate: CLLocationCoordinate2D?
     private(set) var lastFix: LocationFix?
     private(set) var coordinateStamp: Int = 0
+
+    var isAuthorizationBlocked: Bool {
+        LocationAuthorizationPolicy.isBlocked(authorizationStatus)
+    }
 
     private let manager: CLLocationManager
     private var clientCount = 0
@@ -44,7 +51,7 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
                 manager.startUpdatingLocation()
             }
         case .restricted, .denied:
-            break
+            manager.stopUpdatingLocation()
         @unknown default:
             break
         }
@@ -65,6 +72,17 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
             coordinate = fix.coordinate
             lastFix = fix
             coordinateStamp &+= 1
+        }
+    }
+
+    nonisolated func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        let denied = (error as? CLError)?.code == .denied
+        Task { @MainActor in
+            Self.log.error("Location update failed: \(String(describing: error), privacy: .public)")
+            if denied {
+                authorizationStatus = .denied
+                manager.stopUpdatingLocation()
+            }
         }
     }
 }

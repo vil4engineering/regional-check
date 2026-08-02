@@ -116,12 +116,14 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
         guard isConnected else { return }
         withObservationTracking {
             _ = location.coordinateStamp
+            _ = location.authorizationStatus
         } onChange: { [weak self] in
             Task { @MainActor [weak self] in
                 guard let self, isConnected else { return }
-                if let coordinate = location.coordinate {
-                    regions.updateFromLocation(coordinate: coordinate)
+                if let fix = location.lastFix {
+                    regions.updateFromLocation(fix: fix)
                 }
+                await render(animated: true)
                 armLocationObservation()
             }
         }
@@ -142,6 +144,14 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
             CPInformationItem(title: regionTitle, detail: state.detailText),
         ]
         items.append(CPInformationItem(title: state.explanation, detail: nil))
+        if location.isAuthorizationBlocked {
+            items.append(
+                CPInformationItem(
+                    title: NSLocalizedString("location.access.denied.carplay", comment: ""),
+                    detail: nil
+                )
+            )
+        }
 
         let refresh = CPTextButton(
             title: NSLocalizedString("Refresh", comment: ""),

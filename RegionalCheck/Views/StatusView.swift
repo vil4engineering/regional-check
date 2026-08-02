@@ -4,9 +4,11 @@ struct StatusView: View {
     var controller: StatusController
     var isPro = false
     var sourceLabel: String?
+    var showsLocationAccessDenied = false
     var onRefresh: () -> Void = {}
     var onShowInfo: (() -> Void)?
     var onShowPaywall: (() -> Void)?
+    var onOpenLocationSettings: (() -> Void)?
 
     @State private var pulseBright = false
 
@@ -115,6 +117,26 @@ struct StatusView: View {
                         .foregroundStyle(Theme.Colors.onFillSecondary)
                         .padding(.horizontal, Theme.Spacing.xl)
                         .padding(.top, Theme.Spacing.sm)
+                }
+
+                if showsLocationAccessDenied {
+                    VStack(spacing: Theme.Spacing.sm) {
+                        Text("location.access.denied")
+                            .font(Theme.Typography.caption)
+                            .multilineTextAlignment(.center)
+                            .foregroundStyle(Theme.Colors.onFillSecondary)
+                        Text("location.access.pick_region")
+                            .font(Theme.Typography.caption)
+                            .multilineTextAlignment(.center)
+                            .foregroundStyle(Theme.Colors.onFillSecondary)
+                        if let onOpenLocationSettings {
+                            Button("location.access.open_settings", action: onOpenLocationSettings)
+                                .font(Theme.Typography.refreshLabel)
+                                .foregroundStyle(Theme.Colors.onboarding)
+                        }
+                    }
+                    .padding(.horizontal, Theme.Spacing.xl)
+                    .padding(.top, Theme.Spacing.md)
                 }
 
                 Spacer(minLength: Theme.Spacing.lg)
