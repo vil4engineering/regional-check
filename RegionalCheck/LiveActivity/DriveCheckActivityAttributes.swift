@@ -7,17 +7,20 @@ public struct DriveCheckActivityAttributes: ActivityAttributes {
         public var regionTitle: String
         public var checkedAt: Date?
         public var sourceLabel: String
+        public var isStale: Bool
 
         public init(
             phase: DriveCheckActivityPhase,
             regionTitle: String,
             checkedAt: Date?,
-            sourceLabel: String
+            sourceLabel: String,
+            isStale: Bool = false
         ) {
             self.phase = phase
             self.regionTitle = regionTitle
             self.checkedAt = checkedAt
             self.sourceLabel = sourceLabel
+            self.isStale = isStale
         }
     }
 

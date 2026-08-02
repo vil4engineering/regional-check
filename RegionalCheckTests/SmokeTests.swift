@@ -195,6 +195,7 @@ struct SmokeTests {
         #expect(snapshot.status(for: .kyivCity) == .alarm)
         #expect(snapshot.source == "test")
         #expect(snapshot.fetchedAt == Date(timeIntervalSince1970: 123))
+        #expect(snapshot.checkedAt == Date(timeIntervalSince1970: 1_767_225_600))
     }
 
     @Test

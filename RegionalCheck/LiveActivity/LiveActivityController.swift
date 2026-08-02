@@ -16,6 +16,7 @@ final class LiveActivityController: LiveActivityControlling {
     private var latestRegionTitle = ""
     private var latestCheckedAt: Date?
     private var latestSourceLabel = ""
+    private var latestIsStale = false
 
     init(subscription: SubscriptionManager) {
         self.subscription = subscription
@@ -41,12 +42,14 @@ final class LiveActivityController: LiveActivityControlling {
         phase: DriveCheckActivityPhase,
         regionTitle: String,
         checkedAt: Date?,
-        sourceLabel: String
+        sourceLabel: String,
+        isStale: Bool = false
     ) {
         latestPhase = phase
         latestRegionTitle = regionTitle
         latestCheckedAt = checkedAt
         latestSourceLabel = sourceLabel
+        latestIsStale = isStale
         reconcileActivity()
     }
 
@@ -138,7 +141,8 @@ final class LiveActivityController: LiveActivityControlling {
             phase: latestPhase,
             regionTitle: latestRegionTitle,
             checkedAt: latestCheckedAt,
-            sourceLabel: latestSourceLabel
+            sourceLabel: latestSourceLabel,
+            isStale: latestIsStale
         )
     }
 }

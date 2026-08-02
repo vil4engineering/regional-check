@@ -102,7 +102,8 @@ enum AppDependencies {
             phase: status.state.phase.activityPhase,
             regionTitle: status.regionTitle,
             checkedAt: status.state.checkedAt,
-            sourceLabel: StatusSourceLabel.displayName(for: status.lastSourceRaw)
+            sourceLabel: StatusSourceLabel.displayName(for: status.lastSourceRaw),
+            isStale: status.isDataStale
         )
     }
 }

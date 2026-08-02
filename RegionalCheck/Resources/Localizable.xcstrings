@@ -840,6 +840,28 @@
         }
       }
     },
+    "status.stale" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data may be outdated — refresh"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Данные могут быть устаревшими — обновите"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дані можуть бути застарілими — оновіть"
+          }
+        }
+      }
+    },
     "status.source.label" : {
       "localizations" : {
         "en" : {

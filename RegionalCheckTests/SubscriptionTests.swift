@@ -210,7 +210,13 @@ private final class RecordingLiveActivityController: LiveActivityControlling {
         }
     }
 
-    func update(phase _: DriveCheckActivityPhase, regionTitle _: String, checkedAt _: Date?, sourceLabel _: String) {}
+    func update(
+        phase _: DriveCheckActivityPhase,
+        regionTitle _: String,
+        checkedAt _: Date?,
+        sourceLabel _: String,
+        isStale _: Bool
+    ) {}
 
     func endAll() {
         clients.removeAll()

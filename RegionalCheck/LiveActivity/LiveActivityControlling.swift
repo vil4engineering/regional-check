@@ -6,7 +6,13 @@ protocol LiveActivityControlling: AnyObject {
     func endPhoneForegroundSession()
     func beginCarPlaySession()
     func endCarPlaySession()
-    func update(phase: DriveCheckActivityPhase, regionTitle: String, checkedAt: Date?, sourceLabel: String)
+    func update(
+        phase: DriveCheckActivityPhase,
+        regionTitle: String,
+        checkedAt: Date?,
+        sourceLabel: String,
+        isStale: Bool
+    )
     func endAll()
 }
 

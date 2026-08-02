@@ -144,6 +144,14 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
             CPInformationItem(title: regionTitle, detail: state.detailText),
         ]
         items.append(CPInformationItem(title: state.explanation, detail: nil))
+        if status.isDataStale {
+            items.append(
+                CPInformationItem(
+                    title: NSLocalizedString("status.stale", comment: ""),
+                    detail: nil
+                )
+            )
+        }
         if location.isAuthorizationBlocked {
             items.append(
                 CPInformationItem(

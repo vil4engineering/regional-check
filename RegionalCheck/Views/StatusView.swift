@@ -99,6 +99,15 @@ struct StatusView: View {
                     .padding(.horizontal, Theme.Spacing.xl)
                     .padding(.top, Theme.Spacing.md)
 
+                if controller.isDataStale {
+                    Text("status.stale")
+                        .font(Theme.Typography.caption)
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(Theme.Colors.attention)
+                        .padding(.horizontal, Theme.Spacing.xl)
+                        .padding(.top, Theme.Spacing.sm)
+                }
+
                 if let sourceLabel {
                     Text("\(String(localized: "status.source.label")) \(sourceLabel)")
                         .font(Theme.Typography.caption)

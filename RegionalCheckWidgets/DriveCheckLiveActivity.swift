@@ -37,7 +37,7 @@ struct DriveCheckLiveActivity: Widget {
                             .font(.caption.monospacedDigit())
                             .foregroundStyle(.secondary)
                     }
-                    if context.isStale {
+                    if context.state.isStale {
                         Text("liveActivity.stale")
                             .font(.caption2)
                             .foregroundStyle(.secondary)
@@ -92,7 +92,7 @@ private struct DriveCheckLockScreenView: View {
                             .font(.caption2)
                             .foregroundStyle(.white.opacity(0.6))
                     }
-                    if context.isStale {
+                    if context.state.isStale {
                         Text("liveActivity.stale")
                             .font(.caption2)
                             .foregroundStyle(.white.opacity(0.6))

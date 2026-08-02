@@ -137,6 +137,16 @@ final class StatusController {
 
     var currentRegion: AlertRegion { region }
 
+    var isDataStale: Bool {
+        guard let checkedAt = state.checkedAt else { return false }
+        let interval = RefreshPolicy.baseIntervalSeconds(for: refreshEnvironment())
+        return DataFreshness.isStale(
+            checkedAt: checkedAt,
+            now: now(),
+            refreshIntervalSeconds: interval
+        )
+    }
+
     func refreshEnvironment() -> RefreshEnvironment {
         environmentProvider.current(isAlarmActive: state.phase == .alarm)
     }
