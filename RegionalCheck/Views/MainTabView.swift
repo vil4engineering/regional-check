@@ -97,6 +97,7 @@ struct MainTabView: View {
                     showsPaywall = true
                 },
                 onContinue: {
+                    AlternateIconManager.sync(isPro: subscription.isPro)
                     showsOnboarding = false
                 }
             )

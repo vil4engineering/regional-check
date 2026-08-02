@@ -142,6 +142,7 @@ final class SubscriptionManager: SubscriptionManaging {
         }
         if isPro != wasPro || state.isLiveActivityEnabled != wasLiveActivityEnabled {
             SharedStore.shared.saveIsPro(isPro)
+            AlternateIconManager.sync(isPro: isPro)
             WidgetReloader.reloadAllTimelines()
             notifyEntitlementChange()
         }
