@@ -107,7 +107,7 @@ struct SubscriptionTests {
             )
             await manager.refreshProducts()
             #expect(manager.state.products.isEmpty)
-            #expect(manager.state.loadState == .error(String(localized: "subscription.error.storekit_empty_debug")))
+            #expect(manager.state.loadState == .error(String(localized: "subscription.error.storekit_empty")))
         }
     }
 

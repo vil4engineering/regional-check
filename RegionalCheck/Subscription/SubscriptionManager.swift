@@ -73,11 +73,7 @@ final class SubscriptionManager: SubscriptionManaging {
                 return
             }
             if products.isEmpty {
-                #if DEBUG
-                    state.loadState = .error(String(localized: "subscription.error.storekit_empty_debug"))
-                #else
-                    state.loadState = .error(String(localized: "subscription.error.storekit_empty"))
-                #endif
+                state.loadState = .error(String(localized: "subscription.error.storekit_empty"))
                 Self.log.error("manager.refreshProducts empty catalog")
             } else {
                 state.loadState = .ready
