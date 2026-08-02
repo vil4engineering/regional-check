@@ -143,11 +143,26 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
         } catch {}
     }
 
+    private var subscription: SubscriptionManager {
+        AppDependencies.subscription
+    }
+
     private func makeRootTemplate(state: StatusState, regionTitle: String) -> CPTemplate {
         var items = [
             CPInformationItem(title: regionTitle, detail: state.detailText),
         ]
         items.append(CPInformationItem(title: state.explanation, detail: nil))
+        if subscription.allows(.extendedDetail) {
+            let source = StatusSourceLabel.displayName(for: status.lastSourceRaw)
+            if !source.isEmpty {
+                items.append(
+                    CPInformationItem(
+                        title: "\(NSLocalizedString("status.source.label", comment: "")) \(source)",
+                        detail: nil
+                    )
+                )
+            }
+        }
         if status.isDataStale {
             items.append(
                 CPInformationItem(
