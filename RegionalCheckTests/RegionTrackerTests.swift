@@ -1,4 +1,5 @@
 import CoreLocation
+import DriveCheckKit
 import Foundation
 @testable import RegionalCheck
 import Testing
@@ -8,14 +9,14 @@ struct RegionTrackerTests {
     @Test
     func ignoresStaleOrInaccurateFixes() async {
         let geocoder = CountingGeocoder(region: .kharkiv)
-        var now = Date(timeIntervalSince1970: 1_000)
+        var now = Date(timeIntervalSince1970: 1000)
         let tracker = RegionTracker(geocoder: geocoder, now: { now })
 
         let stale = makeFix(lat: 50, lon: 36, accuracy: 100, timestamp: now.addingTimeInterval(-120))
         #expect(await tracker.evaluate(fix: stale, current: .kyivCity) == .ignored)
         #expect(geocoder.callCount == 0)
 
-        let inaccurate = makeFix(lat: 50, lon: 36, accuracy: 2_000, timestamp: now)
+        let inaccurate = makeFix(lat: 50, lon: 36, accuracy: 2000, timestamp: now)
         #expect(await tracker.evaluate(fix: inaccurate, current: .kyivCity) == .ignored)
         #expect(geocoder.callCount == 0)
     }
@@ -23,7 +24,7 @@ struct RegionTrackerTests {
     @Test
     func throttlesGeocodeUntilIntervalAndDistance() async {
         let geocoder = CountingGeocoder(region: .kharkiv)
-        var now = Date(timeIntervalSince1970: 2_000)
+        var now = Date(timeIntervalSince1970: 2000)
         let tracker = RegionTracker(geocoder: geocoder, now: { now })
 
         let first = makeFix(lat: 50.0, lon: 36.0, accuracy: 50, timestamp: now)
@@ -39,7 +40,7 @@ struct RegionTrackerTests {
     @Test
     func commitsAfterHysteresisDuration() async {
         let geocoder = CountingGeocoder(region: .kharkiv)
-        var now = Date(timeIntervalSince1970: 3_000)
+        var now = Date(timeIntervalSince1970: 3000)
         let tracker = RegionTracker(geocoder: geocoder, now: { now })
 
         let first = makeFix(lat: 50.0, lon: 36.0, accuracy: 50, timestamp: now)
@@ -53,7 +54,7 @@ struct RegionTrackerTests {
     @Test
     func disagreeingResolveResetsCandidate() async {
         let geocoder = CountingGeocoder(region: .kharkiv)
-        var now = Date(timeIntervalSince1970: 4_000)
+        var now = Date(timeIntervalSince1970: 4000)
         let tracker = RegionTracker(geocoder: geocoder, now: { now })
 
         let first = makeFix(lat: 50, lon: 36, accuracy: 40, timestamp: now)
@@ -68,7 +69,7 @@ struct RegionTrackerTests {
     @Test
     func sameRegionResolutionClearsCandidate() async {
         let geocoder = CountingGeocoder(region: .kyivCity)
-        var now = Date(timeIntervalSince1970: 5_000)
+        var now = Date(timeIntervalSince1970: 5000)
         let tracker = RegionTracker(geocoder: geocoder, now: { now })
 
         geocoder.resolved = .kharkiv

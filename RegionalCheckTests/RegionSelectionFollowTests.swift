@@ -6,9 +6,9 @@ import Testing
 @MainActor
 struct RegionSelectionFollowTests {
     @Test
-    func pin_disablesFollowAndSavesRegion() {
+    func pin_disablesFollowAndSavesRegion() throws {
         let suite = "RegionSelectionFollowTests.\(UUID().uuidString)"
-        let defaults = UserDefaults(suiteName: suite)!
+        let defaults = try #require(UserDefaults(suiteName: suite))
         defer { defaults.removePersistentDomain(forName: suite) }
         let store = RegionStore(userDefaults: defaults)
         let selection = RegionSelection(store: store, geocoder: StubGeocoder())
@@ -22,9 +22,9 @@ struct RegionSelectionFollowTests {
     }
 
     @Test
-    func setFollowsLocation_persists() {
+    func setFollowsLocation_persists() throws {
         let suite = "RegionSelectionFollowTests.persist.\(UUID().uuidString)"
-        let defaults = UserDefaults(suiteName: suite)!
+        let defaults = try #require(UserDefaults(suiteName: suite))
         defer { defaults.removePersistentDomain(forName: suite) }
         let store = RegionStore(userDefaults: defaults)
         let selection = RegionSelection(store: store, geocoder: StubGeocoder())
@@ -35,9 +35,9 @@ struct RegionSelectionFollowTests {
     }
 
     @Test
-    func updateFromLocation_ignoredWhenPinned() async {
+    func updateFromLocation_ignoredWhenPinned() async throws {
         let suite = "RegionSelectionFollowTests.pinIgnore.\(UUID().uuidString)"
-        let defaults = UserDefaults(suiteName: suite)!
+        let defaults = try #require(UserDefaults(suiteName: suite))
         defer { defaults.removePersistentDomain(forName: suite) }
         let store = RegionStore(userDefaults: defaults)
         let geocoder = StubGeocoder(result: GeocodedAddress(

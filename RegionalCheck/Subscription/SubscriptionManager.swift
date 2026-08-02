@@ -34,7 +34,7 @@ final class SubscriptionManager: SubscriptionManaging {
     func start() async {
         applyCachedEntitlement()
         state.loadState = .loading
-        apply(await service.currentEntitlement())
+        await apply(service.currentEntitlement())
         await refreshProducts()
         updatesTask?.cancel()
         updatesTask = Task { [weak self] in
@@ -62,7 +62,7 @@ final class SubscriptionManager: SubscriptionManaging {
     func purchase(productID: String) async -> PurchaseResult {
         state.loadState = .purchasing
         let result = await service.purchase(productID: productID)
-        apply(await service.currentEntitlement())
+        await apply(service.currentEntitlement())
         state.loadState = .ready
         return result
     }

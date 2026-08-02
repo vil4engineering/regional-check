@@ -1,19 +1,19 @@
 import Foundation
 import os
 
-enum UbillingError: Error, Equatable {
+public enum UbillingError: Error, Equatable {
     case unexpectedResponse(statusCode: Int?, contentType: String?, bodyPrefix: String)
     case rateLimited(retryAfter: Date)
 }
 
-struct UbillingProvider: StatusProviding {
+public struct UbillingProvider: StatusProviding {
     private static let log = Logger(subsystem: "vil4max.RegionalCheck", category: "Data")
 
     private let httpClient: any HTTPClient
     private let now: @Sendable () -> Date
     private let sleep: @Sendable (Duration) async throws -> Void
 
-    init(
+    public init(
         httpClient: any HTTPClient = URLSession.shared,
         now: @escaping @Sendable () -> Date = { Date() },
         sleep: @escaping @Sendable (Duration) async throws -> Void = { try await Task.sleep(for: $0) }
@@ -23,7 +23,7 @@ struct UbillingProvider: StatusProviding {
         self.sleep = sleep
     }
 
-    func fetchAlerts() async throws -> AlertsSnapshot {
+    public func fetchAlerts() async throws -> AlertsSnapshot {
         do {
             return try await fetchAlertsOnce()
         } catch let error as URLError where TransientURLErrorPolicy.isTransient(error) {

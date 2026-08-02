@@ -1,3 +1,4 @@
+import DriveCheckKit
 import Foundation
 
 struct RegionsListModel: Equatable, Sendable {

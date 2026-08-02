@@ -1,10 +1,10 @@
 import Foundation
 import os
 
-enum AlertRegionResolver {
+public enum AlertRegionResolver {
     private static let log = Logger(subsystem: "vil4max.RegionalCheck", category: "Region")
 
-    static func resolve(cityName: String?, administrativeArea: String?) -> AlertRegion? {
+    public static func resolve(cityName: String?, administrativeArea: String?) -> AlertRegion? {
         if let city = normalize(cityName), isKyivCity(city) {
             return .kyivCity
         }

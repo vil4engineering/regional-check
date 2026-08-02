@@ -1,3 +1,4 @@
+import DriveCheckKit
 import SwiftUI
 
 struct StatusView: View {
@@ -231,12 +232,16 @@ struct StatusView: View {
     }
 
     private var isAlertActive: Bool {
-        if case .alarm = controller.state { return true }
+        if case .alarm = controller.state {
+            return true
+        }
         return false
     }
 
     private var isChecking: Bool {
-        if case .idle = controller.state { return true }
+        if case .idle = controller.state {
+            return true
+        }
         return false
     }
 

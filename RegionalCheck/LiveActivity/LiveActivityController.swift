@@ -1,4 +1,5 @@
 import ActivityKit
+import DriveCheckKit
 import Foundation
 import Observation
 import os
@@ -139,7 +140,7 @@ final class LiveActivityController: LiveActivityControlling {
     }
 
     private var activityStaleDate: Date {
-        return LiveActivityStaleDate.make(
+        LiveActivityStaleDate.make(
             checkedAt: latestCheckedAt,
             refreshInterval: RefreshPolicy.baselineSeconds
         )

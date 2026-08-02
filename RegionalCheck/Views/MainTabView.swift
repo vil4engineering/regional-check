@@ -110,7 +110,11 @@ struct MainTabView: View {
         }
         .sheet(isPresented: Binding(
             get: { regions.shouldShowOutsideUkraineInfo },
-            set: { if !$0 { regions.acknowledgeOutsideUkraineInfo() } }
+            set: {
+                if !$0 {
+                    regions.acknowledgeOutsideUkraineInfo()
+                }
+            }
         )) {
             OutsideUkraineInfoSheet {
                 regions.acknowledgeOutsideUkraineInfo()

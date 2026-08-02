@@ -1,4 +1,5 @@
 import CoreLocation
+import DriveCheckKit
 import Foundation
 import os
 
@@ -37,12 +38,12 @@ enum RegionTrackerOutcome: Equatable, Sendable {
 
 @MainActor
 final class RegionTracker {
-    static let maxHorizontalAccuracyMeters: CLLocationDistance = 1_000
+    static let maxHorizontalAccuracyMeters: CLLocationDistance = 1000
     static let maxFixAge: TimeInterval = 60
     static let geocodeMinInterval: TimeInterval = 60
-    static let geocodeMinDistanceMeters: CLLocationDistance = 5_000
+    static let geocodeMinDistanceMeters: CLLocationDistance = 5000
     static let hysteresisMinDuration: TimeInterval = 90
-    static let hysteresisMinDistanceMeters: CLLocationDistance = 5_000
+    static let hysteresisMinDistanceMeters: CLLocationDistance = 5000
 
     private static let log = Logger(subsystem: "vil4max.RegionalCheck", category: "RegionTracker")
 

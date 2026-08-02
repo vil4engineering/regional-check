@@ -25,7 +25,7 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
         authorizationStatus = manager.authorizationStatus
         super.init()
         manager.desiredAccuracy = kCLLocationAccuracyKilometer
-        manager.distanceFilter = 2_000
+        manager.distanceFilter = 2000
         manager.activityType = .automotiveNavigation
         manager.delegate = self
     }

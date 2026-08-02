@@ -1,3 +1,4 @@
+import DriveCheckKit
 import Foundation
 import Observation
 import os
@@ -135,7 +136,9 @@ final class StatusController {
         regionTitle = region.title
     }
 
-    var currentRegion: AlertRegion { region }
+    var currentRegion: AlertRegion {
+        region
+    }
 
     var isDataStale: Bool {
         guard let checkedAt = state.checkedAt else { return false }
@@ -270,7 +273,8 @@ final class StatusController {
         case .quiet:
             state = .quiet(lastCheckedAt: checkedAt)
         case nil:
-            Self.log.error("Region missing from snapshot: \(self.region.apiKey, privacy: .public)")
+            let missingKey = region.apiKey
+            Self.log.error("Region missing from snapshot: \(missingKey, privacy: .public)")
             state = .regionUnavailable
         }
     }

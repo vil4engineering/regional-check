@@ -60,7 +60,10 @@ struct PaywallViewModelTests {
 @MainActor
 private final class FakeSubscriptionManager: SubscriptionManaging {
     var state: SubscriptionState
-    var isPro: Bool { state.isPro }
+    var isPro: Bool {
+        state.isPro
+    }
+
     private let purchaseResult: PurchaseResult
     private let restoreOutcome: RestoreOutcome
 

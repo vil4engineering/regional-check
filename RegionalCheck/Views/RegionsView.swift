@@ -1,3 +1,4 @@
+import DriveCheckKit
 import SwiftUI
 
 struct RegionsView: View {
@@ -115,14 +116,13 @@ struct RegionsView: View {
     }
 
     private func rowAccessibilityLabel(for region: AlertRegion) -> String {
-        let statusText: String
-        switch model.status(for: region) {
+        let statusText = switch model.status(for: region) {
         case .alarm:
-            statusText = String(localized: "Alert Active")
+            String(localized: "Alert Active")
         case .quiet:
-            statusText = String(localized: "All Clear")
+            String(localized: "All Clear")
         case nil:
-            statusText = String(localized: "Checking…")
+            String(localized: "Checking…")
         }
         return "\(region.title), \(statusText)"
     }

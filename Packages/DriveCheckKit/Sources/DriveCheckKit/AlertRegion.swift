@@ -1,6 +1,6 @@
 import Foundation
 
-enum AlertRegion: String, CaseIterable, Codable, Sendable, Hashable {
+public enum AlertRegion: String, CaseIterable, Codable, Sendable, Hashable {
     case kyivCity
     case vinnytsia
     case volyn
@@ -27,7 +27,7 @@ enum AlertRegion: String, CaseIterable, Codable, Sendable, Hashable {
     case chernivtsi
     case chernihiv
 
-    var apiKey: String {
+    public var apiKey: String {
         switch self {
         case .kyivCity:
             "м. Київ"
@@ -82,16 +82,16 @@ enum AlertRegion: String, CaseIterable, Codable, Sendable, Hashable {
         }
     }
 
-    var title: String {
+    public var title: String {
         switch self {
         case .kyivCity:
-            String(localized: "Kyiv")
+            String(localized: "Kyiv", bundle: .module)
         default:
-            String(localized: String.LocalizationValue(apiKey))
+            String(localized: String.LocalizationValue(apiKey), bundle: .module)
         }
     }
 
-    static func from(apiKey: String) -> AlertRegion? {
+    public static func from(apiKey: String) -> AlertRegion? {
         allCases.first { $0.apiKey == apiKey }
     }
 }

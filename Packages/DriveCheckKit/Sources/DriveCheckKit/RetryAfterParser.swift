@@ -1,7 +1,7 @@
 import Foundation
 
-enum RetryAfterParser {
-    static func deadline(header: String?, now: Date, attempt: Int) -> Date {
+public enum RetryAfterParser {
+    public static func deadline(header: String?, now: Date, attempt: Int) -> Date {
         if let header {
             let trimmed = header.trimmingCharacters(in: .whitespacesAndNewlines)
             if let seconds = TimeInterval(trimmed) {
@@ -20,10 +20,10 @@ enum RetryAfterParser {
     }
 }
 
-enum TransientURLErrorPolicy {
-    static let retryDelay: Duration = .seconds(2)
+public enum TransientURLErrorPolicy {
+    public static let retryDelay: Duration = .seconds(2)
 
-    static func isTransient(_ error: URLError) -> Bool {
+    public static func isTransient(_ error: URLError) -> Bool {
         switch error.code {
         case .timedOut, .networkConnectionLost, .cannotConnectToHost, .dnsLookupFailed:
             true

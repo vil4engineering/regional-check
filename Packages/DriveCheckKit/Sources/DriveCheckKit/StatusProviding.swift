@@ -1,5 +1,5 @@
 import Foundation
 
-protocol StatusProviding: Sendable {
+public protocol StatusProviding: Sendable {
     func fetchAlerts() async throws -> AlertsSnapshot
 }

@@ -31,7 +31,10 @@ struct CarPlayConnectionTests {
     @Test
     @MainActor
     func periodicRefresh_survivesDuplicateCarPlayConnectDisconnect() {
-        let controller = StatusController(region: .kyivCity, provider: MockStatusProvider(snapshot: TestFixtures.quietSnapshot()))
+        let controller = StatusController(
+            region: .kyivCity,
+            provider: MockStatusProvider(snapshot: TestFixtures.quietSnapshot())
+        )
         controller.beginPeriodicRefresh()
         controller.beginPeriodicRefresh()
         controller.endPeriodicRefresh()

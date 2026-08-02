@@ -28,7 +28,12 @@ enum AppLaunchArguments {
             ProcessInfo.processInfo.arguments.contains("-ShowPaywall")
         }
     #else
-        static var screenshotPhase: String? { nil }
-        static var showsPaywallOnLaunch: Bool { false }
+        static var screenshotPhase: String? {
+            nil
+        }
+
+        static var showsPaywallOnLaunch: Bool {
+            false
+        }
     #endif
 }

@@ -86,7 +86,7 @@ struct StoreKitSubscriptionService: SubscriptionServicing {
             let task = Task {
                 for await update in updates() {
                     await update.finish()
-                    continuation.yield(await entitlements())
+                    await continuation.yield(entitlements())
                 }
                 continuation.finish()
             }

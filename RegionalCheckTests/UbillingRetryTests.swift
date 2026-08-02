@@ -1,3 +1,4 @@
+import DriveCheckKit
 import Foundation
 @testable import RegionalCheck
 import Testing
@@ -5,13 +6,13 @@ import Testing
 struct UbillingRetryTests {
     @Test
     func retriesTransientURLErrorOnce() async throws {
-        let url = URL(string: "https://ubilling.net.ua/aerialalerts/")!
-        let okResponse = HTTPURLResponse(
+        let url = try #require(URL(string: "https://ubilling.net.ua/aerialalerts/"))
+        let okResponse = try #require(HTTPURLResponse(
             url: url,
             statusCode: 200,
             httpVersion: nil,
             headerFields: ["Content-Type": "application/json"]
-        )!
+        ))
         let json = Data("""
         {"source":"test","cachedat":"2026-01-01 00:00:00","states":{"м. Київ":{"alertnow":false,"changed":"2026-01-01 00:00:00"}}}
         """.utf8)
@@ -33,16 +34,16 @@ struct UbillingRetryTests {
     }
 
     @Test
-    func rateLimitedUsesRetryAfterSeconds() async {
-        let url = URL(string: "https://ubilling.net.ua/aerialalerts/")!
-        let response = HTTPURLResponse(
+    func rateLimitedUsesRetryAfterSeconds() async throws {
+        let url = try #require(URL(string: "https://ubilling.net.ua/aerialalerts/"))
+        let response = try #require(HTTPURLResponse(
             url: url,
             statusCode: 429,
             httpVersion: nil,
             headerFields: ["Retry-After": "45"]
-        )!
+        ))
         let client = MockHTTPClient(data: Data(), response: response)
-        let now = Date(timeIntervalSince1970: 1_000)
+        let now = Date(timeIntervalSince1970: 1000)
         let provider = UbillingProvider(httpClient: client, now: { now }, sleep: { _ in })
 
         do {
@@ -70,9 +71,9 @@ struct UbillingRetryTests {
     @MainActor
     func scheduledRefreshSkipsDuringRateLimitWindow() async {
         let box = RateLimitThenOKProvider(
-            retryAfter: Date(timeIntervalSince1970: 2_000)
+            retryAfter: Date(timeIntervalSince1970: 2000)
         )
-        var now = Date(timeIntervalSince1970: 1_000)
+        var now = Date(timeIntervalSince1970: 1000)
         let controller = StatusController(
             region: .kyivCity,
             provider: box,
@@ -83,11 +84,11 @@ struct UbillingRetryTests {
         #expect(controller.state == .error)
         #expect(box.count == 1)
 
-        now = Date(timeIntervalSince1970: 1_500)
+        now = Date(timeIntervalSince1970: 1500)
         await controller.refresh(isScheduled: true)
         #expect(box.count == 1)
 
-        now = Date(timeIntervalSince1970: 2_100)
+        now = Date(timeIntervalSince1970: 2100)
         await controller.refresh(isScheduled: true)
         #expect(box.count == 2)
         #expect(controller.state.phase == .quiet)

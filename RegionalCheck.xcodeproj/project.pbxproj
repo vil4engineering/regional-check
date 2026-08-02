@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A1B2C3D40E5EE00E00WIDGET /* RegionalCheckWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A1B2C3D40E5EE00100WIDGET /* RegionalCheckWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		509E63802E5EE1C000A13E04 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -22,6 +26,20 @@
 			remoteInfo = RegionalCheckWidgets;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A1B2C3D40E5EE00D00WIDGET /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A1B2C3D40E5EE00E00WIDGET /* RegionalCheckWidgets.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		509E636E2E5EE1BF00A13E04 /* RegionalCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RegionalCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,24 +87,6 @@
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		A1B2C3D40E5EE00D00WIDGET /* Embed Foundation Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				A1B2C3D40E5EE00E00WIDGET /* RegionalCheckWidgets.appex in Embed Foundation Extensions */,
-			);
-			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
-/* Begin PBXBuildFile section */
-		A1B2C3D40E5EE00E00WIDGET /* RegionalCheckWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A1B2C3D40E5EE00100WIDGET /* RegionalCheckWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-/* End PBXBuildFile section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		509E636B2E5EE1BF00A13E04 /* Frameworks */ = {
@@ -155,6 +155,7 @@
 			);
 			name = RegionalCheck;
 			packageProductDependencies = (
+				P6DCKIT002PRODUCT001 /* DriveCheckKit */,
 			);
 			productName = RegionalCheck;
 			productReference = 509E636E2E5EE1BF00A13E04 /* RegionalCheck.app */;
@@ -178,6 +179,7 @@
 			);
 			name = RegionalCheckTests;
 			packageProductDependencies = (
+				P6DCKIT002PRODUCT001 /* DriveCheckKit */,
 			);
 			productName = RegionalCheckTests;
 			productReference = 509E637F2E5EE1C000A13E04 /* RegionalCheckTests.xctest */;
@@ -200,6 +202,7 @@
 			);
 			name = RegionalCheckWidgets;
 			packageProductDependencies = (
+				P6DCKIT002PRODUCT001 /* DriveCheckKit */,
 			);
 			productName = RegionalCheckWidgets;
 			productReference = A1B2C3D40E5EE00100WIDGET /* RegionalCheckWidgets.appex */;
@@ -238,6 +241,9 @@
 			);
 			mainGroup = 509E63652E5EE1BF00A13E04;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				P6DCKIT001PACKAGE001 /* XCLocalSwiftPackageReference "DriveCheckKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 509E636F2E5EE1BF00A13E04 /* Products */;
 			projectDirPath = "";
@@ -311,6 +317,21 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		P6DCKIT001PACKAGE001 /* XCLocalSwiftPackageReference "DriveCheckKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/DriveCheckKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		P6DCKIT002PRODUCT001 /* DriveCheckKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DriveCheckKit;
+			package = P6DCKIT001PACKAGE001 /* XCLocalSwiftPackageReference "DriveCheckKit" */;
+		};
+/* End XCSwiftPackageProductDependency section */
+
 /* Begin XCBuildConfiguration section */
 		509E63932E5EE1C000A13E04 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -325,11 +346,11 @@
 				INFOPLIST_FILE = RegionalCheck/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Drive Check";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = NO;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = NO;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
-				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
@@ -357,11 +378,11 @@
 				INFOPLIST_FILE = RegionalCheck/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Drive Check";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = NO;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = NO;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
-				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";

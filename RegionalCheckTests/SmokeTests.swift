@@ -1,3 +1,4 @@
+import DriveCheckKit
 import Foundation
 @testable import RegionalCheck
 import Testing
@@ -180,7 +181,10 @@ struct SmokeTests {
         (false, AlertStatus.quiet),
     ])
     func provider_parsesKyivStatus(alertnow: Bool, expected: AlertStatus) async throws {
-        let provider = try TestFixtures.makeProvider(json: TestFixtures.kyivJSON(alertnow: alertnow), now: Date(timeIntervalSince1970: 123))
+        let provider = try TestFixtures.makeProvider(
+            json: TestFixtures.kyivJSON(alertnow: alertnow),
+            now: Date(timeIntervalSince1970: 123)
+        )
         let snapshot = try await provider.fetchAlerts()
         #expect(snapshot.status(for: .kyivCity) == expected)
         if alertnow {
@@ -292,14 +296,16 @@ struct SmokeTests {
 
     @Test
     func provider_throwsWhenOffline() async throws {
-        let http = MockHTTPClient(
+        let url = try #require(URL(string: "https://ubilling.net.ua/aerialalerts/"))
+        let response = try #require(HTTPURLResponse(
+            url: url,
+            statusCode: 200,
+            httpVersion: nil,
+            headerFields: nil
+        ))
+        let http = try MockHTTPClient(
             data: Data(),
-            response: HTTPURLResponse(
-                url: URL(string: "https://ubilling.net.ua/aerialalerts/")!,
-                statusCode: 200,
-                httpVersion: nil,
-                headerFields: nil
-            )!,
+            response: response,
             error: URLError(.notConnectedToInternet)
         )
         let provider = UbillingProvider(httpClient: http)
