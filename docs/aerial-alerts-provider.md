@@ -10,16 +10,16 @@ https://ubilling.net.ua/aerialalerts/
 
 Implementation: `RegionalCheck/Data/UbillingProvider.swift`.
 
-Response fields used by the app:
+Response fields (verified against a live response, 2026-08-02):
 
 | Field | Meaning |
 | --- | --- |
 | `source` | Upstream data source selected by Ubilling |
-| `cachedat` | Server cache timestamp (informational) |
+| `cachedat` | Server cache timestamp (`YYYY-MM-DD HH:mm:ss`) |
 | `states[region].alertnow` | `true` = alert active, `false` = all clear |
-| `states[region].changed` | Last change time for that region (informational) |
+| `states[region].changed` | Last change time for that region |
 
-Region keys match Ukrainian oblast names and `м. Київ` for Kyiv city.
+Region keys are Ukrainian oblast names plus `м. Київ` for Kyiv city. A live catalog pin lives in `RegionalCheckTests/Fixtures/aerialalerts.json` (currently **25** keys; Crimea and Sevastopol are not present in the default feed).
 
 ## Ubilling limits (upstream)
 
@@ -31,32 +31,56 @@ From the official wiki (as of 2026):
 | Over limit | HTTP **429** |
 | Server cache | Raw data cached for **3 seconds** |
 
-The API is public (no keys). Ubilling describes it as informational only — not for safety-critical decisions.
+The API is public (no keys). Ubilling describes it as informational only — not for safety-critical decisions. Prefer official sources when making important decisions.
+
+### Optional query parameters
+
+Documented on the Ubilling wiki; Drive Check uses the default JSON endpoint only:
+
+| Parameter | Purpose |
+| --- | --- |
+| `?source=` | Explicit upstream: `default`, `skog`, `klimenko`, `jaam`, `aiu`, `ual` |
+| `?raw` | Unprocessed payload for a chosen source |
+| `?xml=true` | XML instead of JSON |
+| `?map=` | Alert map image (`true`, `nightmode`, `rednight`, `webp`) |
+| `?webalerts` | HTML alert board |
 
 ## Drive Check refresh policy
 
-The app keeps requests well below Ubilling limits.
+The app keeps requests well below Ubilling limits. Polling runs only while an iPhone screen or CarPlay session is active.
 
 | Trigger | Network request |
 | --- | --- |
 | Screen open (`onAppear`) | Yes — immediate check |
-| Region change (GPS) | Yes |
+| Region change (GPS or manual) | Prefer local selection from the last full snapshot; network refresh follows |
 | Manual **Refresh** | Yes |
-| Periodic background refresh | Yes — every **5 minutes** while the iPhone screen or CarPlay session is active |
+| Periodic refresh while session active | Yes — see interval below |
 | App in background (no active UI / CarPlay) | No |
 
-### Five-minute polling
+### Polling interval
 
 `StatusController.beginPeriodicRefresh()` starts a shared timer used by both iPhone (`HomeView`) and CarPlay (`CarPlaySceneDelegate`). Reference counting ensures one timer when both surfaces are active.
 
-- Interval: `StatusController.periodicRefreshInterval` = **300 seconds (5 minutes)**
+- Current interval: `StatusController.periodicRefreshInterval` = **300 seconds (5 minutes)**
+- Planned (Drive Check 2.0): adaptive policy — **60 s** baseline, **30 s** while the current region is in alarm, **300 s** under Low Power Mode, serious thermal state, or expensive/constrained network
 - First fetch on open/connect is still immediate; the timer only schedules later checks
 - Stops when the iPhone home screen disappears and CarPlay disconnects
 
-At 5-minute intervals the app sends about **0.003 rps** from periodic polling alone — far below the 2 rps host limit. Event-driven refreshes (open, region change, manual) may add a few extra requests but remain safe in normal use.
+At 60-second intervals the app sends about **0.017 rps** from periodic polling alone — far below the 2 rps host limit. Event-driven refreshes (open, region change, manual) may add a few extra requests but remain safe in normal use.
+
+### Why a shorter interval is still polite
+
+The 3-second server cache means data *can* be fresh to within three seconds. The real ceiling is the **2 rps** host limit and being a good neighbor — not “faster polling cannot help.” Five minutes as the only interval is not required by Ubilling; it is a product/battery choice. Battery cost of a kilobyte HTTPS request while the screen is on is small compared with continuous high-accuracy GPS + reverse geocoding (see `docs/refresh-policy.md` once added).
+
+## Battery notes
+
+- Polling runs only during an active session (screen on or CarPlay). Display power dominates a once-per-minute request.
+- Cellular cost is radio wakeups (~60/hour at a 60 s interval), not payload size (~hundreds of KB/hour).
+- The larger cost in this app today is location: default best accuracy with no `distanceFilter`, plus reverse geocoding on each update. Tightening location settings saves more than lengthening the poll interval.
+- Listing all regions in the UI does **not** add requests: one response already contains every region.
 
 ## Operational notes
 
-- Do not add aggressive client polling (for example every 30 seconds). Server data is cached for 3 seconds, so faster polling adds load without fresher data.
-- If Ubilling returns HTTP 429, treat it as rate limiting and back off; the UI currently surfaces a generic unavailable state on fetch failure.
-- Optional query parameters (`?source=`, `?xml=true`, maps, etc.) are documented on the Ubilling wiki; Drive Check uses the default JSON endpoint only.
+- Prefer adaptive polling (60 s / 30 s / 300 s) over a fixed multi-minute interval; keep well under 2 rps.
+- If Ubilling returns HTTP 429, treat it as rate limiting and back off (`Retry-After` when present). The UI currently surfaces a generic unavailable state on fetch failure; backoff hardening is planned.
+- Do not hammer the endpoint (for example every few seconds). The 3-second cache does not justify that load.
