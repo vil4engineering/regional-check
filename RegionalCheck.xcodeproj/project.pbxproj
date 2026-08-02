@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		227BD423301F1893004CFBC9 /* DriveCheckKit in Frameworks */ = {isa = PBXBuildFile; productRef = P6DCKIT002PRODUCT001 /* DriveCheckKit */; };
+		227BD424301F1893004CFBC9 /* DriveCheckKit in Frameworks */ = {isa = PBXBuildFile; productRef = P6DCKIT002PRODUCT001 /* DriveCheckKit */; };
+		227BD425301F1893004CFBC9 /* DriveCheckKit in Frameworks */ = {isa = PBXBuildFile; productRef = P6DCKIT002PRODUCT001 /* DriveCheckKit */; };
 		A1B2C3D40E5EE00E00WIDGET /* RegionalCheckWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A1B2C3D40E5EE00100WIDGET /* RegionalCheckWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -59,6 +62,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				RegionalCheckWidgets.entitlements,
 			);
 			target = A1B2C3D40E5EE00200WIDGET /* RegionalCheckWidgets */;
 		};
@@ -93,6 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				227BD423301F1893004CFBC9 /* DriveCheckKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				227BD425301F1893004CFBC9 /* DriveCheckKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				227BD424301F1893004CFBC9 /* DriveCheckKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,7 +249,7 @@
 			mainGroup = 509E63652E5EE1BF00A13E04;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				P6DCKIT001PACKAGE001 /* XCLocalSwiftPackageReference "DriveCheckKit" */,
+				P6DCKIT001PACKAGE001 /* XCLocalSwiftPackageReference "Packages/DriveCheckKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 509E636F2E5EE1BF00A13E04 /* Products */;
@@ -316,21 +323,6 @@
 			targetProxy = A1B2C3D40E5EE00F00WIDGET /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin XCLocalSwiftPackageReference section */
-		P6DCKIT001PACKAGE001 /* XCLocalSwiftPackageReference "DriveCheckKit" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/DriveCheckKit;
-		};
-/* End XCLocalSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		P6DCKIT002PRODUCT001 /* DriveCheckKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = DriveCheckKit;
-			package = P6DCKIT001PACKAGE001 /* XCLocalSwiftPackageReference "DriveCheckKit" */;
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCBuildConfiguration section */
 		509E63932E5EE1C000A13E04 /* Debug */ = {
@@ -560,6 +552,7 @@
 		A1B2C3D40E5EE00B00WIDGET /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = RegionalCheckWidgets/RegionalCheckWidgets.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = BTHRDS7254;
@@ -588,6 +581,7 @@
 		A1B2C3D40E5EE00C00WIDGET /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = RegionalCheckWidgets/RegionalCheckWidgets.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = BTHRDS7254;
@@ -653,6 +647,21 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		P6DCKIT001PACKAGE001 /* XCLocalSwiftPackageReference "Packages/DriveCheckKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/DriveCheckKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		P6DCKIT002PRODUCT001 /* DriveCheckKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = P6DCKIT001PACKAGE001 /* XCLocalSwiftPackageReference "Packages/DriveCheckKit" */;
+			productName = DriveCheckKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 509E63662E5EE1BF00A13E04 /* Project object */;
 }

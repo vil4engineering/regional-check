@@ -1,4 +1,5 @@
 import CoreLocation
+import DriveCheckKit
 import Foundation
 @testable import RegionalCheck
 import Testing
@@ -10,7 +11,7 @@ struct RegionSelectionFollowTests {
         let suite = "RegionSelectionFollowTests.\(UUID().uuidString)"
         let defaults = try #require(UserDefaults(suiteName: suite))
         defer { defaults.removePersistentDomain(forName: suite) }
-        let store = RegionStore(userDefaults: defaults)
+        let store = RegionStore(sharedStore: SharedStore(userDefaults: defaults))
         let selection = RegionSelection(store: store, geocoder: StubGeocoder())
 
         #expect(selection.followsLocation == true)
@@ -26,7 +27,7 @@ struct RegionSelectionFollowTests {
         let suite = "RegionSelectionFollowTests.persist.\(UUID().uuidString)"
         let defaults = try #require(UserDefaults(suiteName: suite))
         defer { defaults.removePersistentDomain(forName: suite) }
-        let store = RegionStore(userDefaults: defaults)
+        let store = RegionStore(sharedStore: SharedStore(userDefaults: defaults))
         let selection = RegionSelection(store: store, geocoder: StubGeocoder())
 
         selection.setFollowsLocation(false)
@@ -39,7 +40,7 @@ struct RegionSelectionFollowTests {
         let suite = "RegionSelectionFollowTests.pinIgnore.\(UUID().uuidString)"
         let defaults = try #require(UserDefaults(suiteName: suite))
         defer { defaults.removePersistentDomain(forName: suite) }
-        let store = RegionStore(userDefaults: defaults)
+        let store = RegionStore(sharedStore: SharedStore(userDefaults: defaults))
         let geocoder = StubGeocoder(result: GeocodedAddress(
             countryCode: "UA",
             cityName: "Харків",

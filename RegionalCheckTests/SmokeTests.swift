@@ -323,7 +323,7 @@ struct SmokeTests {
     @Test
     func regionStore_savesAndLoadsRegions() throws {
         try TestDefaults.withTemporaryDefaults { defaults in
-            let store = RegionStore(userDefaults: defaults)
+            let store = RegionStore(sharedStore: SharedStore(userDefaults: defaults))
             store.save(.kyivCity)
             #expect(store.load() == .kyivCity)
             store.save(.kharkiv)

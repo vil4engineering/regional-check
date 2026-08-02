@@ -1,3 +1,4 @@
+import DriveCheckKit
 import Foundation
 import Observation
 
@@ -140,6 +141,8 @@ final class SubscriptionManager: SubscriptionManaging {
             break
         }
         if isPro != wasPro || state.isLiveActivityEnabled != wasLiveActivityEnabled {
+            SharedStore.shared.saveIsPro(isPro)
+            WidgetReloader.reloadAllTimelines()
             notifyEntitlementChange()
         }
     }

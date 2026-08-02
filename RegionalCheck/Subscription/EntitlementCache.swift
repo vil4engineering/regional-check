@@ -1,11 +1,14 @@
+import DriveCheckKit
 import Foundation
 
 struct EntitlementCache: EntitlementCaching {
     private nonisolated(unsafe) let defaults: UserDefaults
-    private let key = "subscription.entitlement.v1"
+    private let key = SharedStoreKeys.legacyEntitlement
 
-    init(userDefaults: UserDefaults = .standard) {
-        defaults = userDefaults
+    init(userDefaults: UserDefaults? = UserDefaults(suiteName: SharedStoreKeys.appGroup)) {
+        let resolved = userDefaults ?? .standard
+        defaults = resolved
+        SharedStore(userDefaults: resolved).migrateLegacyEntitlementIfNeeded()
     }
 
     func load() -> EntitlementSnapshot? {

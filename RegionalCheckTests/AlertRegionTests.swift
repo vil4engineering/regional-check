@@ -47,15 +47,15 @@ struct AlertRegionTests {
 
         let kyivLegacy = Data(#"{"kind":{"kyivCity":{}}}"#.utf8)
         defaults.set(kyivLegacy, forKey: "selected_region_v1")
-        let store = RegionStore(userDefaults: defaults)
+        let store = RegionStore(sharedStore: SharedStore(userDefaults: defaults, legacyDefaults: defaults))
         #expect(store.load() == .kyivCity)
         #expect(defaults.data(forKey: "selected_region_v1") == nil)
-        #expect(defaults.data(forKey: "selected_region_v2") != nil)
+        #expect(defaults.data(forKey: SharedStoreKeys.region) != nil)
 
         defaults.removePersistentDomain(forName: suite)
         let oblastLegacy = Data(#"{"kind":{"oblast":{"name":"Харківська область"}}}"#.utf8)
         defaults.set(oblastLegacy, forKey: "selected_region_v1")
-        let store2 = RegionStore(userDefaults: defaults)
+        let store2 = RegionStore(sharedStore: SharedStore(userDefaults: defaults, legacyDefaults: defaults))
         #expect(store2.load() == .kharkiv)
     }
 
