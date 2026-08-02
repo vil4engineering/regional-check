@@ -8,6 +8,7 @@ final class SubscriptionManager: SubscriptionManaging {
 
     private let service: any SubscriptionServicing
     private let cache: any EntitlementCaching
+    private let userDefaults: UserDefaults
     private let liveActivityPreferenceKey = "subscription.liveActivity.enabled"
     private var updatesTask: Task<Void, Never>?
     private var entitlementChangeContinuations: [UUID: AsyncStream<Void>.Continuation] = [:]
@@ -18,14 +19,16 @@ final class SubscriptionManager: SubscriptionManaging {
 
     init(
         service: any SubscriptionServicing = StoreKitSubscriptionService(),
-        cache: any EntitlementCaching = EntitlementCache()
+        cache: any EntitlementCaching = EntitlementCache(),
+        userDefaults: UserDefaults = .standard
     ) {
         self.service = service
         self.cache = cache
+        self.userDefaults = userDefaults
         if let cached = cache.load() {
             state.entitlement = Self.cachedEntitlementIfValid(cached)
         }
-        state.isLiveActivityEnabled = UserDefaults.standard.object(forKey: liveActivityPreferenceKey) as? Bool ?? true
+        state.isLiveActivityEnabled = userDefaults.object(forKey: liveActivityPreferenceKey) as? Bool ?? true
     }
 
     func start() async {
@@ -94,7 +97,7 @@ final class SubscriptionManager: SubscriptionManaging {
     func setLiveActivityEnabled(_ enabled: Bool) {
         let previous = state.isLiveActivityEnabled
         state.isLiveActivityEnabled = enabled
-        UserDefaults.standard.set(enabled, forKey: liveActivityPreferenceKey)
+        userDefaults.set(enabled, forKey: liveActivityPreferenceKey)
         if previous != enabled {
             notifyEntitlementChange()
         }

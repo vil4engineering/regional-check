@@ -25,27 +25,11 @@ struct CarPlayConnectionTests {
     @Test
     @MainActor
     func periodicRefresh_survivesDuplicateCarPlayConnectDisconnect() {
-        let provider = MockStatusProvider(
-            snapshot: AlertsSnapshot(
-                source: "test",
-                serverCachedAt: Date(),
-                fetchedAt: Date(),
-                statuses: [.kyivCity: .quiet]
-            )
-        )
-        let controller = StatusController(region: .kyivCity, provider: provider)
+        let controller = StatusController(region: .kyivCity, provider: MockStatusProvider(snapshot: TestFixtures.quietSnapshot()))
         controller.beginPeriodicRefresh()
         controller.beginPeriodicRefresh()
         controller.endPeriodicRefresh()
         controller.endPeriodicRefresh()
         #expect(Bool(true))
-    }
-}
-
-private struct MockStatusProvider: StatusProviding {
-    var snapshot: AlertsSnapshot
-
-    func fetchAlerts() async throws -> AlertsSnapshot {
-        snapshot
     }
 }
