@@ -82,49 +82,53 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
     }
 
     private func armRegionObservation() {
-        guard connectionGate.isConnected else { return }
-        withObservationTracking {
+        armObservation {
             _ = regions.selectedRegion
         } onChange: { [weak self] in
-            Task { @MainActor [weak self] in
-                guard let self, connectionGate.isConnected else { return }
-                status.setRegion(regions.selectedRegion)
-                await status.refresh()
-                AppDependencies.syncLiveActivityContent()
-                await render(animated: true)
-                armRegionObservation()
-            }
+            guard let self else { return }
+            status.setRegion(regions.selectedRegion)
+            await status.refresh()
+            AppDependencies.syncLiveActivityContent()
+            await render(animated: true)
         }
     }
 
     private func armStatusObservation() {
-        guard connectionGate.isConnected else { return }
-        withObservationTracking {
+        armObservation {
             _ = status.state
             _ = status.regionTitle
         } onChange: { [weak self] in
-            Task { @MainActor [weak self] in
-                guard let self, connectionGate.isConnected else { return }
-                await render(animated: true)
-                AppDependencies.syncLiveActivityContent()
-                armStatusObservation()
-            }
+            guard let self else { return }
+            await render(animated: true)
+            AppDependencies.syncLiveActivityContent()
         }
     }
 
     private func armLocationObservation() {
-        guard connectionGate.isConnected else { return }
-        withObservationTracking {
+        armObservation {
             _ = location.coordinateStamp
             _ = location.authorizationStatus
         } onChange: { [weak self] in
+            guard let self else { return }
+            if let fix = location.lastFix {
+                regions.updateFromLocation(fix: fix)
+            }
+            await render(animated: true)
+        }
+    }
+
+    private func armObservation(
+        track: @escaping @MainActor () -> Void,
+        onChange: @escaping @MainActor () async -> Void
+    ) {
+        guard connectionGate.isConnected else { return }
+        withObservationTracking {
+            track()
+        } onChange: { [weak self] in
             Task { @MainActor [weak self] in
                 guard let self, connectionGate.isConnected else { return }
-                if let fix = location.lastFix {
-                    regions.updateFromLocation(fix: fix)
-                }
-                await render(animated: true)
-                armLocationObservation()
+                armObservation(track: track, onChange: onChange)
+                await onChange()
             }
         }
     }
