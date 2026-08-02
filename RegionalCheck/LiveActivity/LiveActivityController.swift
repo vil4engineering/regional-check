@@ -1,11 +1,15 @@
 import ActivityKit
 import Foundation
 import Observation
+import os
 
 @MainActor
 @Observable
 final class LiveActivityController: LiveActivityControlling {
+    private static let log = Logger(subsystem: "vil4max.RegionalCheck", category: "LiveActivity")
+
     private let subscription: SubscriptionManager
+    private let pipeline = LiveActivitySerialPipeline()
     private var clients: Set<LiveActivitySessionClient> = []
     private var activity: Activity<DriveCheckActivityAttributes>?
     private var latestPhase: DriveCheckActivityPhase = .idle
@@ -48,9 +52,7 @@ final class LiveActivityController: LiveActivityControlling {
 
     func endAll() {
         clients.removeAll()
-        Task {
-            await terminate(dismissal: .immediate)
-        }
+        reconcileActivity()
     }
 
     private var canRunActivity: Bool {
@@ -69,17 +71,24 @@ final class LiveActivityController: LiveActivityControlling {
     }
 
     private func reconcileActivity() {
-        if !canRunActivity || clients.isEmpty {
-            if activity != nil {
-                Task { await terminate(dismissal: .immediate) }
+        pipeline.enqueue { [weak self] in
+            guard let self else { return }
+            let action = LiveActivityLifecyclePolicy.nextAction(
+                canRun: canRunActivity,
+                hasClients: !clients.isEmpty,
+                hasActivity: activity != nil
+            )
+            switch action {
+            case .none:
+                break
+            case .start:
+                await startIfNeeded()
+            case .update:
+                await pushUpdate()
+            case .terminate:
+                await terminate(dismissal: .immediate)
             }
-            return
         }
-        if activity == nil {
-            Task { await startIfNeeded() }
-            return
-        }
-        Task { await pushUpdate() }
     }
 
     private func startIfNeeded() async {
@@ -96,7 +105,9 @@ final class LiveActivityController: LiveActivityControlling {
                 content: content,
                 pushType: nil
             )
-        } catch {}
+        } catch {
+            Self.log.error("Activity.request failed: \(String(describing: error), privacy: .public)")
+        }
     }
 
     private func pushUpdate() async {
@@ -110,9 +121,9 @@ final class LiveActivityController: LiveActivityControlling {
 
     private func terminate(dismissal: ActivityUIDismissalPolicy) async {
         guard let activity else { return }
+        self.activity = nil
         let content = ActivityContent(state: contentState(), staleDate: nil)
         await activity.end(content, dismissalPolicy: dismissal)
-        self.activity = nil
     }
 
     private func contentState() -> DriveCheckActivityAttributes.ContentState {
