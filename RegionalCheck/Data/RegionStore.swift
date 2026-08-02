@@ -33,9 +33,21 @@ struct RegionStore {
         userDefaults.set(data, forKey: Keys.v2Key)
     }
 
+    func loadFollowsLocation() -> Bool {
+        if userDefaults.object(forKey: Keys.followsLocation) == nil {
+            return true
+        }
+        return userDefaults.bool(forKey: Keys.followsLocation)
+    }
+
+    func saveFollowsLocation(_ follows: Bool) {
+        userDefaults.set(follows, forKey: Keys.followsLocation)
+    }
+
     private enum Keys {
         static let v1Key = "selected_region_v1"
         static let v2Key = "selected_region_v2"
+        static let followsLocation = "follows_location_v1"
     }
 }
 

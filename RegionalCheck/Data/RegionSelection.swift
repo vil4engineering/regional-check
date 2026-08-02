@@ -9,22 +9,41 @@ final class RegionSelection {
     private static let log = Logger(subsystem: "vil4max.RegionalCheck", category: "Region")
 
     private(set) var selectedRegion: AlertRegion
+    private(set) var followsLocation: Bool
     private(set) var shouldShowOutsideUkraineInfo = false
 
+    private let store: RegionStore
     private let geocoder: any ReverseGeocoding
     private var isResolving = false
     private var didPresentOutsideUkraineThisSession = false
 
-    init(geocoder: any ReverseGeocoding = MapKitReverseGeocoder()) {
+    init(
+        store: RegionStore = .shared,
+        geocoder: any ReverseGeocoding = MapKitReverseGeocoder()
+    ) {
+        self.store = store
         self.geocoder = geocoder
-        selectedRegion = RegionStore.shared.load() ?? .kyivCity
+        selectedRegion = store.load() ?? .kyivCity
+        followsLocation = store.loadFollowsLocation()
     }
 
     func acknowledgeOutsideUkraineInfo() {
         shouldShowOutsideUkraineInfo = false
     }
 
+    func pin(_ region: AlertRegion) {
+        followsLocation = false
+        store.saveFollowsLocation(false)
+        apply(region)
+    }
+
+    func setFollowsLocation(_ enabled: Bool) {
+        followsLocation = enabled
+        store.saveFollowsLocation(enabled)
+    }
+
     func updateFromLocation(coordinate: CLLocationCoordinate2D) {
+        guard followsLocation else { return }
         guard !isResolving else { return }
         isResolving = true
 
@@ -64,6 +83,6 @@ final class RegionSelection {
     private func apply(_ region: AlertRegion) {
         guard region != selectedRegion else { return }
         selectedRegion = region
-        RegionStore.shared.save(region)
+        store.save(region)
     }
 }
