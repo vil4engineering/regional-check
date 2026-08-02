@@ -55,6 +55,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Resources/Info.plist,
+				Resources/PrivacyInfo.xcprivacy,
 			);
 			target = 509E636D2E5EE1BF00A13E04 /* RegionalCheck */;
 		};
@@ -62,6 +63,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				PrivacyInfo.xcprivacy,
 				RegionalCheckWidgets.entitlements,
 			);
 			target = A1B2C3D40E5EE00200WIDGET /* RegionalCheckWidgets */;
