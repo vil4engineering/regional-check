@@ -1,3 +1,4 @@
+import AppIntents
 import DriveCheckKit
 import SwiftUI
 import WidgetKit
@@ -107,6 +108,18 @@ struct DriveCheckStatusWidgetView: View {
                 Text("liveActivity.stale")
                     .font(.caption2)
                     .foregroundStyle(.secondary)
+            }
+            if let source = entry.presentation.sourceLabel, !source.isEmpty {
+                Text(source)
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+            }
+            if #available(iOSApplicationExtension 17.0, *) {
+                Button(intent: RefreshStatusIntent()) {
+                    Label("Refresh", systemImage: "arrow.clockwise")
+                }
+                .font(.caption)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
