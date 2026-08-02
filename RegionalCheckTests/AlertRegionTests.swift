@@ -39,7 +39,7 @@ struct AlertRegionTests {
     }
 
     @Test
-    func regionStore_migratesLegacyKyivAndOblast() {
+    func regionStore_migratesLegacyKyivAndOblast() throws {
         let suite = "AlertRegion.migration.\(UUID().uuidString)"
         let defaults = try #require(UserDefaults(suiteName: suite))
         defer { defaults.removePersistentDomain(forName: suite) }

@@ -1,18 +1,22 @@
 import CoreLocation
 import Foundation
-import MapKit
 import Observation
+import os
 
 @MainActor
 @Observable
 final class RegionSelection {
+    private static let log = Logger(subsystem: "vil4max.RegionalCheck", category: "Region")
+
     private(set) var selectedRegion: AlertRegion
     private(set) var shouldShowOutsideUkraineInfo = false
 
+    private let geocoder: any ReverseGeocoding
     private var isResolving = false
     private var didPresentOutsideUkraineThisSession = false
 
-    init() {
+    init(geocoder: any ReverseGeocoding = MapKitReverseGeocoder()) {
+        self.geocoder = geocoder
         selectedRegion = RegionStore.shared.load() ?? .kyivCity
     }
 
@@ -27,29 +31,25 @@ final class RegionSelection {
         Task {
             defer { isResolving = false }
 
-            let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-            guard let request = MKReverseGeocodingRequest(location: location) else { return }
-            request.preferredLocale = Locale(identifier: "uk_UA")
-
             do {
-                let mapItems = try await request.mapItems
-                guard let address = mapItems.first?.addressRepresentations else { return }
-                guard address.region?.identifier == "UA" else {
+                guard let address = try await geocoder.reverseGeocode(coordinate: coordinate) else {
+                    return
+                }
+                guard address.countryCode == "UA" else {
                     applyOutsideUkraine()
                     return
                 }
 
-                let resolved: AlertRegion? = if let city = address.cityName, city == "Київ" || city == "Kyiv" {
-                    .kyivCity
-                } else if let admin = Self.administrativeAreaName(from: address), !admin.isEmpty {
-                    AlertRegion.from(apiKey: admin)
-                } else {
-                    nil
+                guard let resolved = AlertRegionResolver.resolve(
+                    cityName: address.cityName,
+                    administrativeArea: address.administrativeAreaName
+                ) else {
+                    return
                 }
-
-                guard let resolved else { return }
                 apply(resolved)
-            } catch {}
+            } catch {
+                Self.log.error("Reverse geocode failed: \(String(describing: error), privacy: .public)")
+            }
         }
     }
 
@@ -65,22 +65,5 @@ final class RegionSelection {
         guard region != selectedRegion else { return }
         selectedRegion = region
         RegionStore.shared.save(region)
-    }
-
-    private static func administrativeAreaName(from address: MKAddressRepresentations) -> String? {
-        guard let full = address.cityWithContext(.full) else { return nil }
-        var parts = full
-            .split(separator: ",")
-            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .filter { !$0.isEmpty }
-
-        if let city = address.cityName {
-            parts.removeAll { $0 == city }
-        }
-        if let country = address.regionName {
-            parts.removeAll { $0 == country }
-        }
-
-        return parts.first
     }
 }
