@@ -42,7 +42,7 @@ final class RegionSelection {
                 let resolved: AlertRegion? = if let city = address.cityName, city == "Київ" || city == "Kyiv" {
                     .kyivCity
                 } else if let admin = Self.administrativeAreaName(from: address), !admin.isEmpty {
-                    AlertRegion(kind: .oblast(name: admin))
+                    AlertRegion.from(apiKey: admin)
                 } else {
                     nil
                 }

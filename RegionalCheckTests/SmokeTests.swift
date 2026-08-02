@@ -79,10 +79,7 @@ struct SmokeTests {
     @Test
     func regionTitles_matchBusinessRules() {
         #expect(AlertRegion.kyivCity.title == String(localized: "Kyiv"))
-        #expect(
-            AlertRegion(kind: .oblast(name: "Львівська область")).title
-                == String(localized: "Львівська область")
-        )
+        #expect(AlertRegion.lviv.title == String(localized: "Львівська область"))
     }
 
     @Test
@@ -167,9 +164,7 @@ struct SmokeTests {
             AlertStatusSnapshot(region: region, status: .quiet, checkedAt: Date(), source: "test")
         }
         let controller = StatusController(region: .kyivCity, provider: provider)
-        let oblast = AlertRegion(kind: .oblast(name: "Київська область"))
-
-        controller.setRegion(oblast)
+        controller.setRegion(.kyivOblast)
         #expect(controller.regionTitle == String(localized: "Київська область"))
     }
 
@@ -201,7 +196,7 @@ struct SmokeTests {
         }
         """
         let provider = try makeProvider(json: json)
-        let region = AlertRegion(kind: .oblast(name: "Львівська область"))
+        let region = AlertRegion.lviv
         let snapshot = try await provider.fetchStatus(region: region)
         #expect(snapshot.status == .alarm)
         #expect(snapshot.region == region)
@@ -210,9 +205,8 @@ struct SmokeTests {
     @Test
     func provider_throwsWhenRegionMissing() async throws {
         let provider = try makeProvider(json: kyivJSON(alertnow: true))
-        let region = AlertRegion(kind: .oblast(name: "Одеська область"))
         await #expect(throws: UbillingError.missingRegionKey("Одеська область")) {
-            _ = try await provider.fetchStatus(region: region)
+            _ = try await provider.fetchStatus(region: .odesa)
         }
     }
 
@@ -252,9 +246,8 @@ struct SmokeTests {
         store.save(.kyivCity)
         #expect(store.load() == .kyivCity)
 
-        let oblast = AlertRegion(kind: .oblast(name: "Харківська область"))
-        store.save(oblast)
-        #expect(store.load() == oblast)
+        store.save(.kharkiv)
+        #expect(store.load() == .kharkiv)
     }
 }
 

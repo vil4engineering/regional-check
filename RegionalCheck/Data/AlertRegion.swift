@@ -1,80 +1,97 @@
 import Foundation
 
-struct AlertRegion: Hashable, Codable {
-    enum Kind: Hashable, Codable {
-        case kyivCity
-        case oblast(name: String)
+enum AlertRegion: String, CaseIterable, Codable, Sendable, Hashable {
+    case kyivCity
+    case vinnytsia
+    case volyn
+    case dnipropetrovsk
+    case donetsk
+    case zhytomyr
+    case zakarpattia
+    case zaporizhzhia
+    case ivanoFrankivsk
+    case kyivOblast
+    case kirovohrad
+    case luhansk
+    case lviv
+    case mykolaiv
+    case odesa
+    case poltava
+    case rivne
+    case sumy
+    case ternopil
+    case kharkiv
+    case kherson
+    case khmelnytskyi
+    case cherkasy
+    case chernivtsi
+    case chernihiv
+
+    var apiKey: String {
+        switch self {
+        case .kyivCity:
+            "м. Київ"
+        case .vinnytsia:
+            "Вінницька область"
+        case .volyn:
+            "Волинська область"
+        case .dnipropetrovsk:
+            "Дніпропетровська область"
+        case .donetsk:
+            "Донецька область"
+        case .zhytomyr:
+            "Житомирська область"
+        case .zakarpattia:
+            "Закарпатська область"
+        case .zaporizhzhia:
+            "Запорізька область"
+        case .ivanoFrankivsk:
+            "Івано-Франківська область"
+        case .kyivOblast:
+            "Київська область"
+        case .kirovohrad:
+            "Кіровоградська область"
+        case .luhansk:
+            "Луганська область"
+        case .lviv:
+            "Львівська область"
+        case .mykolaiv:
+            "Миколаївська область"
+        case .odesa:
+            "Одеська область"
+        case .poltava:
+            "Полтавська область"
+        case .rivne:
+            "Рівненська область"
+        case .sumy:
+            "Сумська область"
+        case .ternopil:
+            "Тернопільська область"
+        case .kharkiv:
+            "Харківська область"
+        case .kherson:
+            "Херсонська область"
+        case .khmelnytskyi:
+            "Хмельницька область"
+        case .cherkasy:
+            "Черкаська область"
+        case .chernivtsi:
+            "Чернівецька область"
+        case .chernihiv:
+            "Чернігівська область"
+        }
     }
-
-    let kind: Kind
-
-    static let kyivCity = AlertRegion(kind: .kyivCity)
 
     var title: String {
-        switch kind {
+        switch self {
         case .kyivCity:
             String(localized: "Kyiv")
-        case let .oblast(name):
-            Self.localizedOblastTitle(name)
+        default:
+            String(localized: String.LocalizationValue(apiKey))
         }
     }
 
-    private static func localizedOblastTitle(_ name: String) -> String {
-        switch name {
-        case "Автономна Республіка Крим":
-            String(localized: "Автономна Республіка Крим")
-        case "Вінницька область":
-            String(localized: "Вінницька область")
-        case "Волинська область":
-            String(localized: "Волинська область")
-        case "Дніпропетровська область":
-            String(localized: "Дніпропетровська область")
-        case "Донецька область":
-            String(localized: "Донецька область")
-        case "Житомирська область":
-            String(localized: "Житомирська область")
-        case "Закарпатська область":
-            String(localized: "Закарпатська область")
-        case "Запорізька область":
-            String(localized: "Запорізька область")
-        case "Івано-Франківська область":
-            String(localized: "Івано-Франківська область")
-        case "Київська область":
-            String(localized: "Київська область")
-        case "Кіровоградська область":
-            String(localized: "Кіровоградська область")
-        case "Луганська область":
-            String(localized: "Луганська область")
-        case "Львівська область":
-            String(localized: "Львівська область")
-        case "Миколаївська область":
-            String(localized: "Миколаївська область")
-        case "Одеська область":
-            String(localized: "Одеська область")
-        case "Полтавська область":
-            String(localized: "Полтавська область")
-        case "Рівненська область":
-            String(localized: "Рівненська область")
-        case "Сумська область":
-            String(localized: "Сумська область")
-        case "Тернопільська область":
-            String(localized: "Тернопільська область")
-        case "Харківська область":
-            String(localized: "Харківська область")
-        case "Херсонська область":
-            String(localized: "Херсонська область")
-        case "Хмельницька область":
-            String(localized: "Хмельницька область")
-        case "Черкаська область":
-            String(localized: "Черкаська область")
-        case "Чернівецька область":
-            String(localized: "Чернівецька область")
-        case "Чернігівська область":
-            String(localized: "Чернігівська область")
-        case "м. Севастополь":
-            String(localized: "м. Севастополь")
-        default:
-            name
-        }
+    static func from(apiKey: String) -> AlertRegion? {
+        allCases.first { $0.apiKey == apiKey }
     }
 }

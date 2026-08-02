@@ -19,7 +19,7 @@ struct UbillingProvider: StatusProviding {
 
     func fetchStatus(region: AlertRegion) async throws -> AlertStatusSnapshot {
         let response = try await fetchResponse()
-        let regionKey = ubillingKey(for: region)
+        let regionKey = region.apiKey
         guard let state = response.states[regionKey] else {
             throw UbillingError.missingRegionKey(regionKey)
         }
@@ -71,15 +71,6 @@ struct UbillingProvider: StatusProviding {
                 contentType: (response as? HTTPURLResponse)?.value(forHTTPHeaderField: "Content-Type"),
                 bodyPrefix: prefix
             )
-        }
-    }
-
-    private func ubillingKey(for region: AlertRegion) -> String {
-        switch region.kind {
-        case .kyivCity:
-            "м. Київ"
-        case let .oblast(name):
-            name
         }
     }
 

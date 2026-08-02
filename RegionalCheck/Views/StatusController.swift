@@ -146,10 +146,10 @@ final class StatusController {
                 setRegion(.kyivCity)
                 state = .quiet(lastCheckedAt: checkedAt)
             case "alertActive":
-                setRegion(AlertRegion(kind: .oblast(name: "Харківська область")))
+                setRegion(.kharkiv)
                 state = .alarm(lastCheckedAt: checkedAt)
             case "checking":
-                setRegion(AlertRegion(kind: .oblast(name: "Харківська область")))
+                setRegion(.kharkiv)
                 state = .idle
             case "unavailable":
                 setRegion(.kyivCity)
