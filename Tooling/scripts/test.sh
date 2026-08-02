@@ -2,7 +2,6 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-RUNTIME_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 # shellcheck source=lib.sh
 source "$SCRIPT_DIR/lib.sh"
 # shellcheck source=capabilities.sh
@@ -13,20 +12,22 @@ if ! cfg_bool tests true; then
   exit 0
 fi
 
+[[ -n "$BACKEND_ROOT" ]] || { echo "backend root missing — expected Tooling/backend or ./backend" >&2; exit 1; }
+
 BACKEND="$(select_build_backend)"
 echo "test backend: $BACKEND"
 
 case "$BACKEND" in
   xcode_tools)
-    exec "$RUNTIME_ROOT/backend/build/xcode_tools/test.sh"
+    exec "$BACKEND_ROOT/build/xcode_tools/test.sh"
     ;;
   xcodebuild_mcp)
-    exec "$RUNTIME_ROOT/backend/build/mcp/test.sh"
+    exec "$BACKEND_ROOT/build/mcp/test.sh"
     ;;
   swiftpm)
-    exec "$RUNTIME_ROOT/backend/build/swiftpm/test.sh"
+    exec "$BACKEND_ROOT/build/swiftpm/test.sh"
     ;;
   xcodebuild|*)
-    exec "$RUNTIME_ROOT/backend/build/xcodebuild/test.sh"
+    exec "$BACKEND_ROOT/build/xcodebuild/test.sh"
     ;;
 esac

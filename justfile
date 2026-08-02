@@ -1,45 +1,11 @@
-set shell := ["bash", "-eu", "-o", "pipefail", "-c"]
+# App-owned. Runtime recipes come from Tooling/.
+import 'Tooling/justfile'
 
-# Public Runtime API — thin wrappers only.
+scenario name:
+    just run-sim -- -ScreenshotPhase {{name}}
 
-doctor *args:
-    ./scripts/doctor.sh {{args}}
+paywall:
+    just run-sim -- -ShowPaywall
 
-env:
-    ./scripts/env.sh
-
-diagnose:
-    ./scripts/diagnose.sh
-
-format:
-    ./scripts/format.sh
-
-lint:
-    ./scripts/lint.sh
-
-build:
-    ./scripts/build.sh
-
-test:
-    ./scripts/test.sh
-
-verify:
-    ./scripts/verify.sh
-
-ci:
-    ./scripts/ci.sh
-
-clean:
-    ./scripts/clean.sh
-
-reset:
-    ./scripts/reset.sh
-
-release:
-    ./scripts/release.sh
-
-profile:
-    ./scripts/profile.sh
-
-harness-update:
-    ./scripts/harness-update.sh
+screenshots:
+    ./scripts/capture-app-store-screenshots.sh

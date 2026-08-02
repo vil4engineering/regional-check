@@ -11,11 +11,12 @@ if ! cfg_bool format true; then
 fi
 
 if ! have swiftformat; then
-  echo "swiftformat not installed — brew bundle --file=Brewfile" >&2
+  echo "swiftformat not installed — brew bundle --file=$(brewfile_path)" >&2
   exit 1
 fi
 
 ROOT="$(project_root)"
-CONF="$ROOT/.swiftformat"
+CONF="$TOOLING_ROOT/.swiftformat"
+[[ -f "$CONF" ]] || CONF="$ROOT/.swiftformat"
 [[ -f "$CONF" ]] || CONF="$RUNTIME_ROOT/templates/swiftformat"
 swiftformat "$ROOT" --config "$CONF"

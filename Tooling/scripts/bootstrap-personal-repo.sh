@@ -4,7 +4,7 @@ set -euo pipefail
 REPO_ROOT="${1:-$PWD}"
 REPO_ROOT="$(cd "$REPO_ROOT" && pwd)"
 NAME="$(basename "$REPO_ROOT")"
-CURSOR_REPO="${CURSOR_REPO:-$HOME/Developer/GitHub/cursor-agent-kit}"
+CURSOR_REPO="${CURSOR_REPO:-$HOME/Developer/GitHub/agents-kit}"
 HARNESS_REPO="${IOS_AGENT_HARNESS_ROOT:-$HOME/Developer/GitHub/ios-agent-harness}"
 
 CONTEXT_DIR="$REPO_ROOT/.cursor"
@@ -34,7 +34,7 @@ ${README_HINT}
 
 ## Config
 
-Scheme / simulator / backend: \`runtime.yml\` (see Runtime install).
+Scheme / simulator / backend: \`Tooling/runtime.yml\` (see Runtime install).
 
 ## Brain (Cursor)
 
@@ -42,11 +42,12 @@ Rules and skills: \`${CURSOR_REPO}/\` — \`./scripts/cursor-skills-rules-toggle
 
 ## Runtime
 
-\`${HARNESS_REPO}/\` — \`just doctor\`, \`just verify\`.
+\`${HARNESS_REPO}/\` — installs into \`Tooling/\`; \`just doctor\`, \`just verify\`.
 
 ## Notes
 
-- \`AGENTS.md\` and \`.cursor/\` stay local (not in git).
+- \`.cursor/\` stays local (not in git).
+- \`AGENTS.md\` may be committed (thin project facts).
 EOF
   echo "created $AGENTS_FILE"
 else

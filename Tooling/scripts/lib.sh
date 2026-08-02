@@ -1,13 +1,29 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SCRIPT_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [[ "$(basename "$(dirname "$SCRIPT_HOME")")" == "Tooling" ]]; then
+  ROOT="$(cd "$SCRIPT_HOME/../.." && pwd)"
+  export TOOLING_ROOT="$ROOT/Tooling"
+else
+  ROOT="$(cd "$SCRIPT_HOME/.." && pwd)"
+  export TOOLING_ROOT="${TOOLING_ROOT:-$ROOT/Tooling}"
+fi
 export RUNTIME_ROOT="${RUNTIME_ROOT:-$ROOT}"
+if [[ -d "$TOOLING_ROOT/backend" ]]; then
+  export BACKEND_ROOT="$TOOLING_ROOT/backend"
+elif [[ -d "$ROOT/backend" ]]; then
+  export BACKEND_ROOT="$ROOT/backend"
+else
+  export BACKEND_ROOT=""
+fi
 
 have() { command -v "$1" >/dev/null 2>&1; }
 
 runtime_config_path() {
-  if [[ -f "$PWD/runtime.yml" ]]; then
+  if [[ -f "$TOOLING_ROOT/runtime.yml" ]]; then
+    echo "$TOOLING_ROOT/runtime.yml"
+  elif [[ -f "$PWD/runtime.yml" ]]; then
     echo "$PWD/runtime.yml"
   elif [[ -f "$RUNTIME_ROOT/templates/runtime.yml" ]]; then
     echo "$RUNTIME_ROOT/templates/runtime.yml"
@@ -16,10 +32,30 @@ runtime_config_path() {
   fi
 }
 
+runtime_local_path() {
+  if [[ -f "$TOOLING_ROOT/runtime.local.yml" ]]; then
+    echo "$TOOLING_ROOT/runtime.local.yml"
+  elif [[ -f "$PWD/runtime.local.yml" ]]; then
+    echo "$PWD/runtime.local.yml"
+  else
+    echo ""
+  fi
+}
+
+brewfile_path() {
+  if [[ -f "$TOOLING_ROOT/Brewfile" ]]; then
+    echo "$TOOLING_ROOT/Brewfile"
+  elif [[ -f "$ROOT/Brewfile" ]]; then
+    echo "$ROOT/Brewfile"
+  else
+    echo "Brewfile"
+  fi
+}
+
 cfg_get() {
   local key="$1"
   local default="${2:-}"
-  local file
+  local file local_file
   file="$(runtime_config_path)"
   if [[ -z "$file" ]]; then
     echo "$default"
@@ -28,9 +64,10 @@ cfg_get() {
   if have yq; then
     local v
     v="$(yq -r ".$key // \"\"" "$file" 2>/dev/null || true)"
-    if [[ -f "$PWD/runtime.local.yml" ]]; then
+    local_file="$(runtime_local_path)"
+    if [[ -n "$local_file" ]]; then
       local lv
-      lv="$(yq -r ".$key // \"\"" "$PWD/runtime.local.yml" 2>/dev/null || true)"
+      lv="$(yq -r ".$key // \"\"" "$local_file" 2>/dev/null || true)"
       if [[ -n "$lv" && "$lv" != "null" ]]; then
         v="$lv"
       fi
@@ -113,10 +150,25 @@ sim_os() {
 }
 
 destination_spec() {
-  local name os
+  local name os id
   name="$(sim_name)"
   os="$(sim_os)"
-  if [[ -n "$os" ]]; then
+  id="$(
+    xcrun simctl list devices available -j 2>/dev/null \
+      | /usr/bin/python3 -c "
+import json, sys
+name = sys.argv[1]
+data = json.load(sys.stdin)
+for devices in data.get('devices', {}).values():
+    for d in devices:
+        if d.get('name') == name and d.get('isAvailable', True):
+            print(d['udid'])
+            raise SystemExit(0)
+" "$name" 2>/dev/null || true
+  )"
+  if [[ -n "$id" ]]; then
+    echo "platform=iOS Simulator,id=${id}"
+  elif [[ -n "$os" ]]; then
     echo "platform=iOS Simulator,name=${name},OS=${os}"
   else
     echo "platform=iOS Simulator,name=${name}"
@@ -126,9 +178,25 @@ destination_spec() {
 harness_version() {
   if [[ -f "$RUNTIME_ROOT/HARNESS_VERSION" ]]; then
     tr -d '[:space:]' <"$RUNTIME_ROOT/HARNESS_VERSION"
+  elif [[ -f "$TOOLING_ROOT/.harness-version" ]]; then
+    tr -d '[:space:]' <"$TOOLING_ROOT/.harness-version"
   elif [[ -f "$PWD/.harness-version" ]]; then
     tr -d '[:space:]' <"$PWD/.harness-version"
   else
     echo "0.0.0"
   fi
+}
+
+bundle_id_for_scheme() {
+  local root proj scheme plist
+  root="$(project_root)"
+  scheme="$(scheme_name)"
+  proj="$(find_xcodeproj)"
+  [[ -n "$proj" && -n "$scheme" ]] || return 1
+  plist="$(
+    xcodebuild -project "$proj" -scheme "$scheme" -showBuildSettings 2>/dev/null \
+      | awk -F' = ' '/PRODUCT_BUNDLE_IDENTIFIER/ { print $2; exit }'
+  )"
+  [[ -n "$plist" ]] || return 1
+  echo "$plist"
 }
