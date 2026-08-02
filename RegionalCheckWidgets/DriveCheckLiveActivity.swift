@@ -8,6 +8,8 @@ struct RegionalCheckWidgetsBundle: WidgetBundle {
     var body: some Widget {
         DriveCheckLiveActivity()
         DriveCheckStatusWidget()
+        DriveCheckStatusControl()
+        DriveCheckSecondaryRegionWidget()
     }
 }
 
