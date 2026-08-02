@@ -972,28 +972,6 @@
         }
       }
     },
-    "subscription.error.offline" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Offline"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Нет сети"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Немає мережі"
-          }
-        }
-      }
-    },
     "subscription.error.unavailable" : {
       "localizations" : {
         "en" : {

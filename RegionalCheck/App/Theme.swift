@@ -38,10 +38,6 @@ enum Theme {
             )
         }
 
-        static func statusGradient(for state: StatusState) -> LinearGradient {
-            statusBackdrop(for: state)
-        }
-
         static var onboardingGradient: LinearGradient {
             gradient(base: onboarding)
         }

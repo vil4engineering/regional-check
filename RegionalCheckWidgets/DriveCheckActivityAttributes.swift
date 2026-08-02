@@ -24,11 +24,7 @@ public struct DriveCheckActivityAttributes: ActivityAttributes {
         }
     }
 
-    public var sessionID: String
-
-    public init(sessionID: String = "drive-check") {
-        self.sessionID = sessionID
-    }
+    public init() {}
 }
 
 public enum DriveCheckActivityPhase: String, Codable, Hashable, Sendable {

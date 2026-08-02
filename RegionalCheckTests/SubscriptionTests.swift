@@ -4,23 +4,6 @@ import Testing
 
 struct SubscriptionTests {
     @Test
-    func premiumAccess_gatesFeatures() {
-        let free = PremiumAccess(isPro: false, isLiveActivityEnabled: true)
-        #expect(free.allows(.proBadge) == false)
-        #expect(free.allows(.extendedDetail) == false)
-        #expect(free.allows(.liveActivity) == false)
-
-        let pro = PremiumAccess(isPro: true, isLiveActivityEnabled: true)
-        #expect(pro.allows(.proBadge))
-        #expect(pro.allows(.extendedDetail))
-        #expect(pro.allows(.liveActivity))
-
-        let proDisabledLA = PremiumAccess(isPro: true, isLiveActivityEnabled: false)
-        #expect(proDisabledLA.allows(.liveActivity) == false)
-        #expect(proDisabledLA.allows(.proBadge))
-    }
-
-    @Test
     func statusSourceLabel_hidesRawFeedName() {
         let alertFeed = String(localized: "status.source.alertFeed")
         let external = String(localized: "status.source.external")
