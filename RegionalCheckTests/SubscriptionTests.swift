@@ -199,28 +199,44 @@ struct SubscriptionTests {
 
     @Test
     @MainActor
-    func liveActivitySession_refcount_endsWithoutCarPlay() {
-        let recorder = RecordingLiveActivityController()
-        recorder.beginPhoneForegroundSession()
-        #expect(recorder.clientCount == 1)
-        recorder.endPhoneForegroundSession()
-        #expect(recorder.clientCount == 0)
-        #expect(recorder.didEndAll)
+    func subscriptionManager_purchaseCancelled_doesNotGrantPro() async {
+        let service = FakeSubscriptionService(
+            products: [],
+            entitlement: .none,
+            purchaseResult: .cancelled,
+            entitlementAfterPurchase: activeTestEntitlement
+        )
+        let manager = SubscriptionManager(service: service, cache: EntitlementCache())
+        _ = await manager.purchase(productID: SubscriptionProductID.yearly.rawValue)
+        #expect(manager.isPro == false)
     }
 
     @Test
     @MainActor
-    func liveActivitySession_refcount_phoneEnds_carPlayKeeps() {
-        let recorder = RecordingLiveActivityController()
-        recorder.beginPhoneForegroundSession()
-        recorder.beginCarPlaySession()
-        #expect(recorder.clientCount == 2)
-        recorder.endPhoneForegroundSession()
-        #expect(recorder.clientCount == 1)
-        #expect(recorder.didEndAll == false)
-        recorder.endCarPlaySession()
-        #expect(recorder.clientCount == 0)
-        #expect(recorder.didEndAll)
+    func subscriptionManager_purchasePending_doesNotGrantPro() async {
+        let service = FakeSubscriptionService(
+            products: [],
+            entitlement: .none,
+            purchaseResult: .pending,
+            entitlementAfterPurchase: activeTestEntitlement
+        )
+        let manager = SubscriptionManager(service: service, cache: EntitlementCache())
+        _ = await manager.purchase(productID: SubscriptionProductID.yearly.rawValue)
+        #expect(manager.isPro == false)
+    }
+
+    @Test
+    @MainActor
+    func subscriptionManager_purchaseFailed_doesNotGrantPro() async {
+        let service = FakeSubscriptionService(
+            products: [],
+            entitlement: .none,
+            purchaseResult: .failed("Payment failed"),
+            entitlementAfterPurchase: activeTestEntitlement
+        )
+        let manager = SubscriptionManager(service: service, cache: EntitlementCache())
+        _ = await manager.purchase(productID: SubscriptionProductID.yearly.rawValue)
+        #expect(manager.isPro == false)
     }
 
     @Test
@@ -251,52 +267,13 @@ struct SubscriptionTests {
     }
 }
 
-@MainActor
-private final class RecordingLiveActivityController: LiveActivityControlling {
-    private(set) var clientCount = 0
-    private(set) var didEndAll = false
-    private var clients: Set<LiveActivitySessionClient> = []
-
-    func beginPhoneForegroundSession() {
-        clients.insert(.phoneForeground)
-        clientCount = clients.count
-    }
-
-    func endPhoneForegroundSession() {
-        clients.remove(.phoneForeground)
-        clientCount = clients.count
-        if clients.isEmpty {
-            didEndAll = true
-        }
-    }
-
-    func beginCarPlaySession() {
-        clients.insert(.carPlay)
-        clientCount = clients.count
-    }
-
-    func endCarPlaySession() {
-        clients.remove(.carPlay)
-        clientCount = clients.count
-        if clients.isEmpty {
-            didEndAll = true
-        }
-    }
-
-    func update(
-        phase _: DriveCheckActivityPhase,
-        regionTitle _: String,
-        checkedAt _: Date?,
-        sourceLabel _: String,
-        isStale _: Bool
-    ) {}
-
-    func endAll() {
-        clients.removeAll()
-        clientCount = 0
-        didEndAll = true
-    }
-}
+private let activeTestEntitlement = EntitlementSnapshot(
+    productID: SubscriptionProductID.yearly.rawValue,
+    expirationDate: Date().addingTimeInterval(86400),
+    isActive: true,
+    source: "storekit",
+    verifiedAt: Date()
+)
 
 private final class FakeSubscriptionService: SubscriptionServicing, @unchecked Sendable {
     let products: [SubscriptionProduct]

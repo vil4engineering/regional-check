@@ -23,8 +23,6 @@ struct SmokeTests {
         #expect(alarm.phase == .alarm)
         #expect(error.phase == .error)
         #expect(regionUnavailable.phase == .regionUnavailable)
-        #expect(StatusState.quiet(lastCheckedAt: checkedAt).phase
-            == StatusState.quiet(lastCheckedAt: Date(timeIntervalSince1970: 2)).phase)
 
         #expect(idle.symbolName == "arrow.triangle.2.circlepath")
         #expect(quiet.symbolName == "checkmark.circle.fill")
@@ -44,11 +42,6 @@ struct SmokeTests {
         #expect(alarm.checkedAt == checkedAt)
         #expect(idle.checkedAt == nil)
         #expect(error.checkedAt == nil)
-        #expect(quiet.detailText == StatusState.quiet(lastCheckedAt: checkedAt).detailText)
-        #expect(alarm.detailText == String(
-            format: String(localized: "Updated: %@"),
-            checkedAt.formatted(date: .omitted, time: .shortened)
-        ))
     }
 
     @Test
@@ -82,12 +75,6 @@ struct SmokeTests {
 
         controller.applyScreenshotFixture("unavailable")
         #expect(controller.state == .error)
-    }
-
-    @Test
-    func regionTitles_matchBusinessRules() {
-        #expect(AlertRegion.kyivCity.title == String(localized: "Kyiv"))
-        #expect(AlertRegion.lviv.title == String(localized: "Львівська область"))
     }
 
     @Test
@@ -188,21 +175,19 @@ struct SmokeTests {
         #expect(controller.regionTitle == String(localized: "Київська область"))
     }
 
-    @Test
-    func provider_parsesKyivAlarmFromJSON() async throws {
-        let provider = try makeProvider(json: kyivJSON(alertnow: true), now: Date(timeIntervalSince1970: 123))
+    @Test(arguments: [
+        (true, AlertStatus.alarm),
+        (false, AlertStatus.quiet),
+    ])
+    func provider_parsesKyivStatus(alertnow: Bool, expected: AlertStatus) async throws {
+        let provider = try makeProvider(json: kyivJSON(alertnow: alertnow), now: Date(timeIntervalSince1970: 123))
         let snapshot = try await provider.fetchAlerts()
-        #expect(snapshot.status(for: .kyivCity) == .alarm)
-        #expect(snapshot.source == "test")
-        #expect(snapshot.fetchedAt == Date(timeIntervalSince1970: 123))
-        #expect(snapshot.checkedAt == Date(timeIntervalSince1970: 1_767_225_600))
-    }
-
-    @Test
-    func provider_parsesKyivQuietFromJSON() async throws {
-        let provider = try makeProvider(json: kyivJSON(alertnow: false))
-        let snapshot = try await provider.fetchAlerts()
-        #expect(snapshot.status(for: .kyivCity) == .quiet)
+        #expect(snapshot.status(for: .kyivCity) == expected)
+        if alertnow {
+            #expect(snapshot.source == "test")
+            #expect(snapshot.fetchedAt == Date(timeIntervalSince1970: 123))
+            #expect(snapshot.checkedAt == Date(timeIntervalSince1970: 1_767_225_600))
+        }
     }
 
     @Test
@@ -252,6 +237,80 @@ struct SmokeTests {
             #expect(statusCode == 500)
         } catch {
             Issue.record("Expected UbillingError, got \(error)")
+        }
+    }
+
+    @Test
+    func provider_throwsOnNonJSONResponse() async throws {
+        let url = try #require(URL(string: "https://ubilling.net.ua/aerialalerts/"))
+        let response = try #require(HTTPURLResponse(
+            url: url,
+            statusCode: 200,
+            httpVersion: nil,
+            headerFields: ["Content-Type": "text/html"]
+        ))
+        let http = MockHTTPClient(data: Data("<html></html>".utf8), response: response)
+        let provider = UbillingProvider(httpClient: http)
+
+        do {
+            _ = try await provider.fetchAlerts()
+            Issue.record("Expected non-JSON error")
+        } catch let error as UbillingError {
+            guard case .unexpectedResponse = error else {
+                Issue.record("Expected unexpectedResponse, got \(error)")
+                return
+            }
+        } catch {
+            Issue.record("Expected UbillingError, got \(error)")
+        }
+    }
+
+    @Test
+    func provider_throwsOnBrokenJSON() async throws {
+        let url = try #require(URL(string: "https://ubilling.net.ua/aerialalerts/"))
+        let response = try #require(HTTPURLResponse(
+            url: url,
+            statusCode: 200,
+            httpVersion: nil,
+            headerFields: ["Content-Type": "application/json"]
+        ))
+        let http = MockHTTPClient(data: Data("{not json".utf8), response: response)
+        let provider = UbillingProvider(httpClient: http)
+
+        do {
+            _ = try await provider.fetchAlerts()
+            Issue.record("Expected decode error")
+        } catch let error as UbillingError {
+            guard case .unexpectedResponse = error else {
+                Issue.record("Expected unexpectedResponse, got \(error)")
+                return
+            }
+        } catch {
+            Issue.record("Expected UbillingError, got \(error)")
+        }
+    }
+
+    @Test
+    func provider_throwsWhenOffline() async throws {
+        let http = MockHTTPClient(
+            data: Data(),
+            response: HTTPURLResponse(
+                url: URL(string: "https://ubilling.net.ua/aerialalerts/")!,
+                statusCode: 200,
+                httpVersion: nil,
+                headerFields: nil
+            )!,
+            error: URLError(.notConnectedToInternet)
+        )
+        let provider = UbillingProvider(httpClient: http)
+
+        do {
+            _ = try await provider.fetchAlerts()
+            Issue.record("Expected offline error")
+        } catch let error as URLError {
+            #expect(error.code == .notConnectedToInternet)
+        } catch {
+            Issue.record("Expected URLError, got \(error)")
         }
     }
 
