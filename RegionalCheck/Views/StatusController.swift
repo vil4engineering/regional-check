@@ -117,17 +117,21 @@ final class StatusController {
     private var periodicRefreshClients = 0
     private var periodicRefreshTask: Task<Void, Never>?
     private var powerStateObserver: NSObjectProtocol?
+    private var suppressPollingUntil: Date?
+    private let now: () -> Date
 
     init(
         region: AlertRegion,
         provider: any StatusProviding,
         environmentProvider: (any RefreshEnvironmentProviding)? = nil,
-        jitterUnitInterval: @escaping () -> Double = { Double.random(in: 0 ... 1) }
+        jitterUnitInterval: @escaping () -> Double = { Double.random(in: 0 ... 1) },
+        now: @escaping () -> Date = { Date() }
     ) {
         self.region = region
         self.provider = provider
         self.environmentProvider = environmentProvider ?? SystemRefreshEnvironmentProvider()
         self.jitterUnitInterval = jitterUnitInterval
+        self.now = now
         regionTitle = region.title
     }
 
@@ -173,7 +177,7 @@ final class StatusController {
                 lastRefreshInterval = interval
                 try? await Task.sleep(for: interval)
                 guard !Task.isCancelled else { return }
-                await refresh()
+                await refresh(isScheduled: true)
             }
         }
     }
@@ -224,7 +228,10 @@ final class StatusController {
         }
     #endif
 
-    func refresh() async {
+    func refresh(isScheduled: Bool = false) async {
+        if isScheduled, let until = suppressPollingUntil, now() < until {
+            return
+        }
         guard !isLoading else { return }
         isLoading = true
         defer { isLoading = false }
@@ -232,7 +239,12 @@ final class StatusController {
             let snapshot = try await provider.fetchAlerts()
             lastSnapshot = snapshot
             lastSourceRaw = snapshot.source
+            suppressPollingUntil = nil
             applySnapshotToState()
+        } catch let UbillingError.rateLimited(retryAfter) {
+            suppressPollingUntil = retryAfter
+            Self.log.error("Rate limited until \(retryAfter.timeIntervalSince1970, privacy: .public)")
+            state = .error
         } catch {
             Self.log.error("Fetch status failed: \(String(describing: error), privacy: .public)")
             state = .error

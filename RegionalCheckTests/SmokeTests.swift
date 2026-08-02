@@ -309,11 +309,40 @@ private struct MockStatusProvider: StatusProviding {
     }
 }
 
-struct MockHTTPClient: HTTPClient {
+final class MockHTTPClient: HTTPClient, @unchecked Sendable {
     let data: Data
     let response: URLResponse
+    var error: (any Error)?
+    private(set) var requestCount = 0
 
-    func data(from _: URL) async throws -> (Data, URLResponse) {
-        (data, response)
+    init(data: Data, response: URLResponse, error: (any Error)? = nil) {
+        self.data = data
+        self.response = response
+        self.error = error
+    }
+
+    func data(for _: URLRequest) async throws -> (Data, URLResponse) {
+        requestCount += 1
+        if let error {
+            throw error
+        }
+        return (data, response)
+    }
+}
+
+final class SequencingHTTPClient: HTTPClient, @unchecked Sendable {
+    private var results: [Result<(Data, URLResponse), any Error>]
+    private(set) var requestCount = 0
+
+    init(results: [Result<(Data, URLResponse), any Error>]) {
+        self.results = results
+    }
+
+    func data(for _: URLRequest) async throws -> (Data, URLResponse) {
+        requestCount += 1
+        guard !results.isEmpty else {
+            throw URLError(.unknown)
+        }
+        return try results.removeFirst().get()
     }
 }

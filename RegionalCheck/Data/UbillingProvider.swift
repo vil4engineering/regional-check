@@ -3,6 +3,7 @@ import os
 
 enum UbillingError: Error, Equatable {
     case unexpectedResponse(statusCode: Int?, contentType: String?, bodyPrefix: String)
+    case rateLimited(retryAfter: Date)
 }
 
 struct UbillingProvider: StatusProviding {
@@ -10,13 +11,29 @@ struct UbillingProvider: StatusProviding {
 
     private let httpClient: any HTTPClient
     private let now: @Sendable () -> Date
+    private let sleep: @Sendable (Duration) async throws -> Void
 
-    init(httpClient: any HTTPClient = URLSession.shared, now: @escaping @Sendable () -> Date = { Date() }) {
+    init(
+        httpClient: any HTTPClient = URLSession.shared,
+        now: @escaping @Sendable () -> Date = { Date() },
+        sleep: @escaping @Sendable (Duration) async throws -> Void = { try await Task.sleep(for: $0) }
+    ) {
         self.httpClient = httpClient
         self.now = now
+        self.sleep = sleep
     }
 
     func fetchAlerts() async throws -> AlertsSnapshot {
+        do {
+            return try await fetchAlertsOnce()
+        } catch let error as URLError where TransientURLErrorPolicy.isTransient(error) {
+            Self.log.error("Transient Ubilling error, retrying once: \(error.code.rawValue, privacy: .public)")
+            try await sleep(TransientURLErrorPolicy.retryDelay)
+            return try await fetchAlertsOnce()
+        }
+    }
+
+    private func fetchAlertsOnce() async throws -> AlertsSnapshot {
         let response = try await fetchResponse()
         let fetchedAt = now()
         var statuses: [AlertRegion: AlertStatus] = [:]
@@ -38,13 +55,25 @@ struct UbillingProvider: StatusProviding {
         )
     }
 
-    private func fetchResponse() async throws -> Response {
-        let url = URL(string: "https://ubilling.net.ua/aerialalerts/")!
-        let (data, response) = try await httpClient.data(from: url)
+    private func fetchResponse(rateLimitAttempt: Int = 1) async throws -> Response {
+        var request = URLRequest(url: URL(string: "https://ubilling.net.ua/aerialalerts/")!)
+        request.cachePolicy = .reloadIgnoringLocalCacheData
+        request.timeoutInterval = 15
+        let (data, response) = try await httpClient.data(for: request)
 
         if let http = response as? HTTPURLResponse {
             let statusCode = http.statusCode
             let contentType = http.value(forHTTPHeaderField: "Content-Type")
+
+            if statusCode == 429 {
+                let retryAfter = RetryAfterParser.deadline(
+                    header: http.value(forHTTPHeaderField: "Retry-After"),
+                    now: now(),
+                    attempt: rateLimitAttempt
+                )
+                Self.log.error("Ubilling HTTP 429 retryAfter=\(retryAfter.timeIntervalSince1970, privacy: .public)")
+                throw UbillingError.rateLimited(retryAfter: retryAfter)
+            }
 
             if !(200 ... 299).contains(statusCode) {
                 let prefix = Self.bodyPrefix(data)

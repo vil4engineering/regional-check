@@ -1,7 +1,13 @@
 import Foundation
 
 protocol HTTPClient: Sendable {
-    func data(from url: URL) async throws -> (Data, URLResponse)
+    func data(for request: URLRequest) async throws -> (Data, URLResponse)
+}
+
+extension HTTPClient {
+    func data(from url: URL) async throws -> (Data, URLResponse) {
+        try await data(for: URLRequest(url: url))
+    }
 }
 
 extension URLSession: HTTPClient {}
