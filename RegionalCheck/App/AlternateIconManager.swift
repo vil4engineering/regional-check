@@ -5,6 +5,7 @@ enum AlternateIconManager {
 
     @MainActor
     static func sync(isPro: Bool) {
+        guard !HostProcess.isUnitTesting else { return }
         guard UIApplication.shared.supportsAlternateIcons else { return }
         let desired = isPro ? proIconName : nil
         guard UIApplication.shared.alternateIconName != desired else { return }

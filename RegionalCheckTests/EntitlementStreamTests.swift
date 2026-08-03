@@ -20,9 +20,11 @@ struct EntitlementStreamTests {
 
         service.push(.active(TestFixtures.activeEntitlement))
         await waitForNotificationCount(&notifications, atLeast: 1)
+        #expect(notifications >= 1)
 
         service.push(.none)
         await waitForNotificationCount(&notifications, atLeast: 2)
+        #expect(notifications >= 2)
 
         consumer.cancel()
     }
